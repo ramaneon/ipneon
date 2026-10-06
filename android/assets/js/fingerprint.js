@@ -1,7 +1,7 @@
 ﻿/* =====================================================
    IPNEON - fingerprint.js
    Advanced Browser & Device Fingerprinting Engine
-   Inspired by fingerprint.to & FingerprintJS
+   Client-Side Device Forensics & Entropy Extraction
    Author: ramaneon
    ===================================================== */
 

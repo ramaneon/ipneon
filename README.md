@@ -1,4 +1,4 @@
-# [IPNEON] — Advanced IP Intelligence & Browser Fingerprinting Suite
+﻿# [IPNEON] — Advanced IP Intelligence & Browser Fingerprinting Suite
 
 > Professional-grade cybersecurity tool for IP intelligence, OSINT reconnaissance, threat geolocation, hardware/browser fingerprinting, and native Android standalone execution.
 

@@ -1,4 +1,4 @@
-/* =====================================================
+﻿/* =====================================================
    IPNEON — style.css
    Author: ramaneon
    ===================================================== */
@@ -1199,7 +1199,7 @@ section { position: relative; z-index: 1; }
 
 /* =====================================================
    IPNEON - BROWSER FINGERPRINTING SUITE
-   Inspired by fingerprint.to / FingerprintJS
+   Client-Side Device Forensics & Entropy Extraction
    ===================================================== */
 
 .fingerprint-section {
