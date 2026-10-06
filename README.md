@@ -1,17 +1,21 @@
-﻿# [IPNEON] — Advanced IP Intelligence & Browser Fingerprinting Suite
+# [IPNEON] — Advanced IP Intelligence & Browser Fingerprinting Suite
 
-> Professional-grade cybersecurity tool for IP intelligence, OSINT reconnaissance, threat geolocation, and hardware/browser fingerprinting.
+> Professional-grade cybersecurity tool for IP intelligence, OSINT reconnaissance, threat geolocation, hardware/browser fingerprinting, and native Android standalone execution.
 
 [![Live Tool](https://img.shields.io/badge/🌐%20LIVE%20TOOL-ramaneon.github.io/ipneon-00ff9f?style=for-the-badge)](https://ramaneon.github.io/ipneon/)
-![License](https://img.shields.io/badge/License-MIT-00e5ff?style=for-the-badge)
+[![Download APK](https://img.shields.io/badge/📱%20DOWNLOAD%20APK-v2.0.0%20(Android%2010--17)-00e5ff?style=for-the-badge)](https://github.com/ramaneon/ipneon/raw/main/ipneon.apk)
+![License](https://img.shields.io/badge/License-MIT-00ff9f?style=for-the-badge)
 ![GitHub stars](https://img.shields.io/github/stars/ramaneon/ipneon?style=for-the-badge&color=00ff9f)
 ![GitHub Pages](https://img.shields.io/github/deployments/ramaneon/ipneon/github-pages?label=Pages&style=for-the-badge&color=b84fff)
 
-## 🌐 Live Tool
+---
 
-### **[https://ramaneon.github.io/ipneon/](https://ramaneon.github.io/ipneon/)**
+## 🌐 Live Web App & Direct Android APK Download
 
-Free, browser-based, zero install, client-side execution. Built for ethical security researchers, penetration testers, and OSINT analysts.
+- **Live Web Pages**: **[https://ramaneon.github.io/ipneon/](https://ramaneon.github.io/ipneon/)**
+- **Direct APK Download**: **[ipneon.apk (v2.0.0)](https://github.com/ramaneon/ipneon/raw/main/ipneon.apk)** or from the `/release/` directory: **[release/ipneon-v2.0.0.apk](release/ipneon-v2.0.0.apk)**
+
+> **Android Compatibility**: Android 10, 11, 12, 13, 14, 15, 16, and **Android 17 (API 29 - 36+)**. Zero bloatware, 100% offline standalone client-side execution with hardware acceleration and native Android bridge.
 
 ---
 
@@ -27,6 +31,26 @@ Client-side device entropy extraction generating a unique 64-bit forensic Visito
 - **Bot & Privacy Heuristics**: Automated checks for Headless / Selenium WebDriver (`navigator.webdriver`), Incognito/Private window heuristics, AdBlockers, and Storage quotas.
 - **System Typography Probing**: Baseline differential font measurement probing 20+ installed system typefaces.
 - **Forensic Export**: One-click JSON profile export for audits and forensic logs.
+
+---
+
+### 📡 Advanced Reconnaissance Arsenal (New in v2.0.0)
+
+1. **Live DNS & DMARC Spoof Recon (DoH Powered)**:
+   - Queries real-time Cloudflare / Google DNS-over-HTTPS records (`A`, `AAAA`, `MX`, `TXT`, `NS`, `CNAME`, `SOA`).
+   - Analyzes SPF (`v=spf1`) and DMARC (`_dmarc.domain`) records to detect email spoofability and executive impersonation risks (`p=reject`, `p=quarantine`, or `p=none`).
+2. **Cyber Subnet & CIDR Range Calculator**:
+   - Computes Network IP, Broadcast IP, First & Last Usable Host, Total Usable IPs, Subnet Mask, Wildcard Mask, RFC 1918 Private vs Public scope, and 32-bit Binary bitmask representation.
+3. **Global Edge Latency Radar**:
+   - HTTP round-trip timing (RTT in ms) to 8 global CDN edge regions (US-East, US-West, Frankfurt, Tokyo, Singapore, Mumbai, Sydney, São Paulo) with visual jitter indicators.
+4. **MAC Address (OUI) Hardware Vendor Resolver**:
+   - Queries built-in IEEE database to resolve manufacturers (Apple, Intel, Cisco, Raspberry Pi, TP-Link, Samsung, Espressif, VMware, etc.) and distinguishes between factory OUI vs randomized private MACs.
+5. **HTTP Security Headers Audit & Security Grade**:
+   - Evaluates CSP, HSTS, X-Frame-Options, X-Content-Type-Options, Referrer-Policy, and Permissions-Policy with an OWASP Top 10 letter grade (A+ down to F).
+6. **Interactive Cyber CLI Terminal**:
+   - Live command console supporting `scan <ip>`, `dns <domain>`, `cidr <ip/prefix>`, `ping <host>`, `mac <mac>`, `headers <domain>`, `fp`, `matrix <green|cyan|purple|red>`, `export`, `apk`, and `clear`. Includes command history navigation with arrow keys.
+
+---
 
 ### 20 IP Tracking Vectors
 Comprehensive educational and penetration testing compendium of 20 IP capture vectors:
@@ -53,9 +77,11 @@ Comprehensive educational and penetration testing compendium of 20 IP capture ve
 | 19 | Leaked Database Search | Passive / Network | Historical IP records from public breach archives |
 | 20 | Minecraft Name DB Lookup | Passive / Network | Historical player UUID and server log resolvers |
 
+---
+
 ### Core OSINT Arsenal
 - **IP Tracker**: Real-time geolocation, ISP, ASN, threat score calculation, and OpenStreetMap rendering.
-- **Username Hunter (Live Automated Recon)**: Real-time background probe engine scanning 16+ platforms (GitHub, GitLab, Keybase, HackerNews, Dev.to, Wikipedia, Chess.com, Codeforces, Scratch, Reddit, Telegram, Steam, Duolingo, DockerHub, Mastodon, Gravatar). Only verified active accounts are displayed with real avatars and metadata, hiding unverified 404s.
+- **Username Hunter (Live Automated Recon)**: Real-time background probe engine scanning 16+ platforms (GitHub, GitLab, Keybase, HackerNews, Dev.to, Wikipedia, Chess.com, Codeforces, Scratch, Reddit, Telegram, Steam, Duolingo, DockerHub, Mastodon, Gravatar). Displays verified active accounts only.
 - **Email Intel**: Fast lookups on HaveIBeenPwned, DeHashed, and IntelX.
 - **Link Logger Builder**: Quick redirect generator with Grabify & IPLogger integration.
 - **Breach Check**: Multi-source breach intelligence lookup.
@@ -63,7 +89,22 @@ Comprehensive educational and penetration testing compendium of 20 IP capture ve
 
 ---
 
-## 🚀 Running Locally
+## 📱 Native Android APK (Android 10 - 17)
+
+IPNeon is compiled as a standalone Android application package (`ipneon.apk`):
+- **Min SDK**: 29 (Android 10)
+- **Target SDK**: 36 (Android 16 & 17)
+- **Zero Internet Permissions Required for Core Tools**: All calculators and forensic engines run 100% offline.
+- **Native Android Bridge**: Integrates native haptic feedback, clipboard, and hardware diagnostics via `AndroidNative` bridge.
+
+### Installing APK on Android:
+1. Download [ipneon.apk](https://github.com/ramaneon/ipneon/raw/main/ipneon.apk) onto your phone.
+2. Open the file and tap **Install** (allow "Install unknown apps" if prompted).
+3. Open IPNeon and conduct instant reconnaissance on the go!
+
+---
+
+## 🚀 Running Locally (Web)
 
 No installation or build steps required. Plain HTML5, CSS3, and modern Vanilla ES6+:
 
