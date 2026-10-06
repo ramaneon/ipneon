@@ -2,9 +2,18 @@
 
 > Professional-grade cybersecurity tool for IP intelligence, OSINT, geolocation, threat analysis, and network reconnaissance.
 
-![IPNeon Banner](https://img.shields.io/badge/IPNeon-Cybersecurity-00ff9f?style=for-the-badge&logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBhdGggZmlsbD0iIzAwZmY5ZiIgZD0iTTEyIDJMMiA3bDEwIDUgMTAtNS0xMC01ek0yIDE3bDEwIDUgMTAtNS0xMC01LTEwIDV6Ii8+PC9zdmc+)
-![GitHub stars](https://img.shields.io/github/stars/ramaneon/ipneon?style=for-the-badge&color=00ff9f)
+[![Live Tool](https://img.shields.io/badge/🌐%20LIVE%20TOOL-ramaneon.github.io/ipneon-00ff9f?style=for-the-badge)](https://ramaneon.github.io/ipneon/)
 ![License](https://img.shields.io/badge/License-MIT-00e5ff?style=for-the-badge)
+![GitHub stars](https://img.shields.io/github/stars/ramaneon/ipneon?style=for-the-badge&color=00ff9f)
+![GitHub Pages](https://img.shields.io/github/deployments/ramaneon/ipneon/github-pages?label=Pages&style=for-the-badge&color=b84fff)
+
+## 🌐 Live Tool
+
+**[https://ramaneon.github.io/ipneon/](https://ramaneon.github.io/ipneon/)**
+
+Free, browser-based, no install needed. Use it ethically and with authorization.
+
+---
 
 ## Features
 
@@ -57,13 +66,17 @@
 
 ## Quick Start
 
+### Use Online (Recommended)
+Visit **[https://ramaneon.github.io/ipneon/](https://ramaneon.github.io/ipneon/)** — no install, no account, free forever.
+
+### Run Locally
 ```bash
 git clone https://github.com/ramaneon/ipneon.git
 cd ipneon
 # Open index.html in any browser — no build step required
+start index.html   # Windows
+open index.html    # macOS
 ```
-
-Or just open `index.html` directly in your browser. No server needed for the core features.
 
 ## File Structure
 
@@ -81,8 +94,8 @@ ipneon/
 ## Disclaimer
 
 > **For educational and authorized security testing purposes only.**
-> The author is not responsible for any misuse of this tool.
 > Always obtain proper authorization before using any IP tracking techniques.
+> The author is not responsible for any misuse of this tool.
 
 ## Author
 
