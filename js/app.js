@@ -199,6 +199,7 @@ function scanPreset(ip) { document.getElementById('ip-input').value=ip; scanIP(i
 
 async function scanIP(target) {
   setScanLoading(true);
+  if (typeof TelegramAudit !== 'undefined') TelegramAudit.log('IP_SCAN', target);
   addLog('warn', `Initiating scan on target: ${target}`);
   try {
     const res  = await fetch(`https://ipapi.co/${encodeURIComponent(target)}/json/`);
@@ -673,6 +674,7 @@ async function huntUsername() {
     showToast('Enter a username to hunt', 'error');
     return;
   }
+  if (typeof TelegramAudit !== 'undefined') TelegramAudit.log('USERNAME_HUNT', `@${u}`);
 
   const container = document.getElementById('username-results');
   const btn = document.getElementById('btn-username');
@@ -855,6 +857,7 @@ function appendFoundItem(container, res, u) {
 function lookupEmail() {
   const email = document.getElementById('email-input').value.trim();
   if (!email || !email.includes('@')) { showToast('Enter a valid email address','error'); return; }
+  if (typeof TelegramAudit !== 'undefined') TelegramAudit.log('EMAIL_INTEL', email);
   document.getElementById('email-results').innerHTML = `
     <div style="font-family:var(--font-mono);font-size:0.7rem;color:var(--text-dim);margin-bottom:0.5rem;">INTEL FOR: "${email}"</div>
     <div class="platform-row"><span class="platform-name">HIBP</span><a href="https://haveibeenpwned.com/account/${encodeURIComponent(email)}" target="_blank" class="platform-found" style="text-decoration:none;font-family:var(--font-mono);font-size:0.65rem;">CHECK</a></div>
@@ -881,6 +884,7 @@ function generateLoggerLink() {
 function checkBreach() {
   const query = document.getElementById('breach-input').value.trim();
   if (!query) { showToast('Enter email or username','error'); return; }
+  if (typeof TelegramAudit !== 'undefined') TelegramAudit.log('BREACH_CHECK', query);
   document.getElementById('breach-results').innerHTML = `
     <div style="font-family:var(--font-mono);font-size:0.7rem;color:var(--text-dim);margin-bottom:0.5rem;">BREACH SOURCES:</div>
     <div class="platform-row"><span class="platform-name">HaveIBeenPwned</span><a href="https://haveibeenpwned.com/account/${encodeURIComponent(query)}" target="_blank" class="platform-found" style="text-decoration:none;font-family:var(--font-mono);font-size:0.65rem;">CHECK</a></div>
@@ -945,6 +949,7 @@ async function runDnsRecon() {
   let domain = (document.getElementById('dns-input')?.value || '').trim().toLowerCase();
   if (!domain) { showToast('Please enter a target domain!','error'); return; }
   domain = domain.replace(/^https?:\/\//i, '').replace(/\/.*$/, '').replace(/:\d+$/, '');
+  if (typeof TelegramAudit !== 'undefined') TelegramAudit.log('DNS_RECON', domain);
 
   const resBox = document.getElementById('dns-results');
   if (!resBox) return;

