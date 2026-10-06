@@ -21,7 +21,7 @@
 
 ## 🔥 Features & Capabilities
 
-### 👁️ Browser & Device Fingerprinting Engine *(Inspired by fingerprint.to)*
+### 👁️ Browser & Device Fingerprinting Engine
 Client-side device entropy extraction generating a unique 64-bit forensic Visitor Identifier:
 - **Canvas 2D Fingerprint**: Renders subpixel gradients, shadows, emoji glyphs, and alpha blend operations to calculate a unique 32-bit MurmurHash3 signature. Displays a live visual canvas preview.
 - **AudioContext Acoustic Dynamics**: Synthesizes a 10kHz triangular wave through dynamic compressor nodes using `OfflineAudioContext`, extracting DAC and DSP float32 buffer resonance hashes.
