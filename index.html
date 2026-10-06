@@ -11,12 +11,26 @@
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
+  <!-- CYBER SPLASH BOOTLOADER HUD -->
+  <div class="cyber-splash-screen" id="cyber-splash">
+    <div class="splash-logo-wrap">
+      <div class="splash-radar-pulse"></div>
+      <img src="assets/logo.png" alt="IPNeon Cyber Logo" class="splash-logo-img" />
+    </div>
+    <div class="splash-title">IP<span>NEON</span></div>
+    <div class="splash-progress-track">
+      <div class="splash-progress-bar" id="splash-pbar"></div>
+    </div>
+    <div class="splash-status-text" id="splash-status">INITIALIZING RECON ENGINE...</div>
+  </div>
+
   <canvas id="matrixCanvas"></canvas>
   <div id="particles"></div>
 
   <header class="header" id="header">
     <div class="header-inner">
       <div class="logo" id="logo">
+        <img src="assets/logo.png" alt="Logo" class="header-logo-icon" />
         <span class="logo-bracket">[</span>
         <span class="logo-text">IP<span class="logo-accent">NEON</span></span>
         <span class="logo-bracket">]</span>
@@ -834,6 +848,30 @@
   <button class="floating-term-btn" onclick="scrollToSection('terminal')">
     <span>💻</span> [>_ TERMINAL]
   </button>
+
+  <!-- MOBILE CYBER BOTTOM DOCK -->
+  <nav class="mobile-cyber-dock" id="mobile-dock">
+    <a href="#tracker" class="dock-btn" onclick="dockNav('tracker')">
+      <span class="dock-icon">⚡</span>
+      <span class="dock-label">TRACK</span>
+    </a>
+    <a href="#fingerprint" class="dock-btn" onclick="dockNav('fingerprint')">
+      <span class="dock-icon">👁️</span>
+      <span class="dock-label">DEVICE</span>
+    </a>
+    <a href="#recon" class="dock-btn" onclick="dockNav('recon')">
+      <span class="dock-icon">📡</span>
+      <span class="dock-label">RECON</span>
+    </a>
+    <a href="#terminal" class="dock-btn" onclick="dockNav('terminal')">
+      <span class="dock-icon">💻</span>
+      <span class="dock-label">CLI</span>
+    </a>
+    <a href="#tools" class="dock-btn" onclick="dockNav('tools')">
+      <span class="dock-icon">🔧</span>
+      <span class="dock-label">VECTORS</span>
+    </a>
+  </nav>
 
   <div class="toast-container" id="toast-container"></div>
   <script src="js/fingerprint.js"></script>

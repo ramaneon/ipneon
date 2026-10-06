@@ -2141,4 +2141,168 @@ section { position: relative; z-index: 1; }
   transform: translateY(-2px);
 }
 
+/* ═══════════════════════════════════════════════════════
+   CYBER SPLASH HUD & BOOTLOADER ANIMATION
+   ═══════════════════════════════════════════════════════ */
+.cyber-splash-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  background: #020409;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.cyber-splash-screen.fade-out {
+  opacity: 0;
+  transform: scale(1.08);
+  pointer-events: none;
+}
+.splash-logo-wrap {
+  position: relative;
+  width: 140px;
+  height: 140px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.splash-logo-img {
+  width: 100px;
+  height: 100px;
+  border-radius: 22px;
+  box-shadow: 0 0 35px rgba(0, 255, 159, 0.5), 0 0 70px rgba(0, 229, 255, 0.25);
+  animation: pulse-logo 2s ease-in-out infinite alternate;
+}
+@keyframes pulse-logo {
+  0% { transform: scale(0.96); filter: drop-shadow(0 0 15px rgba(0,255,159,0.4)); }
+  100% { transform: scale(1.04); filter: drop-shadow(0 0 30px rgba(0,255,159,0.8)); }
+}
+.splash-radar-pulse {
+  position: absolute;
+  inset: 0;
+  border: 1px solid var(--neon-green);
+  border-radius: 50%;
+  animation: radar-expand 2.2s cubic-bezier(0.2, 0.8, 0.2, 1) infinite;
+  opacity: 0;
+}
+@keyframes radar-expand {
+  0% { transform: scale(0.6); opacity: 0.8; }
+  100% { transform: scale(1.8); opacity: 0; }
+}
+.splash-title {
+  font-family: var(--font-mono);
+  font-size: 1.6rem;
+  font-weight: 900;
+  letter-spacing: 0.15em;
+  color: #fff;
+  text-shadow: 0 0 12px var(--neon-green);
+}
+.splash-title span { color: var(--neon-cyan); }
+.splash-progress-track {
+  width: 260px;
+  height: 4px;
+  background: rgba(255,255,255,0.08);
+  border-radius: 4px;
+  overflow: hidden;
+  position: relative;
+}
+.splash-progress-bar {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--neon-green), var(--neon-cyan));
+  box-shadow: 0 0 10px var(--neon-green);
+  transition: width 0.3s ease;
+}
+.splash-status-text {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--neon-green);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* ═══════════════════════════════════════════════════════
+   HEADER LOGO BRANDING
+   ═══════════════════════════════════════════════════════ */
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.header-logo-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  box-shadow: 0 0 12px rgba(0, 255, 159, 0.4);
+  vertical-align: middle;
+}
+
+/* ═══════════════════════════════════════════════════════
+   MOBILE CYBER DOCK (BOTTOM HUD NAVIGATION)
+   ═══════════════════════════════════════════════════════ */
+.mobile-cyber-dock {
+  position: fixed;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  width: min(92%, 460px);
+  background: rgba(8, 13, 20, 0.88);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(0, 255, 159, 0.3);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7), 0 0 20px rgba(0, 255, 159, 0.15);
+  border-radius: 36px;
+  padding: 0.4rem 0.6rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding-bottom: calc(0.4rem + env(safe-area-inset-bottom, 0px));
+}
+.dock-btn {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.15rem;
+  padding: 0.35rem 0.6rem;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: var(--transition);
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  font-weight: 700;
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+}
+.dock-btn:active, .dock-btn:hover, .dock-btn.active {
+  color: var(--neon-green);
+  background: rgba(0, 255, 159, 0.1);
+}
+.dock-icon {
+  font-size: 1.15rem;
+  transition: transform 0.2s ease;
+}
+.dock-btn:active .dock-icon {
+  transform: scale(1.2);
+}
+
+/* Adjust padding on mobile so dock doesn't obscure content */
+@media (max-width: 768px) {
+  body {
+    padding-bottom: 76px;
+    -webkit-overflow-scrolling: touch;
+  }
+  .floating-term-btn {
+    bottom: 84px;
+    right: 16px;
+  }
+}
+
+
 

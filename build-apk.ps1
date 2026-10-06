@@ -38,4 +38,4 @@ Write-Host "[+] Signing APK with release key..." -ForegroundColor Cyan
 & "$BUILD_TOOLS\apksigner.bat" sign --ks "android\release.keystore" --ks-pass pass:ipneon123 --key-pass pass:ipneon123 --v1-signing-enabled true --v2-signing-enabled true --v3-signing-enabled true --out "ipneon.apk" "android\build\aligned.apk"
 Copy-Item "ipneon.apk" -Destination "release\ipneon-v2.0.0.apk" -Force
 
-Write-Host "[✓] Build complete: ipneon.apk generated successfully!" -ForegroundColor Green
+Write-Host "[+] Build complete: ipneon.apk generated successfully!" -ForegroundColor Green

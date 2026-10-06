@@ -54,6 +54,7 @@ let logCount = 0;
 let rawData  = null;
 
 document.addEventListener('DOMContentLoaded', () => {
+  initCyberSplash();
   initMatrix();
   initParticles();
   renderTools();
@@ -1608,4 +1609,46 @@ function execTermCommand(raw) {
       appendTermOutput(`Command not recognized: '${escapeHtml(cmd)}'. Type 'help' for command manual.`, 'yellow');
       break;
   }
+}
+
+/* ═══════════════════════════════════════════════════════
+   CYBER SPLASH BOOTLOADER & MOBILE DOCK HUD
+   ═══════════════════════════════════════════════════════ */
+function initCyberSplash() {
+  const splash = document.getElementById('cyber-splash');
+  const pbar   = document.getElementById('splash-pbar');
+  const status = document.getElementById('splash-status');
+  if (!splash) return;
+
+  const steps = [
+    { pct: 30, text: 'CALIBRATING ENTROPY SENSORS...' },
+    { pct: 65, text: 'CONNECTING DOH RECON ENGINES...' },
+    { pct: 90, text: 'SYNCHRONIZING 20 ATTACK VECTORS...' },
+    { pct: 100, text: 'CYBERSPACE ACCESS GRANTED' }
+  ];
+
+  let i = 0;
+  const interval = setInterval(() => {
+    if (i < steps.length) {
+      if (pbar) pbar.style.width = steps[i].pct + '%';
+      if (status) status.textContent = steps[i].text;
+      i++;
+    } else {
+      clearInterval(interval);
+      setTimeout(() => {
+        splash.classList.add('fade-out');
+        setTimeout(() => splash.remove(), 700);
+      }, 350);
+    }
+  }, 220);
+}
+
+function dockNav(id) {
+  if (window.AndroidNative && typeof window.AndroidNative.vibrate === 'function') {
+    try { window.AndroidNative.vibrate(25); } catch(e){}
+  }
+  document.querySelectorAll('.dock-btn').forEach(b => b.classList.remove('active'));
+  const target = document.querySelector(`.dock-btn[onclick*="${id}"]`);
+  if (target) target.classList.add('active');
+  scrollToSection(id);
 }
