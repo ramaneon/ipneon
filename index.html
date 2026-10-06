@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>IPNeon — Advanced IP Intelligence Suite</title>
-  <meta name="description" content="IPNeon is a professional cybersecurity tool for IP intelligence, OSINT, geolocation, threat analysis, and network reconnaissance across 20 tracking vectors." />
+  <title>IPNeon - Advanced IP Intelligence & Browser Fingerprinting Suite</title>
+  <meta name="description" content="IPNeon is a professional cybersecurity suite for IP intelligence, OSINT reconnaissance, threat geolocation, and hardware/browser fingerprinting inspired by fingerprint.to." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
@@ -25,6 +25,7 @@
         <a href="#home" class="nav-link active" id="nav-home">HOME</a>
         <a href="#tools" class="nav-link" id="nav-tools">TOOLS</a>
         <a href="#tracker" class="nav-link" id="nav-tracker">TRACKER</a>
+        <a href="#fingerprint" class="nav-link" id="nav-fingerprint">FINGERPRINT</a>
         <a href="#osint" class="nav-link" id="nav-osint">OSINT</a>
         <a href="#about" class="nav-link" id="nav-about">ABOUT</a>
       </nav>
@@ -32,7 +33,7 @@
         <span class="status-dot"></span>
         <span class="status-text">SYS ONLINE</span>
       </div>
-      <button class="hamburger" id="hamburger" onclick="toggleMenu()">
+      <button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Toggle navigation">
         <span></span><span></span><span></span>
       </button>
     </div>
@@ -41,21 +42,24 @@
   <section class="hero" id="home">
     <div class="hero-content">
       <div class="hero-badge" id="hero-badge">
-        <span class="badge-icon">◈</span> CYBERSECURITY INTELLIGENCE SUITE
+        <span class="badge-icon">⚡</span> CYBERSECURITY INTELLIGENCE SUITE
       </div>
       <h1 class="hero-title" id="hero-title">
-        <span class="title-line">TRACK · TRACE</span>
-        <span class="title-line accent">EXPOSE · ANALYZE</span>
+        <span class="title-line">TRACK &bull; TRACE</span>
+        <span class="title-line accent">EXPOSE &bull; ANALYZE</span>
       </h1>
       <p class="hero-sub" id="hero-sub">
-        20 professional-grade IP intelligence vectors. Zero limits. Full OSINT arsenal at your fingertips.
+        20 professional-grade IP intelligence vectors + deep client-side browser fingerprinting inspired by fingerprint.to. Zero dependencies. Real-time forensics.
       </p>
       <div class="hero-cta" id="hero-cta">
         <button class="btn-primary" id="btn-launch" onclick="scrollToSection('tracker')">
           <span class="btn-icon">⚡</span> LAUNCH TRACKER
         </button>
+        <button class="btn-secondary" id="btn-fp-hero" onclick="scrollToSection('fingerprint')" style="border-color: rgba(0,229,255,0.4); color: var(--neon-cyan);">
+          <span class="btn-icon">👁️</span> DEVICE FINGERPRINT
+        </button>
         <button class="btn-secondary" id="btn-tools" onclick="scrollToSection('tools')">
-          <span class="btn-icon">◎</span> VIEW TOOLS
+          <span class="btn-icon">🔧</span> VIEW TOOLS
         </button>
       </div>
       <div class="hero-stats" id="hero-stats">
@@ -79,16 +83,16 @@
           <div class="globe-ring r1"></div>
           <div class="globe-ring r2"></div>
           <div class="globe-ring r3"></div>
-          <div class="globe-core"><span class="globe-icon">⊕</span></div>
+          <div class="globe-core"><span class="globe-icon">🌐</span></div>
           <div class="globe-ping p1"></div>
           <div class="globe-ping p2"></div>
           <div class="globe-ping p3"></div>
         </div>
         <div class="globe-data" id="globe-data">
           <div class="gd-item">IP: <span class="gd-val" id="live-ip">Fetching...</span></div>
-          <div class="gd-item">LOC: <span class="gd-val" id="live-loc">—</span></div>
-          <div class="gd-item">ISP: <span class="gd-val" id="live-isp">—</span></div>
-          <div class="gd-item">RISK: <span class="gd-val" id="live-threat">—</span></div>
+          <div class="gd-item">LOC: <span class="gd-val" id="live-loc">-</span></div>
+          <div class="gd-item">ISP: <span class="gd-val" id="live-isp">-</span></div>
+          <div class="gd-item">RISK: <span class="gd-val" id="live-threat">-</span></div>
         </div>
       </div>
     </div>
@@ -98,7 +102,7 @@
     <div class="section-header">
       <span class="section-tag">// ARSENAL</span>
       <h2 class="section-title">20 TRACKING <span class="accent">VECTORS</span></h2>
-      <p class="section-sub">Professional-grade methods for IP intelligence gathering</p>
+      <p class="section-sub">Professional-grade methods for IP intelligence gathering and attack vector research</p>
     </div>
     <div class="tools-grid" id="tools-grid"></div>
   </section>
@@ -107,7 +111,7 @@
     <div class="section-header">
       <span class="section-tag">// INTELLIGENCE</span>
       <h2 class="section-title">IP <span class="accent">TRACKER</span></h2>
-      <p class="section-sub">Deep-dive analysis on any IP address — geolocation, ISP, threat score, map</p>
+      <p class="section-sub">Deep-dive analysis on any IP address &mdash; geolocation, ISP, ASN, threat score, map</p>
     </div>
     <div class="tracker-container" id="tracker-container">
       <div class="tracker-input-panel" id="tracker-input-panel">
@@ -116,53 +120,53 @@
           <input type="text" id="ip-input" class="ip-input" placeholder="Enter IP address or domain..." autocomplete="off" spellcheck="false" onkeydown="if(event.key==='Enter')runIPScan()" />
           <button class="btn-scan" id="btn-scan" onclick="runIPScan()">
             <span id="scan-btn-text">SCAN</span>
-            <span class="scan-loader hidden" id="scan-loader">◌</span>
+            <span class="scan-loader hidden" id="scan-loader">⌛</span>
           </button>
         </div>
-        <div class="quick-presets" id="quick-presets">
-          <span class="preset-label">QUICK:</span>
-          <button class="preset-btn" id="preset-myip" onclick="scanMyIP()">MY IP</button>
-          <button class="preset-btn" id="preset-google" onclick="scanPreset('8.8.8.8')">GOOGLE DNS</button>
-          <button class="preset-btn" id="preset-cf" onclick="scanPreset('1.1.1.1')">CLOUDFLARE</button>
-          <button class="preset-btn" id="preset-tor" onclick="scanPreset('185.220.101.34')">TOR NODE</button>
+        <div class="quick-targets" id="quick-targets">
+          <span class="qt-label">PRESETS:</span>
+          <button class="qt-btn" onclick="scanMyIP()">MY IP</button>
+          <button class="qt-btn" onclick="scanPreset('8.8.8.8')">GOOGLE DNS</button>
+          <button class="qt-btn" onclick="scanPreset('1.1.1.1')">CLOUDFLARE</button>
+          <button class="qt-btn" onclick="scanPreset('9.9.9.9')">QUAD9</button>
         </div>
       </div>
       <div class="tracker-results hidden" id="tracker-results">
         <div class="results-grid" id="results-grid">
           <div class="result-card card-primary" id="card-geo">
             <div class="card-header">
-              <span class="card-icon">🌍</span>
+              <span class="card-icon">📍</span>
               <span class="card-title">GEOLOCATION</span>
-              <span class="card-status" id="geo-status">●</span>
+              <span class="card-status live">LIVE</span>
             </div>
             <div class="card-body">
-              <div class="info-row"><span class="info-label">IP</span><span class="info-val" id="res-ip">—</span></div>
-              <div class="info-row"><span class="info-label">CITY</span><span class="info-val" id="res-city">—</span></div>
-              <div class="info-row"><span class="info-label">REGION</span><span class="info-val" id="res-region">—</span></div>
-              <div class="info-row"><span class="info-label">COUNTRY</span><span class="info-val" id="res-country">—</span></div>
-              <div class="info-row"><span class="info-label">POSTAL</span><span class="info-val" id="res-postal">—</span></div>
-              <div class="info-row"><span class="info-label">COORDS</span><span class="info-val" id="res-coords">—</span></div>
-              <div class="info-row"><span class="info-label">TIMEZONE</span><span class="info-val" id="res-timezone">—</span></div>
+              <div class="info-row"><span class="info-label">IP</span><span class="info-val highlight" id="res-ip">-</span></div>
+              <div class="info-row"><span class="info-label">CITY</span><span class="info-val" id="res-city">-</span></div>
+              <div class="info-row"><span class="info-label">REGION</span><span class="info-val" id="res-region">-</span></div>
+              <div class="info-row"><span class="info-label">COUNTRY</span><span class="info-val" id="res-country">-</span></div>
+              <div class="info-row"><span class="info-label">POSTAL</span><span class="info-val" id="res-postal">-</span></div>
+              <div class="info-row"><span class="info-label">COORDS</span><span class="info-val" id="res-coords">-</span></div>
+              <div class="info-row"><span class="info-label">TIMEZONE</span><span class="info-val" id="res-timezone">-</span></div>
             </div>
           </div>
           <div class="result-card card-secondary" id="card-network">
             <div class="card-header">
-              <span class="card-icon">🔌</span>
+              <span class="card-icon">🌐</span>
               <span class="card-title">NETWORK</span>
-              <span class="card-status" id="net-status">●</span>
+              <span class="card-status" id="net-status">BGP</span>
             </div>
             <div class="card-body">
-              <div class="info-row"><span class="info-label">ISP</span><span class="info-val" id="res-isp">—</span></div>
-              <div class="info-row"><span class="info-label">ORG</span><span class="info-val" id="res-org">—</span></div>
-              <div class="info-row"><span class="info-label">ASN</span><span class="info-val" id="res-asn">—</span></div>
-              <div class="info-row"><span class="info-label">TYPE</span><span class="info-val" id="res-type">—</span></div>
-              <div class="info-row"><span class="info-label">HOSTNAME</span><span class="info-val" id="res-hostname">—</span></div>
-              <div class="info-row"><span class="info-label">DOMAIN</span><span class="info-val" id="res-domain">—</span></div>
+              <div class="info-row"><span class="info-label">ISP</span><span class="info-val" id="res-isp">-</span></div>
+              <div class="info-row"><span class="info-label">ORG</span><span class="info-val" id="res-org">-</span></div>
+              <div class="info-row"><span class="info-label">ASN</span><span class="info-val" id="res-asn">-</span></div>
+              <div class="info-row"><span class="info-label">TYPE</span><span class="info-val" id="res-type">-</span></div>
+              <div class="info-row"><span class="info-label">HOSTNAME</span><span class="info-val" id="res-hostname">-</span></div>
+              <div class="info-row"><span class="info-label">DOMAIN</span><span class="info-val" id="res-domain">-</span></div>
             </div>
           </div>
           <div class="result-card card-threat" id="card-threat">
             <div class="card-header">
-              <span class="card-icon">⚠️</span>
+              <span class="card-icon">🛡️</span>
               <span class="card-title">THREAT ANALYSIS</span>
             </div>
             <div class="card-body">
@@ -175,11 +179,11 @@
                 <div class="gauge-label" id="gauge-label">SAFE</div>
               </div>
               <div class="threat-flags">
-                <div class="flag-row"><span class="flag-label">VPN</span><span class="flag-val" id="res-vpn">—</span></div>
-                <div class="flag-row"><span class="flag-label">PROXY</span><span class="flag-val" id="res-proxy">—</span></div>
-                <div class="flag-row"><span class="flag-label">TOR</span><span class="flag-val" id="res-tor">—</span></div>
-                <div class="flag-row"><span class="flag-label">BOT</span><span class="flag-val" id="res-bot">—</span></div>
-                <div class="flag-row"><span class="flag-label">DATACENTER</span><span class="flag-val" id="res-dc">—</span></div>
+                <div class="flag-row"><span class="flag-label">VPN</span><span class="flag-val" id="res-vpn">-</span></div>
+                <div class="flag-row"><span class="flag-label">PROXY</span><span class="flag-val" id="res-proxy">-</span></div>
+                <div class="flag-row"><span class="flag-label">TOR</span><span class="flag-val" id="res-tor">-</span></div>
+                <div class="flag-row"><span class="flag-label">BOT</span><span class="flag-val" id="res-bot">-</span></div>
+                <div class="flag-row"><span class="flag-label">DATACENTER</span><span class="flag-val" id="res-dc">-</span></div>
               </div>
             </div>
           </div>
@@ -190,7 +194,7 @@
             </div>
             <div class="map-container" id="map-container">
               <div class="map-placeholder" id="map-placeholder">
-                <span class="map-icon">◎</span>
+                <span class="map-icon">📍</span>
                 <span>Scan an IP to pinpoint location</span>
               </div>
               <iframe id="map-frame" class="map-frame hidden" frameborder="0" allowfullscreen></iframe>
@@ -202,12 +206,12 @@
               <span class="card-title">ADDITIONAL DATA</span>
             </div>
             <div class="card-body">
-              <div class="info-row"><span class="info-label">MOBILE</span><span class="info-val" id="res-mobile">—</span></div>
-              <div class="info-row"><span class="info-label">CONTINENT</span><span class="info-val" id="res-continent">—</span></div>
-              <div class="info-row"><span class="info-label">CURRENCY</span><span class="info-val" id="res-currency">—</span></div>
-              <div class="info-row"><span class="info-label">LANG</span><span class="info-val" id="res-lang">—</span></div>
-              <div class="info-row"><span class="info-label">FLAG</span><span class="info-val" id="res-flag">—</span></div>
-              <div class="info-row"><span class="info-label">CALLING</span><span class="info-val" id="res-calling">—</span></div>
+              <div class="info-row"><span class="info-label">MOBILE</span><span class="info-val" id="res-mobile">-</span></div>
+              <div class="info-row"><span class="info-label">CONTINENT</span><span class="info-val" id="res-continent">-</span></div>
+              <div class="info-row"><span class="info-label">CURRENCY</span><span class="info-val" id="res-currency">-</span></div>
+              <div class="info-row"><span class="info-label">LANG</span><span class="info-val" id="res-lang">-</span></div>
+              <div class="info-row"><span class="info-label">FLAG</span><span class="info-val" id="res-flag">-</span></div>
+              <div class="info-row"><span class="info-label">CALLING</span><span class="info-val" id="res-calling">-</span></div>
             </div>
           </div>
           <div class="result-card card-terminal" id="card-terminal">
@@ -225,16 +229,277 @@
     </div>
   </section>
 
+  <!-- BROWSER FINGERPRINTING SECTION (Inspired by fingerprint.to/demo) -->
+  <section class="fingerprint-section" id="fingerprint">
+    <div class="section-header">
+      <span class="section-tag">// DEVICE INTELLIGENCE</span>
+      <h2 class="section-title">BROWSER <span class="accent">FINGERPRINTING</span></h2>
+      <p class="section-sub">Hardware, GPU, Canvas, Audio & WebRTC entropy extraction (Inspired by fingerprint.to)</p>
+    </div>
+
+    <!-- Hero Visitor ID Card -->
+    <div class="fp-hero-card" id="fp-hero-card">
+      <div class="fp-hero-top">
+        <div class="fp-id-group">
+          <span class="fp-id-label">
+            <span class="status-dot"></span> GLOBAL VISITOR IDENTIFIER
+          </span>
+          <div class="fp-id-val-wrap">
+            <span class="fp-visitor-id" id="fp-visitor-id">CALCULATING...</span>
+            <span class="fp-confidence-badge" id="fp-confidence">ANALYZING ENTROPY</span>
+          </div>
+        </div>
+        <div class="fp-actions">
+          <button class="fp-btn" id="btn-copy-fp" onclick="copyFingerprintId()">
+            <span>📋</span> COPY VISITOR ID
+          </button>
+          <button class="fp-btn fp-btn-secondary" id="btn-rescan-fp" onclick="collectFingerprint()">
+            <span>⚡</span> RE-AUDIT DEVICE
+          </button>
+          <button class="fp-btn fp-btn-secondary" id="btn-export-fp" onclick="exportFingerprintJson()">
+            <span>💾</span> EXPORT JSON
+          </button>
+        </div>
+      </div>
+
+      <!-- Anomaly & Bot Badges -->
+      <div class="fp-badges-row">
+        <div class="fp-badge badge-neutral" id="badge-bot">BOT: TESTING...</div>
+        <div class="fp-badge badge-neutral" id="badge-incognito">WINDOW: DETECTING...</div>
+        <div class="fp-badge badge-neutral" id="badge-webrtc">WEBRTC: CHECKING...</div>
+        <div class="fp-badge badge-neutral" id="badge-gpu">GPU: QUERYING...</div>
+        <div class="fp-badge badge-neutral" id="badge-adblock">ADBLOCK: TESTING...</div>
+      </div>
+    </div>
+
+    <!-- Fingerprint Analysis Grid -->
+    <div class="fp-grid">
+
+      <!-- Card 1: Canvas & Visual Signature -->
+      <div class="fp-card">
+        <div class="fp-card-header">
+          <div class="fp-card-title-group">
+            <span class="fp-card-icon">🎨</span>
+            <span class="fp-card-title">CANVAS 2D SIGNATURE</span>
+          </div>
+          <span class="fp-card-tag">HIGH ENTROPY</span>
+        </div>
+        <div class="fp-card-body">
+          <div class="fp-prop-row">
+            <span class="fp-prop-label">CANVAS HASH</span>
+            <span class="fp-prop-val highlight" id="fp-canvas-hash">Analyzing...</span>
+          </div>
+          <div class="fp-prop-row">
+            <span class="fp-prop-label">GLYPH METRICS</span>
+            <span class="fp-prop-val" id="fp-canvas-metrics">Calculating...</span>
+          </div>
+          <div class="fp-canvas-box">
+            <canvas id="fp-canvas-preview" class="fp-canvas-preview"></canvas>
+            <span class="fp-canvas-sub">// Real-time rendered subpixel canvas payload</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 2: AudioContext Acoustic Signature -->
+      <div class="fp-card">
+        <div class="fp-card-header">
+          <div class="fp-card-title-group">
+            <span class="fp-card-icon">🔊</span>
+            <span class="fp-card-title">AUDIO DYNAMICS HASH</span>
+          </div>
+          <span class="fp-card-tag">HARDWARE DSP</span>
+        </div>
+        <div class="fp-card-body">
+          <div class="fp-prop-row">
+            <span class="fp-prop-label">ACOUSTIC HASH</span>
+            <span class="fp-prop-val highlight" id="fp-audio-hash">Synthesizing...</span>
+          </div>
+          <div class="fp-prop-row">
+            <span class="fp-prop-label">SAMPLE RATE / CH</span>
+            <span class="fp-prop-val" id="fp-audio-rate">Querying...</span>
+          </div>
+          <div class="fp-prop-row">
+            <span class="fp-prop-label">OSCILLATOR DYNAMICS</span>
+            <span class="fp-prop-val cyan">Triangle 10kHz + Compressor</span>
+          </div>
+          <div class="fp-prop-row">
+            <span class="fp-prop-label">FREQUENCY RESPONSE</span>
+            <span class="fp-prop-val">Hardware DAC / Float32 Buffer</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 3: WebGL & GPU Hardware -->
+      <div class="fp-card">
+        <div class="fp-card-header">
+          <div class="fp-card-title-group">
+            <span class="fp-card-icon">🎮</span>
+            <span class="fp-card-title">GPU ARCHITECTURE (WEBGL)</span>
+          </div>
+          <span class="fp-card-tag">UNMASKED</span>
+        </div>
+        <div class="fp-card-body">
+          <div class="fp-prop-row">
+            <span class="fp-prop-label">RENDERER</span>
+            <span class="fp-prop-val highlight" id="fp-gpu-renderer">Querying GPU...</span>
+          </div>
+          <div class="fp-prop-row">
+            <span class="fp-prop-label">VENDOR</span>
+            <span class="fp-prop-val" id="fp-gpu-vendor">-</span>
+          </div>
+          <div class="fp-prop-row">
+            <span class="fp-prop-label">WEBGL CONTEXT</span>
+            <span class="fp-prop-val" id="fp-webgl-version">-</span>
+          </div>
+          <div class="fp-prop-row">
+            <span class="fp-prop-label">MAX TEXTURE SIZE</span>
+            <span class="fp-prop-val cyan" id="fp-max-texture">-</span>
+          </div>
+          <div class="fp-prop-row">
+            <span class="fp-prop-label">EXTENSIONS</span>
+            <span class="fp-prop-val" id="fp-webgl-exts">-</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 4: Hardware & Display Sensors -->
+      <div class="fp-card">
+        <div class="fp-card-header">
+          <div class="fp-card-title-group">
+            <span class="fp-card-icon">⚡</span>
+            <span class="fp-card-title">HARDWARE & SENSORS</span>
+          </div>
+          <span class="fp-card-tag">SYSTEM</span>
+        </div>
+        <div class="fp-card-body">
+          <div class="fp-prop-row">
+            <span class="fp-prop-label">CPU CORES</span>
+            <span class="fp-prop-val highlight" id="fp-cpu-cores">Querying...</span>
+          </div>
+          <div class="fp-prop-row">
+            <span class="fp-prop-label">DEVICE RAM</span>
+            <span class="fp-prop-val cyan" id="fp-ram-mem">Querying...</span>
+          </div>
+          <div class="fp-prop-row">
+            <span class="fp-prop-label">RESOLUTION</span>
+            <span class="fp-prop-val" id="fp-screen-res">-</span>
+          </div>
+          <div class="fp-prop-row">
+            <span class="fp-prop-label">WORK AREA</span>
+            <span class="fp-prop-val" id="fp-screen-avail">-</span>
+          </div>
+          <div class="fp-prop-row">
+            <span class="fp-prop-label">COLOR DEPTH / DPR</span>
+            <span class="fp-prop-val" id="fp-color-depth">-</span>
+          </div>
+          <div class="fp-prop-row">
+            <span class="fp-prop-label">TOUCH INPUT</span>
+            <span class="fp-prop-val" id="fp-touch-points">-</span>
+          </div>
+          <div class="fp-prop-row">
+            <span class="fp-prop-label">BATTERY STATUS</span>
+            <span class="fp-prop-val" id="fp-battery-stat">-</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 5: Network & WebRTC Leak -->
+      <div class="fp-card">
+        <div class="fp-card-header">
+          <div class="fp-card-title-group">
+            <span class="fp-card-icon">🌐</span>
+            <span class="fp-card-title">NETWORK & WEBRTC LEAK</span>
+          </div>
+          <span class="fp-card-tag">TRAFFIC</span>
+        </div>
+        <div class="fp-card-body">
+          <div class="fp-prop-row">
+            <span class="fp-prop-label">WEBRTC LAN IP(S)</span>
+            <span class="fp-prop-val highlight" id="fp-webrtc-ips">Scanning candidates...</span>
+          </div>
+          <div class="fp-prop-row">
+            <span class="fp-prop-label">CONNECTION PROFILE</span>
+            <span class="fp-prop-val cyan" id="fp-net-type">-</span>
+          </div>
+          <div class="fp-prop-row">
+            <span class="fp-prop-label">ESTIMATED RTT</span>
+            <span class="fp-prop-val" id="fp-net-rtt">-</span>
+          </div>
+          <div class="fp-prop-row">
+            <span class="fp-prop-label">STUN SERVER TEST</span>
+            <span class="fp-prop-val">stun.l.google.com:19302 (Active)</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 6: OS, Locale & Fonts -->
+      <div class="fp-card">
+        <div class="fp-card-header">
+          <div class="fp-card-title-group">
+            <span class="fp-card-icon">🔤</span>
+            <span class="fp-card-title">OS, LOCALE & SYSTEM FONTS</span>
+          </div>
+          <span class="fp-card-tag">ENVIRONMENT</span>
+        </div>
+        <div class="fp-card-body">
+          <div class="fp-prop-row">
+            <span class="fp-prop-label">OPERATING SYSTEM</span>
+            <span class="fp-prop-val highlight" id="fp-os-name">Detecting...</span>
+          </div>
+          <div class="fp-prop-row">
+            <span class="fp-prop-label">BROWSER ENGINE</span>
+            <span class="fp-prop-val" id="fp-browser-name">-</span>
+          </div>
+          <div class="fp-prop-row">
+            <span class="fp-prop-label">TIMEZONE</span>
+            <span class="fp-prop-val cyan" id="fp-timezone">-</span>
+          </div>
+          <div class="fp-prop-row">
+            <span class="fp-prop-label">LOCALE & LANGS</span>
+            <span class="fp-prop-val" id="fp-locale-langs">-</span>
+          </div>
+          <div class="fp-prop-row">
+            <span class="fp-prop-label">DO NOT TRACK</span>
+            <span class="fp-prop-val" id="fp-dnt-status">-</span>
+          </div>
+          <div class="fp-prop-row">
+            <span class="fp-prop-label">PROBED FONTS</span>
+            <span class="fp-prop-val highlight" id="fp-fonts-count">-</span>
+          </div>
+          <div class="fp-prop-row">
+            <span class="fp-prop-label">DETECTED FONTS</span>
+            <span class="fp-prop-val" id="fp-fonts-list">-</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 7: Full Raw Profile JSON Terminal -->
+      <div class="fp-card fp-card-full">
+        <div class="fp-card-header">
+          <div class="fp-card-title-group">
+            <span class="fp-card-icon">💻</span>
+            <span class="fp-card-title">RAW FORENSIC PROFILE (JSON)</span>
+          </div>
+          <button class="copy-btn" onclick="exportFingerprintJson()">DOWNLOAD JSON</button>
+        </div>
+        <div class="fp-terminal">
+          <pre class="fp-raw-code" id="fp-raw-json">// Awaiting complete fingerprint telemetry synthesis...</pre>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
   <section class="osint-section" id="osint">
     <div class="section-header">
       <span class="section-tag">// OSINT</span>
       <h2 class="section-title">OPEN SOURCE <span class="accent">INTELLIGENCE</span></h2>
-      <p class="section-sub">Username, email and breach intelligence lookup</p>
+      <p class="section-sub">Username, email, link generator and breach intelligence lookup</p>
     </div>
     <div class="osint-grid" id="osint-grid">
       <div class="osint-card" id="osint-username">
         <div class="osint-card-header">
-          <span class="osint-icon">👤</span>
+          <span class="osint-icon">🔍</span>
           <h3 class="osint-title">USERNAME HUNTER</h3>
         </div>
         <div class="osint-input-row">
@@ -242,7 +507,7 @@
           <button class="osint-btn" id="btn-username" onclick="huntUsername()">HUNT</button>
         </div>
         <div class="osint-results" id="username-results">
-          <p class="osint-hint">Check username across 50+ platforms instantly</p>
+          <p class="osint-hint">Check username across 20+ platforms instantly</p>
         </div>
       </div>
       <div class="osint-card" id="osint-email">
@@ -273,7 +538,7 @@
       </div>
       <div class="osint-card" id="osint-breach">
         <div class="osint-card-header">
-          <span class="osint-icon">💀</span>
+          <span class="osint-icon">💥</span>
           <h3 class="osint-title">BREACH CHECK</h3>
         </div>
         <div class="osint-input-row">
@@ -298,7 +563,7 @@
     <div class="log-stream" id="log-stream">
       <div class="log-entry log-system">
         <span class="log-time" id="log-init-time"></span>
-        <span class="log-msg">IPNeon initialized. All systems nominal. Ready for input.</span>
+        <span class="log-msg">IPNeon initialized. All systems nominal. Fingerprint engine ready.</span>
       </div>
     </div>
   </section>
@@ -311,15 +576,16 @@
         <p class="about-desc">
           IPNeon is a professional cybersecurity intelligence suite built for security researchers,
           penetration testers, and OSINT investigators. Combining 20 proven IP tracking vectors
-          with real-time geolocation, threat analysis, and breach intelligence.
+          with real-time geolocation, threat analysis, browser fingerprinting, and breach intelligence.
         </p>
         <div class="about-features">
-          <div class="af-item"><span class="af-icon">⚡</span> Real-time IP geolocation</div>
+          <div class="af-item"><span class="af-icon">📍</span> Real-time IP geolocation</div>
           <div class="af-item"><span class="af-icon">🛡️</span> Threat score and VPN/Proxy/TOR detection</div>
+          <div class="af-item"><span class="af-icon">👁️</span> Deep client-side browser fingerprinting</div>
           <div class="af-item"><span class="af-icon">🔍</span> OSINT username and email lookup</div>
-          <div class="af-item"><span class="af-icon">💀</span> Data breach intelligence</div>
+          <div class="af-item"><span class="af-icon">💥</span> Data breach intelligence</div>
           <div class="af-item"><span class="af-icon">🔗</span> Custom link logger generator</div>
-          <div class="af-item"><span class="af-icon">🌍</span> Interactive map visualization</div>
+          <div class="af-item"><span class="af-icon">🗺️</span> Interactive map visualization</div>
         </div>
         <div class="about-disclaimer">
           <span>⚠️</span> For educational and authorized security testing purposes only.
@@ -327,7 +593,7 @@
       </div>
       <div class="about-stats-panel">
         <div class="astat"><span class="astat-num">20</span><span class="astat-label">Tracking Vectors</span></div>
-        <div class="astat"><span class="astat-num">∞</span><span class="astat-label">Scans</span></div>
+        <div class="astat"><span class="astat-num">10+</span><span class="astat-label">FP Signals</span></div>
         <div class="astat"><span class="astat-num">0</span><span class="astat-label">Rate Limits</span></div>
         <div class="astat"><span class="astat-num">100%</span><span class="astat-label">Client-Side</span></div>
       </div>
@@ -341,12 +607,13 @@
         <span class="logo-text">IP<span class="logo-accent">NEON</span></span>
         <span class="logo-bracket">]</span>
       </div>
-      <p class="footer-sub">Built by <a href="https://github.com/ramaneon" target="_blank" class="footer-link">ramaneon</a> · For educational and authorized use only</p>
+      <p class="footer-sub">Built by <a href="https://github.com/ramaneon" target="_blank" class="footer-link">ramaneon</a> &bull; For educational and authorized use only</p>
       <div class="footer-links">
         <a href="https://ramaneon.github.io/ipneon/" target="_blank" class="footer-link" id="footer-live">🌐 LIVE</a>
         <a href="https://github.com/ramaneon/ipneon" target="_blank" class="footer-link" id="footer-github">GitHub</a>
         <a href="#tools" class="footer-link">Tools</a>
         <a href="#tracker" class="footer-link">Tracker</a>
+        <a href="#fingerprint" class="footer-link">Fingerprint</a>
       </div>
     </div>
   </footer>
@@ -362,7 +629,7 @@
   </div>
 
   <div class="toast-container" id="toast-container"></div>
+  <script src="js/fingerprint.js"></script>
   <script src="js/app.js"></script>
 </body>
 </html>
-
