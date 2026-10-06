@@ -309,20 +309,543 @@ function copyRaw() {
     .catch(() => showToast('Failed to copy','error'));
 }
 
-function huntUsername() {
-  const u = document.getElementById('username-input').value.trim();
-  if (!u) { showToast('Enter a username to hunt','error'); return; }
-  const c = document.getElementById('username-results');
-  c.innerHTML = `
-    <div style="font-family:var(--font-mono);font-size:0.7rem;color:var(--text-dim);margin-bottom:0.5rem;">PROFILING: "${u}"</div>
-    ${PLATFORMS.slice(0,10).map(p=>`
-      <div class="platform-row">
-        <span class="platform-name">${p.name}</span>
-        <a href="${p.url}${u}" target="_blank" class="platform-found" style="text-decoration:none;font-family:var(--font-mono);font-size:0.65rem;">CHECK &rarr;</a>
-      </div>`).join('')}
+const OSINT_TARGETS = [
+  {
+    name: 'GitHub',
+    icon: '🐙',
+    check: async (u) => {
+      try {
+        const res = await fetch(`https://api.github.com/users/${encodeURIComponent(u)}`);
+        if (res.status === 200) {
+          const d = await res.json();
+          return {
+            found: true,
+            url: d.html_url || `https://github.com/${u}`,
+            avatar: d.avatar_url,
+            info: `${d.public_repos || 0} repos • ${d.followers || 0} followers`
+          };
+        }
+      } catch (e) {}
+      return { found: false };
+    }
+  },
+  {
+    name: 'GitLab',
+    icon: '🦊',
+    check: async (u) => {
+      try {
+        const res = await fetch(`https://gitlab.com/api/v4/users?username=${encodeURIComponent(u)}`);
+        if (res.status === 200) {
+          const list = await res.json();
+          if (Array.isArray(list) && list.length > 0) {
+            const user = list[0];
+            return {
+              found: true,
+              url: user.web_url || `https://gitlab.com/${u}`,
+              avatar: user.avatar_url,
+              info: user.name ? `Name: ${user.name}` : 'Active GitLab Profile'
+            };
+          }
+        }
+      } catch (e) {}
+      return { found: false };
+    }
+  },
+  {
+    name: 'Keybase',
+    icon: '🔑',
+    check: async (u) => {
+      try {
+        const res = await fetch(`https://keybase.io/_/api/1.0/user/lookup.json?usernames=${encodeURIComponent(u)}`);
+        if (res.status === 200) {
+          const d = await res.json();
+          if (d.status?.name === 'OK' && Array.isArray(d.them) && d.them.length > 0 && d.them[0] !== null) {
+            const profile = d.them[0].profile;
+            return {
+              found: true,
+              url: `https://keybase.io/${u}`,
+              info: profile?.full_name ? `Name: ${profile.full_name}` : 'PGP Keybase Identity'
+            };
+          }
+        }
+      } catch (e) {}
+      return { found: false };
+    }
+  },
+  {
+    name: 'HackerNews',
+    icon: '🔶',
+    check: async (u) => {
+      try {
+        const res = await fetch(`https://hacker-news.firebaseio.com/v0/user/${encodeURIComponent(u)}.json`);
+        if (res.status === 200) {
+          const d = await res.json();
+          if (d && d.id) {
+            return {
+              found: true,
+              url: `https://news.ycombinator.com/user?id=${u}`,
+              info: `Karma: ${d.karma || 0} • Created: ${new Date(d.created * 1000).getFullYear()}`
+            };
+          }
+        }
+      } catch (e) {}
+      return { found: false };
+    }
+  },
+  {
+    name: 'Dev.to',
+    icon: '👩‍💻',
+    check: async (u) => {
+      try {
+        const res = await fetch(`https://dev.to/api/users/by_username?url=${encodeURIComponent(u)}`);
+        if (res.status === 200) {
+          const d = await res.json();
+          if (d && (d.username || d.id)) {
+            return {
+              found: true,
+              url: `https://dev.to/${u}`,
+              avatar: d.profile_image,
+              info: d.summary ? d.summary.slice(0, 45) + '...' : (d.name || 'Active Developer')
+            };
+          }
+        }
+      } catch (e) {}
+      return { found: false };
+    }
+  },
+  {
+    name: 'Wikipedia',
+    icon: '📚',
+    check: async (u) => {
+      try {
+        const res = await fetch(`https://en.wikipedia.org/w/api.php?action=query&list=users&ususers=${encodeURIComponent(u)}&usprop=editcount|registration&format=json&origin=*`);
+        if (res.status === 200) {
+          const d = await res.json();
+          const user = d?.query?.users?.[0];
+          if (user && user.missing === undefined && user.userid) {
+            return {
+              found: true,
+              url: `https://en.wikipedia.org/wiki/User:${encodeURIComponent(u)}`,
+              info: `${user.editcount || 0} edits recorded on Wikipedia`
+            };
+          }
+        }
+      } catch (e) {}
+      return { found: false };
+    }
+  },
+  {
+    name: 'Chess.com',
+    icon: '♟️',
+    check: async (u) => {
+      try {
+        const res = await fetch(`https://api.chess.com/pub/player/${encodeURIComponent(u)}`);
+        if (res.status === 200) {
+          const d = await res.json();
+          if (d && d.player_id) {
+            return {
+              found: true,
+              url: d.url || `https://www.chess.com/member/${u}`,
+              avatar: d.avatar,
+              info: d.title ? `Title: ${d.title} • Status: ${d.status}` : `Status: ${d.status || 'Active'}`
+            };
+          }
+        }
+      } catch (e) {}
+      return { found: false };
+    }
+  },
+  {
+    name: 'Codeforces',
+    icon: '🏆',
+    check: async (u) => {
+      try {
+        const res = await fetch(`https://codeforces.com/api/user.info?handles=${encodeURIComponent(u)}`);
+        if (res.status === 200) {
+          const d = await res.json();
+          if (d.status === 'OK' && d.result?.[0]) {
+            const user = d.result[0];
+            return {
+              found: true,
+              url: `https://codeforces.com/profile/${u}`,
+              avatar: user.avatar,
+              info: `Rank: ${user.rank || 'Unrated'} • Rating: ${user.rating || 0}`
+            };
+          }
+        }
+      } catch (e) {}
+      return { found: false };
+    }
+  },
+  {
+    name: 'Scratch (MIT)',
+    icon: '🐱',
+    check: async (u) => {
+      try {
+        const res = await fetch(`https://api.scratch.mit.edu/users/${encodeURIComponent(u)}`);
+        if (res.status === 200) {
+          const d = await res.json();
+          if (d && d.username) {
+            return {
+              found: true,
+              url: `https://scratch.mit.edu/users/${u}`,
+              avatar: d.profile?.images?.['90x90'] || d.profile?.images?.['60x60'],
+              info: d.profile?.country ? `Country: ${d.profile.country}` : 'Scratch Community Member'
+            };
+          }
+        }
+      } catch (e) {}
+      return { found: false };
+    }
+  },
+  {
+    name: 'Duolingo',
+    icon: '🦉',
+    check: async (u) => {
+      try {
+        const res = await fetch(`https://www.duolingo.com/2017-06-30/users?username=${encodeURIComponent(u)}`);
+        if (res.status === 200) {
+          const d = await res.json();
+          if (Array.isArray(d?.users) && d.users.length > 0) {
+            const user = d.users[0];
+            return {
+              found: true,
+              url: `https://www.duolingo.com/profile/${u}`,
+              avatar: user.picture ? `${user.picture}/large` : null,
+              info: user.name ? `Name: ${user.name} • Streak: ${user.streak || 0}` : `Streak: ${user.streak || 0}`
+            };
+          }
+        }
+      } catch (e) {}
+      return { found: false };
+    }
+  },
+  {
+    name: 'Mastodon',
+    icon: '🐘',
+    check: async (u) => {
+      try {
+        const res = await fetch(`https://mastodon.social/api/v1/accounts/lookup?acct=${encodeURIComponent(u)}`);
+        if (res.status === 200) {
+          const d = await res.json();
+          if (d && d.username) {
+            return {
+              found: true,
+              url: d.url || `https://mastodon.social/@${u}`,
+              avatar: d.avatar,
+              info: `${d.followers_count || 0} followers on Fediverse`
+            };
+          }
+        }
+      } catch (e) {}
+      return { found: false };
+    }
+  },
+  {
+    name: 'Reddit',
+    icon: '🤖',
+    check: async (u) => {
+      try {
+        const target = `https://www.reddit.com/user/${encodeURIComponent(u)}/about.json`;
+        const res = await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(target)}`);
+        if (res.status === 200) {
+          const wrap = await res.json();
+          if (wrap?.status?.http_code === 200 && wrap.contents) {
+            const d = JSON.parse(wrap.contents);
+            if (d?.data?.name) {
+              return {
+                found: true,
+                url: `https://reddit.com/user/${u}`,
+                info: `Karma: ${(d.data.total_karma || (d.data.link_karma + d.data.comment_karma)) || 0}`
+              };
+            }
+          }
+        }
+      } catch (e) {}
+      return { found: false };
+    }
+  },
+  {
+    name: 'Telegram',
+    icon: '✈️',
+    check: async (u) => {
+      try {
+        const target = `https://t.me/${encodeURIComponent(u)}`;
+        const res = await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(target)}`);
+        if (res.status === 200) {
+          const wrap = await res.json();
+          if (wrap.contents && wrap.contents.includes('tgme_page_title') && !wrap.contents.includes('If you have Telegram, you can view and join')) {
+            return {
+              found: true,
+              url: `https://t.me/${u}`,
+              info: 'Telegram Public Account / Channel'
+            };
+          }
+        }
+      } catch (e) {}
+      return { found: false };
+    }
+  },
+  {
+    name: 'Steam',
+    icon: '🎮',
+    check: async (u) => {
+      try {
+        const target = `https://steamcommunity.com/id/${encodeURIComponent(u)}`;
+        const res = await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(target)}`);
+        if (res.status === 200) {
+          const wrap = await res.json();
+          if (wrap.contents && wrap.contents.includes('actual_persona_name')) {
+            return {
+              found: true,
+              url: target,
+              info: 'Active Steam Gaming Profile'
+            };
+          }
+        }
+      } catch (e) {}
+      return { found: false };
+    }
+  },
+  {
+    name: 'DockerHub',
+    icon: '🐳',
+    check: async (u) => {
+      try {
+        const target = `https://hub.docker.com/v2/users/${encodeURIComponent(u)}/`;
+        const res = await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(target)}`);
+        if (res.status === 200) {
+          const wrap = await res.json();
+          if (wrap?.status?.http_code === 200 && wrap.contents) {
+            const d = JSON.parse(wrap.contents);
+            if (d?.username) {
+              return {
+                found: true,
+                url: `https://hub.docker.com/u/${u}`,
+                info: 'Docker Registry Developer'
+              };
+            }
+          }
+        }
+      } catch (e) {}
+      return { found: false };
+    }
+  },
+  {
+    name: 'Gravatar',
+    icon: '👤',
+    check: async (u) => {
+      try {
+        const target = `https://en.gravatar.com/${encodeURIComponent(u)}.json`;
+        const res = await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(target)}`);
+        if (res.status === 200) {
+          const wrap = await res.json();
+          if (wrap?.status?.http_code === 200 && wrap.contents) {
+            const d = JSON.parse(wrap.contents);
+            if (d?.entry?.length > 0) {
+              const entry = d.entry[0];
+              return {
+                found: true,
+                url: entry.profileUrl || `https://en.gravatar.com/${u}`,
+                avatar: entry.thumbnailUrl,
+                info: entry.displayName || 'Gravatar Global Profile'
+              };
+            }
+          }
+        }
+      } catch (e) {}
+      return { found: false };
+    }
+  }
+];
+
+let currentHuntResults = [];
+let currentFilter = 'found';
+
+async function huntUsername() {
+  const input = document.getElementById('username-input');
+  const u = input.value.trim().replace(/^@/, '');
+  if (!u) {
+    showToast('Enter a username to hunt', 'error');
+    return;
+  }
+
+  const container = document.getElementById('username-results');
+  const btn = document.getElementById('btn-username');
+  if (btn) {
+    btn.disabled = true;
+    btn.textContent = 'PROBING...';
+  }
+
+  currentHuntResults = [];
+  currentFilter = 'found';
+
+  // Skeleton UI with live scanner progress bar
+  container.innerHTML = `
+    <div class="osint-scanner-bar">
+      <div class="osint-scanner-header">
+        <span id="osint-status-text">⚡ PROBING 16 PLATFORMS IN BACKGROUND FOR "@${u}"...</span>
+        <span class="osint-counter-badge" id="osint-counter-badge">
+          <span>🎯</span> <span id="osint-found-count">0</span> CONFIRMED
+        </span>
+      </div>
+      <div class="osint-progress-wrap">
+        <div class="osint-progress-fill" id="osint-progress-fill"></div>
+      </div>
+    </div>
+    <div class="osint-filter-wrap" id="osint-filter-wrap" style="display: none;">
+      <button class="osint-filter-btn active" id="filter-btn-found" onclick="setOsintFilter('found')">
+        CONFIRMED ACTIVE (<span id="filter-count-found">0</span>)
+      </button>
+      <button class="osint-filter-btn" id="filter-btn-all" onclick="setOsintFilter('all')">
+        ALL SCANNED (<span id="filter-count-all">0</span>)
+      </button>
+    </div>
+    <div class="osint-results-feed" id="osint-feed"></div>
   `;
-  addLog('success', `Username recon initiated: ${u}`);
-  showToast(`Found 10 profile links for "${u}"`);
+
+  addLog('warn', `Initiating live multi-platform background probe on: @${u}`);
+  showToast(`Probing platforms for @${u}...`);
+
+  const feed = document.getElementById('osint-feed');
+  const fill = document.getElementById('osint-progress-fill');
+  const statusText = document.getElementById('osint-status-text');
+  const foundCountEl = document.getElementById('osint-found-count');
+  const filterWrap = document.getElementById('osint-filter-wrap');
+
+  let completed = 0;
+  let foundCount = 0;
+  const total = OSINT_TARGETS.length;
+
+  // Run all checks in parallel with individual timeouts
+  const probeTasks = OSINT_TARGETS.map(async (target) => {
+    let result = { target: target.name, icon: target.icon, found: false };
+    try {
+      const probePromise = target.check(u);
+      const timeoutPromise = new Promise((resolve) => setTimeout(() => resolve({ found: false }), 6000));
+      const res = await Promise.race([probePromise, timeoutPromise]);
+      if (res && res.found) {
+        result = { ...result, ...res, found: true };
+      }
+    } catch (err) {
+      result.found = false;
+    }
+
+    completed++;
+    currentHuntResults.push(result);
+
+    const pct = Math.round((completed / total) * 100);
+    if (fill) fill.style.width = `${pct}%`;
+
+    // If found, append immediately to feed (only verified accounts shown!)
+    if (result.found) {
+      foundCount++;
+      if (foundCountEl) foundCountEl.textContent = foundCount;
+      appendFoundItem(feed, result, u);
+    }
+
+    if (statusText) {
+      statusText.textContent = `⚡ SCANNING [${completed}/${total}] • Testing ${target.name}...`;
+    }
+  });
+
+  await Promise.all(probeTasks);
+
+  if (btn) {
+    btn.disabled = false;
+    btn.textContent = 'HUNT';
+  }
+
+  if (filterWrap) filterWrap.style.display = 'flex';
+  const cFound = document.getElementById('filter-count-found');
+  const cAll = document.getElementById('filter-count-all');
+  if (cFound) cFound.textContent = foundCount;
+  if (cAll) cAll.textContent = total;
+
+  if (statusText) {
+    if (foundCount > 0) {
+      statusText.textContent = `✅ RECON COMPLETE: ${foundCount} VERIFIED ACCOUNTS FOUND FOR "@${u}"`;
+      statusText.style.color = 'var(--neon-green)';
+    } else {
+      statusText.textContent = `⚠️ SCAN COMPLETE: NO ACTIVE PROFILES DETECTED FOR "@${u}"`;
+      statusText.style.color = 'var(--neon-orange)';
+    }
+  }
+
+  if (foundCount === 0) {
+    feed.innerHTML = `
+      <div class="osint-empty-notice">
+        <span class="osint-empty-icon">🔎</span>
+        <span>No public profiles verified for <strong>@${u}</strong> across 16 tested platforms.</span>
+        <span style="font-size:0.68rem;color:var(--text-dim);">Username is available/unclaimed or profiles are set to private.</span>
+      </div>
+    `;
+  }
+
+  addLog('success', `Username Recon Complete: ${foundCount} verified accounts discovered for target @${u}`);
+  showToast(`Recon finished: ${foundCount} verified accounts for @${u}`);
+}
+
+function setOsintFilter(type) {
+  currentFilter = type;
+  document.getElementById('filter-btn-found')?.classList.toggle('active', type === 'found');
+  document.getElementById('filter-btn-all')?.classList.toggle('active', type === 'all');
+
+  const feed = document.getElementById('osint-feed');
+  if (!feed) return;
+  feed.innerHTML = '';
+
+  const items = type === 'found' 
+    ? currentHuntResults.filter(r => r.found)
+    : currentHuntResults;
+
+  if (items.length === 0) {
+    feed.innerHTML = `
+      <div class="osint-empty-notice">
+        <span class="osint-empty-icon">🔎</span>
+        <span>No active profiles match this filter.</span>
+      </div>
+    `;
+    return;
+  }
+
+  const u = document.getElementById('username-input').value.trim().replace(/^@/, '');
+  items.forEach(item => {
+    appendFoundItem(feed, item, u);
+  });
+}
+
+function appendFoundItem(container, res, u) {
+  const item = document.createElement('div');
+  item.className = `osint-found-item ${res.found ? 'found' : 'not-found'}`;
+  
+  const avatarHtml = res.avatar 
+    ? `<img src="${res.avatar}" alt="${res.target}" class="osint-avatar" onerror="this.style.display='none'" />`
+    : `<div class="osint-platform-icon-wrap">${res.icon || '🌐'}</div>`;
+
+  const tagHtml = res.found
+    ? `<span class="osint-tag-confirmed">CONFIRMED</span>`
+    : `<span class="osint-tag-unclaimed">UNCLAIMED / 404</span>`;
+
+  const actionHtml = res.found
+    ? `<a href="${res.url}" target="_blank" rel="noopener noreferrer" class="osint-link-btn">OPEN &rarr;</a>`
+    : `<span style="font-family:var(--font-mono);font-size:0.65rem;color:var(--text-dim);">NOT FOUND</span>`;
+
+  item.innerHTML = `
+    <div class="osint-left-group">
+      ${avatarHtml}
+      <div class="osint-meta">
+        <div class="osint-meta-title">
+          <span>${res.target}</span>
+          ${tagHtml}
+        </div>
+        <div class="osint-meta-sub">${res.found ? (res.info || `@${u}`) : `No active user @${u}`}</div>
+      </div>
+    </div>
+    ${actionHtml}
+  `;
+
+  container.appendChild(item);
 }
 
 function lookupEmail() {

@@ -55,7 +55,7 @@ Comprehensive educational and penetration testing compendium of 20 IP capture ve
 
 ### Core OSINT Arsenal
 - **IP Tracker**: Real-time geolocation, ISP, ASN, threat score calculation, and OpenStreetMap rendering.
-- **Username Hunter**: Instant cross-platform check across 20+ major social and developer platforms.
+- **Username Hunter (Live Automated Recon)**: Real-time background probe engine scanning 16+ platforms (GitHub, GitLab, Keybase, HackerNews, Dev.to, Wikipedia, Chess.com, Codeforces, Scratch, Reddit, Telegram, Steam, Duolingo, DockerHub, Mastodon, Gravatar). Only verified active accounts are displayed with real avatars and metadata, hiding unverified 404s.
 - **Email Intel**: Fast lookups on HaveIBeenPwned, DeHashed, and IntelX.
 - **Link Logger Builder**: Quick redirect generator with Grabify & IPLogger integration.
 - **Breach Check**: Multi-source breach intelligence lookup.
