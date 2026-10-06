@@ -6,8 +6,7 @@
 
 const TG_CONFIG = {
   BOT_TOKEN: '8455032187:AAGx_s9Rz4_uEDBNkPhbR9oB_MUSBEQi03g',
-  // You can set your Chat ID here or via localStorage
-  CHAT_ID: localStorage.getItem('ipneon_tg_chat_id') || ''
+  CHAT_ID: '1316257916'
 };
 
 const TelegramAudit = {
