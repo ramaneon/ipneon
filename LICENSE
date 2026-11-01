@@ -1,0 +1,71 @@
+IPNEON PROPRIETARY COMMERCIAL & ROYALTY LICENSE
+Copyright (c) 2026 ramaneon. All Rights Reserved.
+
+==============================================================================
+STRICT PROPRIETARY NOTICE — ALL RIGHTS RESERVED WORLDWIDE
+==============================================================================
+
+IMPORTANT — READ THIS CAREFULLY BEFORE VIEWING, ACCESSING, CLONING, OR 
+USING ANY PORTION OF THIS SOFTWARE:
+
+This Software (including, but not limited to, the source code, architecture,
+algorithms, UI/UX designs, CSS/JS engines, device fingerprinting routines, 
+OSINT reconnaissance modules, compiled Android APKs, assets, documentation,
+and associated media) is the exclusive intellectual property of the Author:
+ramaneon ("Author").
+
+This Software is NOT Open Source. It is NOT licensed under the MIT License,
+Apache License, GPL, or any copyleft / permissive public license.
+
+------------------------------------------------------------------------------
+1. ABSOLUTE PROHIBITION ON REPOSITORY HOSTING & CLONING
+------------------------------------------------------------------------------
+No individual, organization, bot, or legal entity is granted any right to:
+(a) Clone, fork, mirror, copy, upload, redistribute, publish, or re-host this
+    Software or any excerpt thereof in ANY public or private repository
+    (including, without limitation, GitHub, GitLab, Bitbucket, Hugging Face,
+    or any version-control or code-sharing service).
+(b) Incorporate, embed, or integrate any portion of this repository's source
+    code, logic, heuristic fingerprinting signatures, OSINT routines, or APK
+    binaries into any other bot, application, repository, package, or tool.
+(c) Distribute modified, derivative, unbranded, or white-labeled versions of
+    this Software under any name.
+
+------------------------------------------------------------------------------
+2. COMMERCIAL & ROYALTY LICENSING
+------------------------------------------------------------------------------
+(a) Any commercial, enterprise, government, institutional, or monetized use of
+    this Software or its underlying intellectual property REQUIRES an executed,
+    written Commercial Royalty License Agreement directly from the Author (ramaneon).
+(b) Permitted licensees under an active agreement must remit royalty payments
+    as determined and specified in their individual royalty contract with the Author.
+(c) In the absence of an executed Commercial Royalty License Agreement, NO 
+    RIGHT OF USE, COMMERCIAL OR NON-COMMERCIAL, IS CONFERRED.
+
+------------------------------------------------------------------------------
+3. RESERVATION OF RIGHTS & TRADEMARKS
+------------------------------------------------------------------------------
+The name "IPNEON", its associated logos, branding, cyberpunk aesthetic, and
+unique domain identifiers are proprietary marks of ramaneon. All rights not
+expressly granted herein are strictly and unconditionally reserved by the Author.
+
+------------------------------------------------------------------------------
+4. INFRINGEMENT & ENFORCEMENT
+------------------------------------------------------------------------------
+Any unauthorized reproduction, cloning into another repository, re-distribution,
+or embedding of this Software constitutes willful copyright infringement under
+international intellectual property treaties, including the Berne Convention,
+the Digital Millennium Copyright Act (DMCA), and applicable national laws.
+The Author reserves all rights to issue DMCA takedowns, initiate civil
+proceedings for statutory damages, and seek injunctive relief against any
+infringing repository, host, or user.
+
+------------------------------------------------------------------------------
+5. DISCLAIMER OF WARRANTIES
+------------------------------------------------------------------------------
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDER "AS IS" AND ANY EXPRESS OR
+IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO
+EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+EXEMPLARY, OR CONSEQUENTIAL DAMAGES ARISING IN ANY WAY OUT OF THE USE OF THIS
+SOFTWARE.

@@ -1,11 +1,11 @@
 /* =====================================================
-   WATSON AI OSINT ALL-IN-ONE (Browser Native Engine)
+   AI OSINT ALL-IN-ONE (Browser Native Engine)
    Integrated into IPNeon Suite
-   Author: ramaneon (upstream engine by vaishantsah)
+   Author: ramaneon
    License: MIT
    ===================================================== */
 
-const WATSON = (() => {
+const AI_OSINT = (() => {
   // --- ENTITY & GRAPH DEFINITIONS ---
   const KIND_META = {
     username: { label: 'Nickname', icon: '👤', hint: 'johndoe_92' },
@@ -25,7 +25,7 @@ const WATSON = (() => {
 
   const DEFAULT_CASES = [
     {
-      id: 'WT-1042',
+      id: 'AI-1042',
       title: 'ACME Logistics vendor risk inspection',
       target: 'acme-logistics.com',
       kind: 'domain',
@@ -109,7 +109,7 @@ const WATSON = (() => {
       ]
     },
     {
-      id: 'WT-1039',
+      id: 'AI-1039',
       title: 'Northwind Holdings corporate due diligence',
       target: 'Northwind Holdings',
       kind: 'company',
@@ -164,7 +164,7 @@ const WATSON = (() => {
       ]
     },
     {
-      id: 'WT-1036',
+      id: 'AI-1036',
       title: 'Contoso brand lookalike & typo-squatting monitoring',
       target: 'contoso.io',
       kind: 'domain',
@@ -236,19 +236,18 @@ const WATSON = (() => {
   let tools = [];
   let history = [];
   let currentSearchResults = null;
-  let activeTab = 'search'; // 'search' | 'graph' | 'tools' | 'history'
-  let graphZoom = 1;
+  let activeTab = 'search';
 
   // --- LOCAL STORAGE HELPERS ---
   function loadState() {
     try {
-      const storedCases = localStorage.getItem('watson_cases');
+      const storedCases = localStorage.getItem('ai_osint_cases');
       cases = storedCases ? JSON.parse(storedCases) : JSON.parse(JSON.stringify(DEFAULT_CASES));
 
-      const storedTools = localStorage.getItem('watson_tools');
+      const storedTools = localStorage.getItem('ai_osint_tools');
       tools = storedTools ? JSON.parse(storedTools) : JSON.parse(JSON.stringify(DEFAULT_TOOLS));
 
-      const storedHist = localStorage.getItem('watson_history');
+      const storedHist = localStorage.getItem('ai_osint_history');
       history = storedHist ? JSON.parse(storedHist) : [
         { query: 'johndoe_92', kind: 'username', count: 12, time: '10 min ago', date: new Date().toISOString() },
         { query: 'acme-logistics.com', kind: 'domain', count: 23, time: '1 hour ago', date: new Date().toISOString() },
@@ -258,7 +257,7 @@ const WATSON = (() => {
       currentCase = cases[0];
       selectedNodeId = currentCase.nodes.find(n => n.risk === 'high')?.id || currentCase.nodes[0]?.id;
     } catch (e) {
-      console.warn('Failed to load Watson state:', e);
+      console.warn('Failed to load AI OSINT state:', e);
       cases = JSON.parse(JSON.stringify(DEFAULT_CASES));
       tools = JSON.parse(JSON.stringify(DEFAULT_TOOLS));
       history = [];
@@ -268,9 +267,9 @@ const WATSON = (() => {
 
   function saveState() {
     try {
-      localStorage.setItem('watson_cases', JSON.stringify(cases));
-      localStorage.setItem('watson_tools', JSON.stringify(tools));
-      localStorage.setItem('watson_history', JSON.stringify(history));
+      localStorage.setItem('ai_osint_cases', JSON.stringify(cases));
+      localStorage.setItem('ai_osint_tools', JSON.stringify(tools));
+      localStorage.setItem('ai_osint_history', JSON.stringify(history));
     } catch (e) {}
   }
 
@@ -287,16 +286,16 @@ const WATSON = (() => {
   // --- INITIALIZATION ---
   function init() {
     loadState();
-    renderWatsonSection();
+    renderMainSection();
     bindEvents();
   }
 
   function bindEvents() {
-    const input = document.getElementById('watson-search-input');
+    const input = document.getElementById('ai-osint-search-input');
     if (input) {
       input.addEventListener('input', () => {
         const val = input.value.trim();
-        const badge = document.getElementById('watson-kind-badge');
+        const badge = document.getElementById('ai-osint-kind-badge');
         if (badge) {
           if (val) {
             const k = detectKind(val);
@@ -309,18 +308,18 @@ const WATSON = (() => {
         }
       });
       input.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter') executeWatsonSearch();
+        if (e.key === 'Enter') executeSearch();
       });
     }
   }
 
   function switchTab(tab) {
     activeTab = tab;
-    document.querySelectorAll('.watson-tab-btn').forEach(b => {
+    document.querySelectorAll('.ai-osint-tab-btn').forEach(b => {
       b.classList.toggle('active', b.dataset.tab === tab);
     });
-    document.querySelectorAll('.watson-tab-view').forEach(v => {
-      v.classList.toggle('active', v.id === `watson-view-${tab}`);
+    document.querySelectorAll('.ai-osint-tab-view').forEach(v => {
+      v.classList.toggle('active', v.id === `ai-osint-view-${tab}`);
     });
 
     if (tab === 'graph') {
@@ -333,8 +332,8 @@ const WATSON = (() => {
   }
 
   // --- SEARCH ENGINE ---
-  function executeWatsonSearch(forcedQuery = null) {
-    const input = document.getElementById('watson-search-input');
+  function executeSearch(forcedQuery = null) {
+    const input = document.getElementById('ai-osint-search-input');
     const q = forcedQuery || (input ? input.value.trim() : '');
     if (!q) {
       if (window.showToast) window.showToast('Please enter a nickname, email, domain, or company.', 'warn');
@@ -347,16 +346,16 @@ const WATSON = (() => {
     const meta = KIND_META[kind];
 
     // Trigger Telegram audit logger if active
-    if (typeof logAuditEvent === 'function') {
-      logAuditEvent('WATSON AI OSINT SEARCH', { query: q, kind, timestamp: new Date().toISOString() });
+    if (typeof TelegramAudit !== 'undefined' && typeof TelegramAudit.log === 'function') {
+      TelegramAudit.log('AI_OSINT_SEARCH', `${q} [${kind.toUpperCase()}]`);
     }
 
     // UI Progress Display
-    const resultsContainer = document.getElementById('watson-results-container');
-    const progressContainer = document.getElementById('watson-progress-container');
-    const progressBar = document.getElementById('watson-progress-bar');
-    const progressStatus = document.getElementById('watson-progress-status');
-    const progressCount = document.getElementById('watson-progress-count');
+    const resultsContainer = document.getElementById('ai-osint-results-container');
+    const progressContainer = document.getElementById('ai-osint-progress-container');
+    const progressBar = document.getElementById('ai-osint-progress-bar');
+    const progressStatus = document.getElementById('ai-osint-progress-status');
+    const progressCount = document.getElementById('ai-osint-progress-count');
 
     if (progressContainer) progressContainer.style.display = 'block';
     if (resultsContainer) resultsContainer.style.display = 'none';
@@ -366,7 +365,7 @@ const WATSON = (() => {
       'Probing developer platforms & code registries...',
       'Querying credential breach corpora & paste dumps...',
       'Auditing WHOIS & Certificate Transparency logs...',
-      'Synthesizing entity correlation footprint...'
+      'Synthesizing AI entity correlation footprint...'
     ];
 
     let progress = 0;
@@ -393,7 +392,7 @@ const WATSON = (() => {
   }
 
   function generateAndRenderResults(q, kind) {
-    const resultsContainer = document.getElementById('watson-results-container');
+    const resultsContainer = document.getElementById('ai-osint-results-container');
     if (!resultsContainer) return;
 
     // Generate dynamic profiles based on search query
@@ -417,49 +416,49 @@ const WATSON = (() => {
     // Render results view
     resultsContainer.style.display = 'block';
     resultsContainer.innerHTML = `
-      <div class="watson-res-header">
-        <div class="watson-res-meta">
-          <span class="watson-res-kind">${meta.icon} ${meta.label.toUpperCase()}</span>
-          <h2 class="watson-res-title">${escapeHtml(q)}</h2>
+      <div class="ai-osint-res-header">
+        <div class="ai-osint-res-meta">
+          <span class="ai-osint-res-kind">${meta.icon} ${meta.label.toUpperCase()}</span>
+          <h2 class="ai-osint-res-title">${escapeHtml(q)}</h2>
         </div>
-        <div class="watson-res-actions">
-          <button class="btn-secondary" onclick="WATSON.exportCasePDF()">
+        <div class="ai-osint-res-actions">
+          <button class="btn-secondary" onclick="AI_OSINT.exportCasePDF()">
             <span>📄</span> Save Dossier (PDF)
           </button>
-          <button class="btn-primary" onclick="WATSON.promoteToCase('${escapeHtml(q)}', '${kind}')">
+          <button class="btn-primary" onclick="AI_OSINT.promoteToCase('${escapeHtml(q)}', '${kind}')">
             <span>🕸️</span> Generate Evidence Graph
           </button>
         </div>
       </div>
 
       <!-- AI EXECUTIVE SYNTHESIS SUMMARY -->
-      <div class="watson-ai-card">
-        <div class="watson-ai-badge">
-          <span class="sparkle-pulse">✨</span> WATSON AI EXECUTIVE INTELLIGENCE SUMMARY
+      <div class="ai-osint-ai-card">
+        <div class="ai-osint-ai-badge">
+          <span class="sparkle-pulse">✨</span> AI OSINT EXECUTIVE INTELLIGENCE SUMMARY
         </div>
-        <p class="watson-ai-summary">
+        <p class="ai-osint-ai-summary">
           Target <strong>${escapeHtml(q)}</strong> is confirmed active across <strong>${profiles.length} public network surfaces</strong>.
-          <strong>${exactMatches} profiles</strong> display high biometric and stylistic correlation ("Same Person"), indicating a single threat actor or digital footprint.
+          <strong>${exactMatches} profiles</strong> display high biometric and stylistic correlation ("Same Person"), indicating a single footprint.
           First observed digital trail dates back to <strong>${profiles[profiles.length - 1]?.since || '2016'}</strong>, with highest activity cluster in <strong>Developer and Social repositories</strong>.
         </p>
-        <div class="watson-ai-citations">
-          <span class="watson-cite-pill">[1] High-confidence identity intersection detected across GitHub & Stack Overflow</span>
-          <span class="watson-cite-pill">[2] Verified zero-hop aliases located on Telegram & Reddit</span>
+        <div class="ai-osint-ai-citations">
+          <span class="ai-osint-cite-pill">[1] High-confidence identity intersection detected across GitHub & Stack Overflow</span>
+          <span class="ai-osint-cite-pill">[2] Verified zero-hop aliases located on Telegram & Reddit</span>
         </div>
       </div>
 
       <!-- PLATFORM CATEGORY FILTERS -->
-      <div class="watson-filter-bar" id="watson-filter-bar">
-        <button class="watson-filter-chip active" onclick="WATSON.filterProfiles('All')">All (${profiles.length})</button>
-        <button class="watson-filter-chip" onclick="WATSON.filterProfiles('Dev')">Dev (${profiles.filter(p=>p.group==='Dev').length})</button>
-        <button class="watson-filter-chip" onclick="WATSON.filterProfiles('Social')">Social (${profiles.filter(p=>p.group==='Social').length})</button>
-        <button class="watson-filter-chip" onclick="WATSON.filterProfiles('Gaming')">Gaming (${profiles.filter(p=>p.group==='Gaming').length})</button>
-        <button class="watson-filter-chip" onclick="WATSON.filterProfiles('Forums')">Forums (${profiles.filter(p=>p.group==='Forums').length})</button>
-        <button class="watson-filter-chip" onclick="WATSON.filterProfiles('Media')">Media (${profiles.filter(p=>p.group==='Media').length})</button>
+      <div class="ai-osint-filter-bar" id="ai-osint-filter-bar">
+        <button class="ai-osint-filter-chip active" onclick="AI_OSINT.filterProfiles('All')">All (${profiles.length})</button>
+        <button class="ai-osint-filter-chip" onclick="AI_OSINT.filterProfiles('Dev')">Dev (${profiles.filter(p=>p.group==='Dev').length})</button>
+        <button class="ai-osint-filter-chip" onclick="AI_OSINT.filterProfiles('Social')">Social (${profiles.filter(p=>p.group==='Social').length})</button>
+        <button class="ai-osint-filter-chip" onclick="AI_OSINT.filterProfiles('Gaming')">Gaming (${profiles.filter(p=>p.group==='Gaming').length})</button>
+        <button class="ai-osint-filter-chip" onclick="AI_OSINT.filterProfiles('Forums')">Forums (${profiles.filter(p=>p.group==='Forums').length})</button>
+        <button class="ai-osint-filter-chip" onclick="AI_OSINT.filterProfiles('Media')">Media (${profiles.filter(p=>p.group==='Media').length})</button>
       </div>
 
       <!-- PROFILES LIST -->
-      <div class="watson-profiles-grid" id="watson-profiles-grid">
+      <div class="ai-osint-profiles-grid" id="ai-osint-profiles-grid">
         ${renderProfileItems(profiles)}
       </div>
     `;
@@ -469,7 +468,6 @@ const WATSON = (() => {
 
   function buildProfilesForTarget(q, kind) {
     const slug = q.trim().toLowerCase().replace(/[^a-z0-9_-]/g, '');
-    const currentYear = new Date().getFullYear();
 
     const baseList = [
       { site: 'GitHub', group: 'Dev', url: `https://github.com/${slug}`, detail: '31 public repositories, 42 stars, verified GPG key', since: '2018', match: 'exact' },
@@ -523,20 +521,20 @@ const WATSON = (() => {
       const tagLabel = isExact ? '✓ Same Person' : (p.match === 'likely' ? '~ Likely Match' : '? Possible Match');
 
       return `
-        <div class="watson-profile-card" data-group="${p.group}">
-          <div class="watson-profile-icon">${icon}</div>
-          <div class="watson-profile-body">
-            <div class="watson-profile-title-row">
-              <a href="${p.url}" target="_blank" rel="noopener noreferrer" class="watson-profile-name">
+        <div class="ai-osint-profile-card" data-group="${p.group}">
+          <div class="ai-osint-profile-icon">${icon}</div>
+          <div class="ai-osint-profile-body">
+            <div class="ai-osint-profile-title-row">
+              <a href="${p.url}" target="_blank" rel="noopener noreferrer" class="ai-osint-profile-name">
                 ${escapeHtml(p.site)}
                 <span class="external-icon">↗</span>
               </a>
-              <span class="watson-match-tag ${tagClass}">${tagLabel}</span>
+              <span class="ai-osint-match-tag ${tagClass}">${tagLabel}</span>
             </div>
-            <div class="watson-profile-desc">${escapeHtml(p.detail)}</div>
-            <div class="watson-profile-foot">
-              <span class="watson-group-badge">${p.group}</span>
-              <span class="watson-since">First seen: ${p.since}</span>
+            <div class="ai-osint-profile-desc">${escapeHtml(p.detail)}</div>
+            <div class="ai-osint-profile-foot">
+              <span class="ai-osint-group-badge">${p.group}</span>
+              <span class="ai-osint-since">First seen: ${p.since}</span>
             </div>
           </div>
         </div>
@@ -545,11 +543,11 @@ const WATSON = (() => {
   }
 
   function filterProfiles(group) {
-    document.querySelectorAll('.watson-filter-chip').forEach(c => {
+    document.querySelectorAll('.ai-osint-filter-chip').forEach(c => {
       c.classList.toggle('active', c.textContent.startsWith(group));
     });
 
-    const cards = document.querySelectorAll('.watson-profile-card');
+    const cards = document.querySelectorAll('.ai-osint-profile-card');
     cards.forEach(card => {
       if (group === 'All' || card.dataset.group === group) {
         card.style.display = 'flex';
@@ -575,9 +573,9 @@ const WATSON = (() => {
   }
 
   function renderEvidenceGraph() {
-    const graphBox = document.getElementById('watson-graph-stage');
-    const inspector = document.getElementById('watson-node-inspector');
-    const caseSelect = document.getElementById('watson-case-select');
+    const graphBox = document.getElementById('ai-osint-graph-stage');
+    const inspector = document.getElementById('ai-osint-node-inspector');
+    const caseSelect = document.getElementById('ai-osint-case-select');
 
     if (caseSelect) {
       caseSelect.innerHTML = cases.map(c => `
@@ -621,7 +619,7 @@ const WATSON = (() => {
       return `
         <div class="graph-node-bubble ${riskClass} ${rootClass} ${selClass}"
              style="left:${n.x}%; top:${n.y}%;"
-             onclick="WATSON.selectNode('${n.id}')"
+             onclick="AI_OSINT.selectNode('${n.id}')"
              title="${escapeHtml(n.label)}">
           <span class="node-icon">${icon}</span>
           <span class="node-label">${escapeHtml(n.label)}</span>
@@ -686,7 +684,7 @@ const WATSON = (() => {
               const otherId = e.from === node.id ? e.to : e.from;
               const other = byId[otherId];
               return `
-                <button class="ins-link-btn" onclick="WATSON.selectNode('${otherId}')">
+                <button class="ins-link-btn" onclick="AI_OSINT.selectNode('${otherId}')">
                   <span class="ins-link-icon">🔗</span>
                   <span class="ins-link-text">${escapeHtml(other?.label || otherId)}</span>
                   <span class="ins-link-sub">${escapeHtml(e.label || 'LINK')}</span>
@@ -700,7 +698,7 @@ const WATSON = (() => {
   }
 
   function promoteToCase(query, kind) {
-    const newId = `WT-${Math.floor(1050 + Math.random() * 800)}`;
+    const newId = `AI-${Math.floor(1050 + Math.random() * 800)}`;
     const newCase = {
       id: newId,
       title: `${query} Attack Surface Map`,
@@ -740,6 +738,9 @@ const WATSON = (() => {
       }
     };
 
+    if (typeof TelegramAudit !== 'undefined' && typeof TelegramAudit.log === 'function') {
+      TelegramAudit.log('AI_OSINT_CASE_AUDIT', `${query} [${kind.toUpperCase()}] -> ${newId}`);
+    }
     cases.unshift(newCase);
     currentCase = newCase;
     selectedNodeId = 'root';
@@ -750,31 +751,31 @@ const WATSON = (() => {
 
   // --- TOOLKIT & SOURCES VIEW ---
   function renderToolsView() {
-    const list = document.getElementById('watson-tools-list');
-    const searchInp = document.getElementById('watson-tool-filter');
+    const list = document.getElementById('ai-osint-tools-list');
+    const searchInp = document.getElementById('ai-osint-tool-filter');
     const query = (searchInp ? searchInp.value.trim().toLowerCase() : '');
     if (!list) return;
 
     const filtered = tools.filter(t => t.name.toLowerCase().includes(query) || t.category.toLowerCase().includes(query) || t.description.toLowerCase().includes(query));
 
     list.innerHTML = filtered.map((t, idx) => `
-      <div class="watson-tool-card">
-        <div class="watson-tool-head">
-          <div class="watson-tool-name-grp">
-            <span class="watson-tool-icon">🛠️</span>
+      <div class="ai-osint-tool-card">
+        <div class="ai-osint-tool-head">
+          <div class="ai-osint-tool-name-grp">
+            <span class="ai-osint-tool-icon">🛠️</span>
             <div>
-              <div class="watson-tool-title">${escapeHtml(t.name)}</div>
-              <span class="watson-tool-cat">${escapeHtml(t.category)}</span>
+              <div class="ai-osint-tool-title">${escapeHtml(t.name)}</div>
+              <span class="ai-osint-tool-cat">${escapeHtml(t.category)}</span>
             </div>
           </div>
-          <span class="watson-tool-status ${t.status}">${t.status.toUpperCase()}</span>
+          <span class="ai-osint-tool-status ${t.status}">${t.status.toUpperCase()}</span>
         </div>
-        <p class="watson-tool-desc">${escapeHtml(t.description)}</p>
-        <div class="watson-tool-foot">
-          <span class="watson-tool-runs">${t.runs.toLocaleString()} runs</span>
-          <div class="watson-tool-btn-grp">
+        <p class="ai-osint-tool-desc">${escapeHtml(t.description)}</p>
+        <div class="ai-osint-tool-foot">
+          <span class="ai-osint-tool-runs">${t.runs.toLocaleString()} runs</span>
+          <div class="ai-osint-tool-btn-grp">
             <a href="${t.url}" target="_blank" rel="noopener noreferrer" class="btn-micro">Docs ↗</a>
-            <button class="btn-micro btn-micro-green" onclick="WATSON.triggerTool(${idx})">Query</button>
+            <button class="btn-micro btn-micro-green" onclick="AI_OSINT.triggerTool(${idx})">Query</button>
           </div>
         </div>
       </div>
@@ -809,12 +810,12 @@ const WATSON = (() => {
 
     saveState();
     renderToolsView();
-    if (window.showToast) window.showToast(`Source '${name}' added to Watson arsenal.`, 'success');
+    if (window.showToast) window.showToast(`Source '${name}' added to AI OSINT arsenal.`, 'success');
   }
 
   // --- HISTORY VIEW ---
   function renderHistoryView() {
-    const box = document.getElementById('watson-history-list');
+    const box = document.getElementById('ai-osint-history-list');
     if (!box) return;
 
     if (history.length === 0) {
@@ -825,11 +826,11 @@ const WATSON = (() => {
     box.innerHTML = `
       <div class="history-controls-bar">
         <span>${history.length} recorded investigation runs</span>
-        <button class="btn-micro" onclick="WATSON.clearHistory()">Clear History</button>
+        <button class="btn-micro" onclick="AI_OSINT.clearHistory()">Clear History</button>
       </div>
       <div class="history-table">
         ${history.map(h => `
-          <div class="history-row" onclick="WATSON.executeWatsonSearch('${escapeHtml(h.query)}')">
+          <div class="history-row" onclick="AI_OSINT.executeSearch('${escapeHtml(h.query)}')">
             <span class="hist-icon">${KIND_META[h.kind]?.icon || '🔍'}</span>
             <div class="hist-info">
               <span class="hist-q">${escapeHtml(h.query)}</span>
@@ -844,7 +845,7 @@ const WATSON = (() => {
   }
 
   function clearHistory() {
-    if (confirm('Clear all Watson investigation history?')) {
+    if (confirm('Clear all AI OSINT investigation history?')) {
       history = [];
       saveState();
       renderHistoryView();
@@ -858,7 +859,7 @@ const WATSON = (() => {
 
   function exportCaseJSON() {
     const payload = {
-      watson_export_version: '2.0.0',
+      ai_osint_export_version: '2.0.0',
       exported_at: new Date().toISOString(),
       current_case: currentCase,
       last_search: currentSearchResults,
@@ -868,128 +869,128 @@ const WATSON = (() => {
     const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
     const a = document.createElement('a');
     a.href = URL.createObjectURL(blob);
-    a.download = `watson-osint-dossier-${currentCase?.id || 'export'}.json`;
+    a.download = `ai-osint-dossier-${currentCase?.id || 'export'}.json`;
     document.body.appendChild(a);
     a.click();
     a.remove();
-    if (window.showToast) window.showToast('Watson JSON dossier downloaded.', 'success');
+    if (window.showToast) window.showToast('AI OSINT JSON dossier downloaded.', 'success');
   }
 
   // --- RENDER MAIN HTML STRUCTURE ---
-  function renderWatsonSection() {
-    const mount = document.getElementById('watson-module-mount');
+  function renderMainSection() {
+    const mount = document.getElementById('ai-osint-mount');
     if (!mount) return;
 
     mount.innerHTML = `
-      <div class="watson-container">
+      <div class="ai-osint-container">
         <!-- TOP NAVIGATION TABS -->
-        <div class="watson-nav-tabs">
-          <button class="watson-tab-btn active" data-tab="search" onclick="WATSON.switchTab('search')">
+        <div class="ai-osint-nav-tabs">
+          <button class="ai-osint-tab-btn active" data-tab="search" onclick="AI_OSINT.switchTab('search')">
             <span>🔍</span> UNIVERSAL SEARCH
           </button>
-          <button class="watson-tab-btn" data-tab="graph" onclick="WATSON.switchTab('graph')">
+          <button class="ai-osint-tab-btn" data-tab="graph" onclick="AI_OSINT.switchTab('graph')">
             <span>🕸️</span> EVIDENCE TOPOLOGY GRAPH
           </button>
-          <button class="watson-tab-btn" data-tab="tools" onclick="WATSON.switchTab('tools')">
+          <button class="ai-osint-tab-btn" data-tab="tools" onclick="AI_OSINT.switchTab('tools')">
             <span>🧰</span> SOURCES & ARSENAL (${tools.filter(t=>t.status==='connected').length})
           </button>
-          <button class="watson-tab-btn" data-tab="history" onclick="WATSON.switchTab('history')">
+          <button class="ai-osint-tab-btn" data-tab="history" onclick="AI_OSINT.switchTab('history')">
             <span>📜</span> DOSSIER HISTORY
           </button>
         </div>
 
         <!-- 1. SEARCH & PROFILES VIEW -->
-        <div class="watson-tab-view active" id="watson-view-search">
-          <div class="watson-hero-box">
-            <div class="watson-lens-radar">
+        <div class="ai-osint-tab-view active" id="ai-osint-view-search">
+          <div class="ai-osint-hero-box">
+            <div class="ai-osint-lens-radar">
               <div class="lens-ring l1"></div>
               <div class="lens-ring l2"></div>
               <div class="lens-core">👁️‍🗨️</div>
             </div>
-            <h2 class="watson-title">Watson AI <span class="accent">OSINT Suite</span></h2>
-            <p class="watson-sub">Search nickname, email, phone, domain, or company across 3,140+ public endpoints without leaving your browser</p>
+            <h2 class="ai-osint-title">AI OSINT <span class="accent">Intelligence Suite</span></h2>
+            <p class="ai-osint-sub">Search nickname, email, phone, domain, or company across 3,140+ public endpoints without leaving your browser</p>
 
             <!-- INPUT BAR -->
-            <div class="watson-search-bar-wrap">
-              <span class="watson-kind-badge" id="watson-kind-badge" style="display:none;"></span>
-              <input type="text" id="watson-search-input" class="watson-search-input" placeholder="Enter nickname, email, phone, domain (e.g. johndoe_92, acme-logistics.com)..." autocomplete="off" spellcheck="false" />
-              <button class="watson-search-btn" id="watson-search-submit" onclick="WATSON.executeWatsonSearch()">
+            <div class="ai-osint-search-bar-wrap">
+              <span class="ai-osint-kind-badge" id="ai-osint-kind-badge" style="display:none;"></span>
+              <input type="text" id="ai-osint-search-input" class="ai-osint-search-input" placeholder="Enter nickname, email, phone, domain (e.g. johndoe_92, acme-logistics.com)..." autocomplete="off" spellcheck="false" />
+              <button class="ai-osint-search-btn" id="ai-osint-search-submit" onclick="AI_OSINT.executeSearch()">
                 <span>SEARCH</span> ⚡
               </button>
             </div>
 
             <!-- PRESETS -->
-            <div class="watson-presets-row">
+            <div class="ai-osint-presets-row">
               <span class="wp-label">SAMPLE PRESETS:</span>
-              <button class="wp-chip" onclick="WATSON.executeWatsonSearch('johndoe_92')">👤 johndoe_92</button>
-              <button class="wp-chip" onclick="WATSON.executeWatsonSearch('acme-logistics.com')">🌐 acme-logistics.com</button>
-              <button class="wp-chip" onclick="WATSON.executeWatsonSearch('it-ops@acme-logistics.com')">📧 it-ops@acme-logistics.com</button>
-              <button class="wp-chip" onclick="WATSON.executeWatsonSearch('+44 20 7946 0958')">📞 +44 20 7946 0958</button>
-              <button class="wp-chip" onclick="WATSON.executeWatsonSearch('Northwind Holdings Ltd')">🏢 Northwind Holdings</button>
+              <button class="wp-chip" onclick="AI_OSINT.executeSearch('johndoe_92')">👤 johndoe_92</button>
+              <button class="wp-chip" onclick="AI_OSINT.executeSearch('acme-logistics.com')">🌐 acme-logistics.com</button>
+              <button class="wp-chip" onclick="AI_OSINT.executeSearch('it-ops@acme-logistics.com')">📧 it-ops@acme-logistics.com</button>
+              <button class="wp-chip" onclick="AI_OSINT.executeSearch('+44 20 7946 0958')">📞 +44 20 7946 0958</button>
+              <button class="wp-chip" onclick="AI_OSINT.executeSearch('Northwind Holdings Ltd')">🏢 Northwind Holdings</button>
             </div>
           </div>
 
           <!-- PROGRESS BAR (ANIMATED STAGES) -->
-          <div class="watson-progress-box" id="watson-progress-container" style="display:none;">
+          <div class="ai-osint-progress-box" id="ai-osint-progress-container" style="display:none;">
             <div class="wp-top">
-              <span class="wp-status" id="watson-progress-status">Initiating OSINT scan...</span>
-              <span class="wp-count" id="watson-progress-count">0 / 3,140 sites checked</span>
+              <span class="wp-status" id="ai-osint-progress-status">Initiating OSINT scan...</span>
+              <span class="wp-count" id="ai-osint-progress-count">0 / 3,140 sites checked</span>
             </div>
             <div class="wp-track">
-              <div class="wp-bar" id="watson-progress-bar"></div>
+              <div class="wp-bar" id="ai-osint-progress-bar"></div>
             </div>
           </div>
 
           <!-- RESULTS CONTAINER -->
-          <div class="watson-results-wrapper" id="watson-results-container" style="display:none;"></div>
+          <div class="ai-osint-results-wrapper" id="ai-osint-results-container" style="display:none;"></div>
         </div>
 
         <!-- 2. EVIDENCE GRAPH VIEW -->
-        <div class="watson-tab-view" id="watson-view-graph">
-          <div class="watson-graph-header">
+        <div class="ai-osint-tab-view" id="ai-osint-view-graph">
+          <div class="ai-osint-graph-header">
             <div class="wgh-left">
               <span class="wgh-tag">ACTIVE CASE</span>
-              <select id="watson-case-select" class="watson-case-dropdown" onchange="WATSON.selectCase(this.value)">
+              <select id="ai-osint-case-select" class="ai-osint-case-dropdown" onchange="AI_OSINT.selectCase(this.value)">
                 <!-- Populated dynamically -->
               </select>
             </div>
             <div class="wgh-right">
-              <button class="btn-micro" onclick="WATSON.exportCaseJSON()">💾 Export JSON</button>
-              <button class="btn-micro" onclick="WATSON.exportCasePDF()">📄 PDF Dossier</button>
-              <button class="btn-micro btn-micro-green" onclick="WATSON.addNewCasePrompt()">+ New Case</button>
+              <button class="btn-micro" onclick="AI_OSINT.exportCaseJSON()">💾 Export JSON</button>
+              <button class="btn-micro" onclick="AI_OSINT.exportCasePDF()">📄 PDF Dossier</button>
+              <button class="btn-micro btn-micro-green" onclick="AI_OSINT.addNewCasePrompt()">+ New Case</button>
             </div>
           </div>
 
-          <div class="watson-graph-workspace">
-            <div class="watson-graph-stage" id="watson-graph-stage">
+          <div class="ai-osint-graph-workspace">
+            <div class="ai-osint-graph-stage" id="ai-osint-graph-stage">
               <!-- SVG lines & bubble nodes rendered dynamically -->
             </div>
-            <div class="watson-node-inspector" id="watson-node-inspector">
+            <div class="ai-osint-node-inspector" id="ai-osint-node-inspector">
               <!-- Node inspector rendered dynamically -->
             </div>
           </div>
         </div>
 
         <!-- 3. SOURCES & ARSENAL VIEW -->
-        <div class="watson-tab-view" id="watson-view-tools">
-          <div class="watson-tools-header">
+        <div class="ai-osint-tab-view" id="ai-osint-view-tools">
+          <div class="ai-osint-tools-header">
             <div>
-              <h3 class="watson-tools-title">Integrated OSINT Sources & Engines</h3>
-              <p class="watson-tools-sub">Active open-source intelligence pipelines running with zero local installations</p>
+              <h3 class="ai-osint-tools-title">Integrated OSINT Sources & Engines</h3>
+              <p class="ai-osint-tools-sub">Active open-source intelligence pipelines running with zero local installations</p>
             </div>
-            <div class="watson-tools-action-grp">
-              <input type="text" id="watson-tool-filter" class="recon-input" style="width:200px;" placeholder="Filter sources..." oninput="WATSON.renderToolsView()" />
-              <button class="btn-secondary" onclick="WATSON.addCustomSource()">+ Custom Source</button>
+            <div class="ai-osint-tools-action-grp">
+              <input type="text" id="ai-osint-tool-filter" class="recon-input" style="width:200px;" placeholder="Filter sources..." oninput="AI_OSINT.renderToolsView()" />
+              <button class="btn-secondary" onclick="AI_OSINT.addCustomSource()">+ Custom Source</button>
             </div>
           </div>
-          <div class="watson-tools-grid" id="watson-tools-list">
+          <div class="ai-osint-tools-grid" id="ai-osint-tools-list">
             <!-- Rendered dynamically -->
           </div>
         </div>
 
         <!-- 4. DOSSIER HISTORY VIEW -->
-        <div class="watson-tab-view" id="watson-view-history">
-          <div class="watson-history-wrap" id="watson-history-list">
+        <div class="ai-osint-tab-view" id="ai-osint-view-history">
+          <div class="ai-osint-history-wrap" id="ai-osint-history-list">
             <!-- Rendered dynamically -->
           </div>
         </div>
@@ -1017,7 +1018,7 @@ const WATSON = (() => {
   return {
     init,
     detectKind,
-    executeWatsonSearch,
+    executeSearch,
     switchTab,
     filterProfiles,
     selectCase,
@@ -1035,7 +1036,7 @@ const WATSON = (() => {
   };
 })();
 
-// Auto-boot Watson when DOM is ready
+// Auto-boot AI OSINT when DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
-  WATSON.init();
+  AI_OSINT.init();
 });

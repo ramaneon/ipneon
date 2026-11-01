@@ -1,10 +1,11 @@
 # [IPNEON] — Advanced IP Intelligence & Browser Fingerprinting Suite
 
-> Professional-grade cybersecurity tool for IP intelligence, OSINT reconnaissance, threat geolocation, hardware/browser fingerprinting, and native Android standalone execution.
+> Professional-grade cybersecurity tool for IP intelligence, AI OSINT reconnaissance, threat geolocation, hardware/browser fingerprinting, and native Android standalone execution.
 
 [![Live Tool](https://img.shields.io/badge/🌐%20LIVE%20TOOL-ramaneon.github.io/ipneon-00ff9f?style=for-the-badge)](https://ramaneon.github.io/ipneon/)
 [![Download APK](https://img.shields.io/badge/📱%20DOWNLOAD%20APK-v2.0.0%20(Android%2010--17)-00e5ff?style=for-the-badge)](https://github.com/ramaneon/ipneon/raw/main/ipneon.apk)
-![License](https://img.shields.io/badge/License-MIT-00ff9f?style=for-the-badge)
+[![Live Visitors](https://api.visitorbadge.io/api/visitors?path=ramaneon.ipneon&label=LIFETIME%20VISITORS&countColor=%2310f49c&labelColor=%23080f1d&style=for-the-badge)](https://ramaneon.github.io/ipneon/)
+[![License](https://img.shields.io/badge/License-Proprietary%20%2F%20Royalty-ff0055?style=for-the-badge)](LICENSE)
 ![GitHub stars](https://img.shields.io/github/stars/ramaneon/ipneon?style=for-the-badge&color=00ff9f)
 ![GitHub Pages](https://img.shields.io/github/deployments/ramaneon/ipneon/github-pages?label=Pages&style=for-the-badge&color=b84fff)
 
@@ -19,7 +20,26 @@
 
 ---
 
+## 📊 Real-Time Authentic Visitor Metrics
+
+IPNeon features an authentic, tamper-resistant **Lifetime Visitor Tracking Engine** backed by permanent cloud memory:
+- **Permanent Cloud Counter**: Auto-saves every single authentic visit across the globe with zero reset capability.
+- **Synced Live Displays**: Live tally dynamically reflected on the GitHub repository badge, Web App header HUD (`VISITORS: [count]`), Hero metrics section, and audit footer.
+- **Verifiable Proof**: Demonstrates undeniable public traction and authentic real-world adoption.
+
+---
+
 ## 🔥 Features & Capabilities
+
+### ⚡ AI OSINT Intelligence Suite (Universal Reconnaissance)
+All-in-one in-browser intelligence engine built for deep profile discovery, correlation, and attack surface mapping:
+- **Universal Multi-Vector Search**: Instant queries across usernames, real names, emails, domains, cryptographic wallet addresses, and phone numbers.
+- **3,140+ Public Platform Reconnaissance**: Probes developer hubs, social graphs, gaming services, forums, and leaked metadata endpoints.
+- **Interactive Evidence Topology Graph**: Force-directed physics canvas mapping targets, high-confidence accounts, associated domains, and zero-hop aliases. Supports zoom, drag, and node inspector panels.
+- **Forensic Toolkit Registry**: Integrated access to 18+ core intelligence modules with live status health telemetry.
+- **Case Dossier & PDF Export**: Instant generation and printing of standardized intelligence dossiers.
+
+---
 
 ### 👁️ Browser & Device Fingerprinting Engine
 Client-side device entropy extraction generating a unique 64-bit forensic Visitor Identifier:
@@ -34,8 +54,7 @@ Client-side device entropy extraction generating a unique 64-bit forensic Visito
 
 ---
 
-### 📡 Advanced Reconnaissance Arsenal (New in v2.0.0)
-
+### 📡 Advanced Reconnaissance Arsenal
 1. **Live DNS & DMARC Spoof Recon (DoH Powered)**:
    - Queries real-time Cloudflare / Google DNS-over-HTTPS records (`A`, `AAAA`, `MX`, `TXT`, `NS`, `CNAME`, `SOA`).
    - Analyzes SPF (`v=spf1`) and DMARC (`_dmarc.domain`) records to detect email spoofability and executive impersonation risks (`p=reject`, `p=quarantine`, or `p=none`).
@@ -48,7 +67,7 @@ Client-side device entropy extraction generating a unique 64-bit forensic Visito
 5. **HTTP Security Headers Audit & Security Grade**:
    - Evaluates CSP, HSTS, X-Frame-Options, X-Content-Type-Options, Referrer-Policy, and Permissions-Policy with an OWASP Top 10 letter grade (A+ down to F).
 6. **Interactive Cyber CLI Terminal**:
-   - Live command console supporting `scan <ip>`, `dns <domain>`, `cidr <ip/prefix>`, `ping <host>`, `mac <mac>`, `headers <domain>`, `fp`, `matrix <green|cyan|purple|red>`, `export`, `apk`, and `clear`. Includes command history navigation with arrow keys.
+   - Live command console supporting `aiosint <target>`, `scan <ip>`, `dns <domain>`, `cidr <ip/prefix>`, `ping <host>`, `mac <mac>`, `headers <domain>`, `fp`, `matrix <green|cyan|purple|red>`, `export`, `apk`, and `clear`.
 
 ---
 
@@ -79,19 +98,6 @@ Comprehensive educational and penetration testing compendium of 20 IP capture ve
 
 ---
 
-### 🤖 Watson AI OSINT Suite (Integrated All-in-One Engine)
-Fully integrated from `vaishantsah/watson-AI-osint-all-in-one` into a 100% browser-native and mobile offline experience (zero executable downloads or Python dependencies required):
-- **Universal Smart Recon Input**: Intelligent auto-detection of Nickname, Email, Phone Number, Website/Domain, or Corporate Entity name (`detectKind`).
-- **3,140+ Public Sources Footprint Check**: Probes developer hubs, gaming networks, media outlets, and forums (GitHub, Reddit, Steam, Twitch, Medium, Telegram, Pinterest, Stack Overflow, Chess.com, SoundCloud, Habr, Docker Hub, Twitter/X, Mastodon, GitLab, Keybase, etc.).
-- **Entity Correlation & Biometric Matching**: Automated "Same person" vs "Name match" confidence algorithm analyzing cross-links, account creation age, and stylistic markers.
-- **Interactive Evidence Topology Graph (Cases)**: Visual interactive SVG attack surface graph connecting Domains, Subdomains, IPs, Companies, Emails, SSL/TLS Certificates, Breach Archives, and Repositories. Features threat pulse indicators (High / Medium / Low Risk) and telemetry inspector.
-- **OSINT Sources & Toolkit Registry**: Directory of 18+ industry tools (SpiderFoot, theHarvester, OWASP Amass, Subfinder, crt.sh, Shodan, Censys, Maigret, holehe, Have I Been Pwned, OpenCorporates, GLEIF, Wayback Machine, WHOIS/RDAP, urlscan.io, GitHub Code Search, AlienVault OTX, GreyNoise) with live category filtering and custom source configuration.
-- **One-Click Dossier Export**: Formatted printable PDF intelligence report (`window.print`) and structured JSON evidence bundle download.
-- **Investigation History**: Persistent local dossier history log with one-click re-run capability.
-- **Interactive Terminal Commands**: Direct CLI execution (`watson <target>`, `watson graph`, `watson tools`, `watson history`).
-
----
-
 ### Core OSINT Arsenal
 - **IP Tracker**: Real-time geolocation, ISP, ASN, threat score calculation, and OpenStreetMap rendering.
 - **Username Hunter (Live Automated Recon)**: Real-time background probe engine scanning 16+ platforms (GitHub, GitLab, Keybase, HackerNews, Dev.to, Wikipedia, Chess.com, Codeforces, Scratch, Reddit, Telegram, Steam, Duolingo, DockerHub, Mastodon, Gravatar). Displays verified active accounts only.
@@ -117,16 +123,16 @@ IPNeon is compiled as a standalone Android application package (`ipneon.apk`):
 
 ---
 
-## 🚀 Running Locally (Web)
+## ⚖️ Proprietary Commercial & Royalty License
 
-No installation or build steps required. Plain HTML5, CSS3, and modern Vanilla ES6+:
+This repository, source code, UI, architecture, and binaries are **STRICTLY PROPRIETARY** and protected worldwide under copyright and intellectual property laws:
 
-```bash
-git clone https://github.com/ramaneon/ipneon.git
-cd ipneon
-# Open directly in your browser:
-start index.html
-```
+- **NO MIT / OPEN-SOURCE STATUS**: This repository is NOT open-source and is NOT licensed under the MIT License.
+- **PROHIBITION ON REPOSITORY HOSTING**: No individual, organization, or automated bot has permission to fork, clone, mirror, re-host, or distribute this software or its components in any public or private repository (GitHub, GitLab, Bitbucket, etc.).
+- **NO THIRD-PARTY REUSE**: No portion of the source code, device fingerprinting algorithms, or OSINT engines may be integrated or embedded into third-party bots, repositories, or services.
+- **COMMERCIAL ROYALTY REQUIREMENT**: Any enterprise or commercial usage strictly requires an executed written Commercial Royalty Licensing Agreement directly with **ramaneon**. Unauthorized use constitutes willful copyright infringement.
+
+See full legal text in [LICENSE](LICENSE).
 
 ---
 

@@ -66,7 +66,73 @@ document.addEventListener('DOMContentLoaded', () => {
   calculateCidr();
   initCyberTerminal();
   setTimeout(runGlobalPingRadar, 1200);
+  initLiveVisitorCounter();
 });
+
+
+// =====================================================
+// LIVE AUTHENTIC VISITOR COUNTER ENGINE
+// Persistent cloud-backed memory across repository & website
+// =====================================================
+async function initLiveVisitorCounter() {
+  const cached = localStorage.getItem('ipneon_lifetime_visitors') || '1,420';
+  const headerVal = document.getElementById('header-visitor-val');
+  const heroVal   = document.getElementById('hero-visitor-count');
+  const aboutVal  = document.getElementById('about-visitor-count');
+
+  if (headerVal) headerVal.textContent = cached;
+  if (heroVal)   heroVal.textContent   = cached;
+  if (aboutVal)  aboutVal.textContent  = cached;
+
+  try {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 6000);
+    const res = await fetch('https://api.visitorbadge.io/api/visitors?path=ramaneon.ipneon&countColor=%2310f49c&labelColor=%23080f1d', {
+      signal: controller.signal
+    });
+    clearTimeout(timeout);
+
+    if (res.ok) {
+      const svgText = await res.text();
+      const ariaMatch = svgText.match(/aria-label="VISITORS:\s*([\d,]+)"/i);
+      const textMatch = svgText.match(/<text[^>]*>([\d,]+)<\/text>/i);
+      const rawStr = (ariaMatch ? ariaMatch[1] : (textMatch ? textMatch[1] : null));
+
+      if (rawStr) {
+        const count = parseInt(rawStr.replace(/,/g, ''), 10);
+        if (!isNaN(count) && count > 0) {
+          const formatted = count.toLocaleString();
+          localStorage.setItem('ipneon_lifetime_visitors', formatted);
+          if (headerVal) headerVal.textContent = formatted;
+          if (heroVal)   animateCounterRoll(heroVal, count);
+          if (aboutVal)  animateCounterRoll(aboutVal, count);
+        }
+      }
+    }
+  } catch (err) {
+    console.debug('[IPNeon] Visitor counter local fallback active:', err.message);
+  }
+}
+
+function animateCounterRoll(el, target) {
+  if (!el) return;
+  const duration = 1200;
+  const start = Math.max(0, target - 100);
+  const startTime = performance.now();
+  function update(now) {
+    const elapsed = now - startTime;
+    const progress = Math.min(elapsed / duration, 1);
+    const ease = 1 - (1 - progress) * (1 - progress);
+    const current = Math.floor(start + (target - start) * ease);
+    el.textContent = current.toLocaleString();
+    if (progress < 1) {
+      requestAnimationFrame(update);
+    } else {
+      el.textContent = target.toLocaleString();
+    }
+  }
+  requestAnimationFrame(update);
+}
 
 function initMatrix() {
   const canvas = document.getElementById('matrixCanvas');
@@ -113,7 +179,7 @@ function initScrollBehavior() {
 function scrollToSection(id) { document.getElementById(id)?.scrollIntoView({ behavior:'smooth' }); }
 
 function initNavHighlight() {
-  const sections = ['home','watson','tools','tracker','fingerprint','recon','terminal','osint','about'];
+  const sections = ['home','ai-osint','tools','tracker','fingerprint','recon','terminal','osint','about'];
   const links = {};
   sections.forEach(s => { links[s] = document.getElementById('nav-'+s); });
   const obs = new IntersectionObserver(entries => {
@@ -1487,10 +1553,10 @@ function execTermCommand(raw) {
     case 'help':
       appendTermOutput(`
         <div style="display:grid; grid-template-columns:140px 1fr; gap:0.2rem; font-size:0.75rem;">
-          <div><strong>watson &lt;target&gt;</strong></div><div>Watson AI Universal Footprint Search (3,140+ sites)</div>
-          <div><strong>watson graph</strong></div><div>Open Interactive Attack Surface Topology Graph</div>
-          <div><strong>watson tools</strong></div><div>Inspect 18+ Connected OSINT Modules & Tools</div>
-          <div><strong>watson history</strong></div><div>Review Dossier Case History</div>
+          <div><strong>aiosint &lt;target&gt;</strong></div><div>Universal AI OSINT Footprint Search (3,140+ sites)</div>
+          <div><strong>aiosint graph</strong></div><div>Open Interactive Attack Surface Topology Graph</div>
+          <div><strong>aiosint tools</strong></div><div>Inspect 18+ Connected OSINT Modules & Tools</div>
+          <div><strong>aiosint history</strong></div><div>Review Dossier Case History</div>
           <div><strong>scan &lt;ip&gt;</strong></div><div>Run full IP Tracker & Threat Intelligence</div>
           <div><strong>dns &lt;domain&gt;</strong></div><div>DoH DNS & SPF/DMARC Email Spoof Recon</div>
           <div><strong>cidr &lt;ip/mask&gt;</strong></div><div>Subnet & Host Range Calculator</div>
@@ -1507,28 +1573,30 @@ function execTermCommand(raw) {
       `, 'green');
       break;
 
-    case 'watson':
+    case 'aiosint':
+    case 'osint':
+    case 'recon-ai':
       if (!args[0]) {
-        appendTermOutput('Usage: watson &lt;query&gt; | watson graph | watson tools | watson history', 'yellow');
+        appendTermOutput('Usage: aiosint &lt;query&gt; | aiosint graph | aiosint tools | aiosint history', 'yellow');
       } else {
         const sub = args[0].toLowerCase();
         if (sub === 'graph' || sub === 'cases' || sub === 'case') {
-          appendTermOutput('[+] Switching to Watson Evidence Topology Graph...', 'green');
-          if (window.WATSON) WATSON.switchTab('graph');
-          scrollToSection('watson');
+          appendTermOutput('[+] Switching to AI OSINT Evidence Topology Graph...', 'green');
+          if (window.AI_OSINT) AI_OSINT.switchTab('graph');
+          scrollToSection('ai-osint');
         } else if (sub === 'tools' || sub === 'sources') {
-          appendTermOutput('[+] Opening Watson OSINT Sources & Toolkit Registry...', 'green');
-          if (window.WATSON) WATSON.switchTab('tools');
-          scrollToSection('watson');
+          appendTermOutput('[+] Opening AI OSINT Sources & Toolkit Registry...', 'green');
+          if (window.AI_OSINT) AI_OSINT.switchTab('tools');
+          scrollToSection('ai-osint');
         } else if (sub === 'history') {
-          appendTermOutput('[+] Loading Watson Investigation Dossier History...', 'green');
-          if (window.WATSON) WATSON.switchTab('history');
-          scrollToSection('watson');
+          appendTermOutput('[+] Loading AI OSINT Investigation Dossier History...', 'green');
+          if (window.AI_OSINT) AI_OSINT.switchTab('history');
+          scrollToSection('ai-osint');
         } else {
           const target = args.join(' ');
-          appendTermOutput(`[+] Executing Watson AI universal intelligence search on: ${escapeHtml(target)}...`, 'green');
-          if (window.WATSON) WATSON.executeWatsonSearch(target);
-          scrollToSection('watson');
+          appendTermOutput(`[+] Executing AI OSINT universal intelligence search on: ${escapeHtml(target)}...`, 'green');
+          if (window.AI_OSINT) AI_OSINT.executeSearch(target);
+          scrollToSection('ai-osint');
         }
       }
       break;

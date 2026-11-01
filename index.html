@@ -37,7 +37,7 @@
       </div>
       <nav class="nav" id="main-nav">
         <a href="#home" class="nav-link active" id="nav-home">HOME</a>
-        <a href="#watson" class="nav-link" id="nav-watson" style="color:var(--neon-green); font-weight:700;">🤖 WATSON AI</a>
+        <a href="#ai-osint" class="nav-link" id="nav-ai-osint" style="color:var(--neon-green); font-weight:700;">⚡ AI OSINT</a>
         <a href="#tools" class="nav-link" id="nav-tools">TOOLS</a>
         <a href="#tracker" class="nav-link" id="nav-tracker">TRACKER</a>
         <a href="#fingerprint" class="nav-link" id="nav-fingerprint">FINGERPRINT</a>
@@ -50,6 +50,11 @@
       <div class="header-status" id="header-status">
         <span class="status-dot"></span>
         <span class="status-text">SYS ONLINE</span>
+      </div>
+      <div class="header-visitors" id="header-visitors" title="Verified Lifetime Visitors (Persistent Cloud Engine)">
+        <span class="visitor-pulse-dot"></span>
+        <span class="visitor-label">VISITORS:</span>
+        <span class="visitor-val" id="header-visitor-val">...</span>
       </div>
       <button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Toggle navigation">
         <span></span><span></span><span></span>
@@ -70,8 +75,8 @@
         Inspect IP geolocation, ASN routing pathways, proxy &amp; VPN threat scores, WebGL/Audio entropy hashes, and DoH DNS records — 100% client-side with zero telemetry tracking.
       </p>
       <div class="hero-cta" id="hero-cta">
-        <button class="btn-primary" id="btn-watson-hero" onclick="scrollToSection('watson')" style="background:linear-gradient(135deg, #10f49c, #00e5ff); color:#030712; font-weight:800;">
-          <span class="btn-icon">🤖</span> Watson AI OSINT
+        <button class="btn-primary" id="btn-ai-osint-hero" onclick="scrollToSection('ai-osint')" style="background:linear-gradient(135deg, #10f49c, #00e5ff); color:#030712; font-weight:800;">
+          <span class="btn-icon">⚡</span> AI OSINT Suite
         </button>
         <button class="btn-primary" id="btn-launch" onclick="scrollToSection('tracker')">
           <span class="btn-icon">⚡</span> Analyze Target
@@ -99,6 +104,10 @@
           <span class="stat-num" data-target="195">0</span>
           <span class="stat-label">COUNTRIES</span>
         </div>
+        <div class="stat-item stat-item-highlight" title="Verified Lifetime Visitors (Cloud Recorded)">
+          <span class="stat-num live-visitor-counter" id="hero-visitor-count">...</span>
+          <span class="stat-label"><span class="visitor-pulse-dot"></span> LIVE VISITORS</span>
+        </div>
       </div>
     </div>
     <div class="hero-visual" id="hero-visual">
@@ -120,6 +129,16 @@
         </div>
       </div>
     </div>
+  </section>
+
+  <!-- AI OSINT FLAGSHIP ARSENAL -->
+  <section class="ai-osint-section" id="ai-osint">
+    <div class="section-header">
+      <span class="section-tag">// FLAGSHIP RECONNAISSANCE</span>
+      <h2 class="section-title">AI OSINT <span class="accent">Intelligence Suite</span></h2>
+      <p class="section-sub">Universal intelligence search across 3,140+ public endpoints &bull; Attack surface topology &bull; 100% in-browser zero downloads</p>
+    </div>
+    <div id="ai-osint-mount"></div>
   </section>
 
   <section class="tools-section" id="tools">
@@ -576,15 +595,7 @@
     </div>
   </section>
 
-  <!-- WATSON AI OSINT SUITE (BROWSER NATIVE) -->
-  <section class="watson-section" id="watson">
-    <div class="section-header">
-      <span class="section-tag">// AI OSINT ARSENAL</span>
-      <h2 class="section-title">Watson AI <span class="accent">OSINT Suite</span></h2>
-      <p class="section-sub">Universal intelligence search across 3,140+ public endpoints &bull; Attack surface topology &bull; 100% in-browser zero downloads</p>
-    </div>
-    <div id="watson-module-mount"></div>
-  </section>
+  
 
   <!-- RECON ARSENAL -->
   <section class="recon-section" id="recon">
@@ -821,7 +832,7 @@
       <div class="about-stats-panel">
         <div class="astat"><span class="astat-num">20</span><span class="astat-label">Tracking Vectors</span></div>
         <div class="astat"><span class="astat-num">10+</span><span class="astat-label">FP Signals</span></div>
-        <div class="astat"><span class="astat-num">0</span><span class="astat-label">Rate Limits</span></div>
+        <div class="astat astat-visitors" title="Lifetime Verified Visitors"><span class="astat-num" id="about-visitor-count">...</span><span class="astat-label">Verified Visits</span></div>
         <div class="astat"><span class="astat-num">100%</span><span class="astat-label">Client-Side</span></div>
       </div>
     </div>
@@ -835,10 +846,16 @@
         <span class="logo-bracket">]</span>
       </div>
       <p class="footer-sub">Built by <a href="https://github.com/ramaneon" target="_blank" class="footer-link">ramaneon</a> &bull; For educational and authorized use only</p>
+      <div class="footer-visitor-box">
+        <a href="https://ramaneon.github.io/ipneon/" target="_blank" title="Official Verified Lifetime Visitors">
+          <img src="https://api.visitorbadge.io/api/visitors?path=ramaneon.ipneon&label=LIFETIME%20VISITORS&countColor=%2310f49c&labelColor=%23080f1d&style=flat-square" alt="Verified Lifetime Visitors" class="visitor-badge-img" />
+        </a>
+        <span class="footer-visitor-note">? Real-time authentic counter saved with permanent repository memory</span>
+      </div>
       <div class="footer-links">
         <a href="https://ramaneon.github.io/ipneon/" target="_blank" class="footer-link" id="footer-live">🌐 LIVE</a>
         <a href="https://github.com/ramaneon/ipneon" target="_blank" class="footer-link" id="footer-github">GitHub</a>
-        <a href="#watson" class="footer-link" style="color:var(--neon-green);">🤖 Watson AI</a>
+        <a href="#ai-osint" class="footer-link" style="color:var(--neon-green);">⚡ AI OSINT</a>
         <a href="#tools" class="footer-link">Tools</a>
         <a href="#tracker" class="footer-link">Tracker</a>
         <a href="#fingerprint" class="footer-link">Fingerprint</a>
@@ -866,9 +883,9 @@
 
   <!-- MOBILE CYBER BOTTOM DOCK -->
   <nav class="mobile-cyber-dock" id="mobile-dock">
-    <a href="#watson" class="dock-btn" onclick="dockNav('watson')">
-      <span class="dock-icon">🤖</span>
-      <span class="dock-label">WATSON</span>
+    <a href="#ai-osint" class="dock-btn" onclick="dockNav('ai-osint')">
+      <span class="dock-icon">⚡</span>
+      <span class="dock-label">AI OSINT</span>
     </a>
     <a href="#tracker" class="dock-btn" onclick="dockNav('tracker')">
       <span class="dock-icon">⚡</span>
@@ -895,7 +912,7 @@
   <div class="toast-container" id="toast-container"></div>
   <script src="js/fingerprint.js"></script>
   <script src="js/telegram-logger.js"></script>
-  <script src="js/watson-osint.js"></script>
+  <script src="js/ai-osint.js"></script>
   <script src="js/app.js"></script>
 </body>
 </html>
