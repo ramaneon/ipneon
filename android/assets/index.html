@@ -625,6 +625,37 @@
     <!-- Fingerprint Analysis Grid -->
     <div class="fp-grid">
 
+      <!-- SMART SIGNALS RADAR (Fingerprint.to Enterprise Engine) -->
+      <div class="fp-card fp-card-full" style="border-color: rgba(16, 244, 156, 0.4); background: linear-gradient(135deg, rgba(8, 16, 36, 0.95), rgba(4, 9, 20, 0.95));">
+        <div class="fp-card-header">
+          <div class="fp-card-title-group">
+            <span class="fp-card-icon">⚡</span>
+            <span class="fp-card-title">SMART SIGNALS &amp; THREAT TELEMETRY</span>
+          </div>
+          <span class="fp-card-tag" style="background: rgba(16,244,156,0.15); color: var(--neon-green);">FINGERPRINT.TO PARITY</span>
+        </div>
+        <div class="fp-card-body">
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; margin-bottom: 0.8rem;">
+            <div class="fp-prop-row" style="flex-direction: column; align-items: flex-start; gap: 0.3rem;">
+              <span class="fp-prop-label">VISITOR VELOCITY &amp; HISTORY</span>
+              <span class="fp-prop-val highlight" id="fp-visit-velocity">Visit #1 (New Session)</span>
+            </div>
+            <div class="fp-prop-row" style="flex-direction: column; align-items: flex-start; gap: 0.3rem;">
+              <span class="fp-prop-label">SUSPECT RISK SCORE</span>
+              <span class="fp-prop-val" id="fp-suspect-score" style="color: var(--neon-green); font-weight: 700;">5.0% (Low Risk / Authentic)</span>
+            </div>
+            <div class="fp-prop-row" style="flex-direction: column; align-items: flex-start; gap: 0.3rem;">
+              <span class="fp-prop-label">BROWSER INTEGRITY / TAMPERING</span>
+              <span class="fp-prop-val" id="fp-tamper-status" style="color: var(--neon-green);">Clean (Native Prototypes Intact)</span>
+            </div>
+            <div class="fp-prop-row" style="flex-direction: column; align-items: flex-start; gap: 0.3rem;">
+              <span class="fp-prop-label">EXECUTION ENVIRONMENT</span>
+              <span class="fp-prop-val cyan" id="fp-vm-status">Bare Metal Hardware</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <!-- Card 1: Canvas & Visual Signature -->
       <div class="fp-card">
         <div class="fp-card-header">
