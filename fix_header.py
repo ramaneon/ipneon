@@ -23,3 +23,4 @@ with open('js/ai-osint.js', 'w', encoding='utf-8') as f:
     f.write(content)
 
 print("Done:", content[:300])
+

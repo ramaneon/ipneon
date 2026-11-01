@@ -18,3 +18,4 @@ import subprocess
 result = subprocess.run(['python', '-c', 'import re; c=open("css/style.css","r",encoding="utf-8").read(); m=re.findall(r"\\.AI OSINT", c); print(f"Remaining broken selectors: {len(m)}")'], capture_output=True, text=True)
 print(result.stdout)
 print(result.stderr)
+

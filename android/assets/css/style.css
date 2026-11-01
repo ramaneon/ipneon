@@ -3627,3 +3627,139 @@ section { position: relative; z-index: 1; }
   box-shadow: 0 0 6px var(--neon-cyan);
   animation: pulse-dot 1.5s infinite;
 }
+
+
+
+/* =====================================================
+   AI NEON OSINT SUITE — Unified Search Bar + Idle State
+   ===================================================== */
+
+/* Unified search wrap — sticky above all tabs */
+.ai-osint-unified-search-wrap {
+  background: linear-gradient(135deg, rgba(4,9,20,0.98) 0%, rgba(8,16,36,0.98) 100%);
+  border-bottom: 1px solid rgba(16,244,156,0.15);
+  padding: 1.6rem 2rem 1rem 2rem;
+}
+
+.ai-osint-suite-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  color: var(--neon-green);
+  margin-bottom: 1rem;
+  opacity: 0.85;
+}
+
+.suite-pulse {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--neon-green);
+  box-shadow: 0 0 8px var(--neon-green);
+  animation: pulse-dot 1.4s ease-in-out infinite;
+}
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: 0.4; transform: scale(0.7); }
+}
+
+/* Unified quick-fire presets row */
+.ai-osint-unified-search-wrap .ai-osint-presets-row {
+  margin-top: 0.8rem;
+  padding-top: 0;
+}
+
+/* Idle state — shown before first search */
+.ai-osint-idle-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 3rem 1.5rem 2rem;
+  gap: 1.5rem;
+}
+
+.ai-osint-idle-text {
+  color: var(--text-dim);
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  max-width: 600px;
+  line-height: 1.7;
+}
+
+/* Route pills — shows user where each input type routes */
+.ai-osint-route-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  justify-content: center;
+  max-width: 700px;
+}
+
+.route-pill {
+  background: rgba(16,244,156,0.06);
+  border: 1px solid rgba(16,244,156,0.2);
+  border-radius: 999px;
+  padding: 0.4rem 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--neon-green);
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+  transition: background 0.2s;
+}
+.route-pill:hover {
+  background: rgba(16,244,156,0.12);
+}
+
+/* Username hunter tab — clean full-width card */
+#ai-osint-view-username .osint-card {
+  border: 1px solid rgba(16,244,156,0.2);
+}
+
+/* Email + breach tab side-by-side grid */
+#ai-osint-view-email .osint-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.2rem;
+}
+@media (max-width: 700px) {
+  #ai-osint-view-email .osint-grid { grid-template-columns: 1fr; }
+}
+
+/* Link logger tab */
+#ai-osint-view-linklog .osint-card {
+  border-color: rgba(0,229,255,0.25);
+}
+
+/* Tab view padding fix — remove old top padding since unified bar handles it */
+.ai-osint-tab-view {
+  padding: 2rem 2rem 2.5rem;
+}
+.ai-osint-tab-view.active {
+  display: block;
+  animation: fadeIn 0.25s ease;
+}
+
+/* Responsive: stack unified bar on mobile */
+@media (max-width: 640px) {
+  .ai-osint-unified-search-wrap {
+    padding: 1.2rem 1rem 0.8rem;
+  }
+  .ai-osint-suite-badge {
+    font-size: 0.58rem;
+    flex-wrap: wrap;
+  }
+  .ai-osint-nav-tabs {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .ai-osint-tab-btn {
+    min-width: 120px;
+  }
+}
