@@ -37,10 +37,10 @@
       </div>
       <nav class="nav" id="main-nav">
         <a href="#home" class="nav-link active" id="nav-home">HOME</a>
-        <a href="#ai-osint" class="nav-link" id="nav-ai-osint" style="color:var(--neon-green); font-weight:700;">⚡ AI OSINT</a>
+        <a href="#ai-osint" class="nav-link" id="nav-ai-osint" style="color:var(--neon-green); font-weight:700;">⚡ AI NEON OSINT</a>
         <a href="#tools" class="nav-link" id="nav-tools">TOOLS</a>
         <a href="#tracker" class="nav-link" id="nav-tracker">TRACKER</a>
-        <a href="#fingerprint" class="nav-link" id="nav-fingerprint">FINGERPRINT</a>
+        <a href="javascript:void(0)" class="nav-link" id="nav-fingerprint" onclick="openIdentityDrawer()">👁️ MY INTEL</a>
         <a href="#recon" class="nav-link" id="nav-recon">RECON</a>
         <a href="#terminal" class="nav-link" id="nav-terminal">TERMINAL</a>
         <a href="#osint" class="nav-link" id="nav-osint">OSINT</a>
@@ -56,6 +56,10 @@
         <span class="visitor-label">VISITORS:</span>
         <span class="visitor-val" id="header-visitor-val">...</span>
       </div>
+      <button class="nav-identity-btn" onclick="openIdentityDrawer()" id="nav-identity-btn" title="Inspect your device fingerprint and forensic entropy">
+        <span class="nav-id-dot"></span>
+        <span>👁️ MY INTEL</span>
+      </button>
       <button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Toggle navigation">
         <span></span><span></span><span></span>
       </button>
@@ -76,12 +80,12 @@
       </p>
       <div class="hero-cta" id="hero-cta">
         <button class="btn-primary" id="btn-ai-osint-hero" onclick="scrollToSection('ai-osint')" style="background:linear-gradient(135deg, #10f49c, #00e5ff); color:#030712; font-weight:800;">
-          <span class="btn-icon">⚡</span> AI OSINT Suite
+          <span class="btn-icon">⚡</span> AI NEON OSINT
         </button>
         <button class="btn-primary" id="btn-launch" onclick="scrollToSection('tracker')">
           <span class="btn-icon">⚡</span> Analyze Target
         </button>
-        <button class="btn-secondary" id="btn-fp-hero" onclick="scrollToSection('fingerprint')" style="border-color: rgba(0,229,255,0.4); color: var(--neon-cyan);">
+        <button class="btn-secondary" id="btn-fp-hero" onclick="openIdentityDrawer()" style="border-color: rgba(0,229,255,0.4); color: var(--neon-cyan);">
           <span class="btn-icon">👁️</span> Device Fingerprint
         </button>
         <a href="ipneon.apk" download class="btn-secondary" id="btn-apk-hero" style="border-color: rgba(0,255,159,0.5); color: var(--neon-green); text-decoration: none; display: inline-flex; align-items: center;">
@@ -135,8 +139,8 @@
   <section class="ai-osint-section" id="ai-osint">
     <div class="section-header">
       <span class="section-tag">// FLAGSHIP RECONNAISSANCE</span>
-      <h2 class="section-title">AI OSINT <span class="accent">Intelligence Suite</span></h2>
-      <p class="section-sub">Universal intelligence search across 3,140+ public endpoints &bull; Attack surface topology &bull; 100% in-browser zero downloads</p>
+      <h2 class="section-title">AI NEON <span class="accent">OSINT ARSENAL</span></h2>
+      <p class="section-sub">Universal intelligence search across 3,140+ public endpoints &bull; Username Hunter &bull; Email &amp; Breach Intel &bull; Attack surface topology &bull; 100% in-browser</p>
     </div>
     <div id="ai-osint-mount"></div>
   </section>
@@ -272,328 +276,9 @@
     </div>
   </section>
 
-  <!-- BROWSER FINGERPRINTING SECTION -->
-  <section class="fingerprint-section" id="fingerprint">
-    <div class="section-header">
-      <span class="section-tag">// ENTROPY</span>
-      <h2 class="section-title">Device &amp; Browser <span class="accent">Fingerprinting</span></h2>
-      <p class="section-sub">Hardware architecture, WebGL GPU pipelines, Canvas 2D, and AudioContext DSP entropy</p>
-    </div>
+  
 
-    <!-- Hero Visitor ID Card -->
-    <div class="fp-hero-card" id="fp-hero-card">
-      <div class="fp-hero-top">
-        <div class="fp-id-group">
-          <span class="fp-id-label">
-            <span class="status-dot"></span> GLOBAL VISITOR IDENTIFIER
-          </span>
-          <div class="fp-id-val-wrap">
-            <span class="fp-visitor-id" id="fp-visitor-id">CALCULATING...</span>
-            <span class="fp-confidence-badge" id="fp-confidence">ANALYZING ENTROPY</span>
-          </div>
-        </div>
-        <div class="fp-actions">
-          <button class="fp-btn" id="btn-copy-fp" onclick="copyFingerprintId()">
-            <span>📋</span> COPY VISITOR ID
-          </button>
-          <button class="fp-btn fp-btn-secondary" id="btn-rescan-fp" onclick="collectFingerprint()">
-            <span>⚡</span> RE-AUDIT DEVICE
-          </button>
-          <button class="fp-btn fp-btn-secondary" id="btn-export-fp" onclick="exportFingerprintJson()">
-            <span>💾</span> EXPORT JSON
-          </button>
-        </div>
-      </div>
-
-      <!-- Anomaly & Bot Badges -->
-      <div class="fp-badges-row">
-        <div class="fp-badge badge-neutral" id="badge-bot">BOT: TESTING...</div>
-        <div class="fp-badge badge-neutral" id="badge-incognito">WINDOW: DETECTING...</div>
-        <div class="fp-badge badge-neutral" id="badge-webrtc">WEBRTC: CHECKING...</div>
-        <div class="fp-badge badge-neutral" id="badge-gpu">GPU: QUERYING...</div>
-        <div class="fp-badge badge-neutral" id="badge-adblock">ADBLOCK: TESTING...</div>
-      </div>
-    </div>
-
-    <!-- Fingerprint Analysis Grid -->
-    <div class="fp-grid">
-
-      <!-- Card 1: Canvas & Visual Signature -->
-      <div class="fp-card">
-        <div class="fp-card-header">
-          <div class="fp-card-title-group">
-            <span class="fp-card-icon">🎨</span>
-            <span class="fp-card-title">CANVAS 2D SIGNATURE</span>
-          </div>
-          <span class="fp-card-tag">HIGH ENTROPY</span>
-        </div>
-        <div class="fp-card-body">
-          <div class="fp-prop-row">
-            <span class="fp-prop-label">CANVAS HASH</span>
-            <span class="fp-prop-val highlight" id="fp-canvas-hash">Analyzing...</span>
-          </div>
-          <div class="fp-prop-row">
-            <span class="fp-prop-label">GLYPH METRICS</span>
-            <span class="fp-prop-val" id="fp-canvas-metrics">Calculating...</span>
-          </div>
-          <div class="fp-canvas-box">
-            <canvas id="fp-canvas-preview" class="fp-canvas-preview"></canvas>
-            <span class="fp-canvas-sub">// Real-time rendered subpixel canvas payload</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Card 2: AudioContext Acoustic Signature -->
-      <div class="fp-card">
-        <div class="fp-card-header">
-          <div class="fp-card-title-group">
-            <span class="fp-card-icon">🔊</span>
-            <span class="fp-card-title">AUDIO DYNAMICS HASH</span>
-          </div>
-          <span class="fp-card-tag">HARDWARE DSP</span>
-        </div>
-        <div class="fp-card-body">
-          <div class="fp-prop-row">
-            <span class="fp-prop-label">ACOUSTIC HASH</span>
-            <span class="fp-prop-val highlight" id="fp-audio-hash">Synthesizing...</span>
-          </div>
-          <div class="fp-prop-row">
-            <span class="fp-prop-label">SAMPLE RATE / CH</span>
-            <span class="fp-prop-val" id="fp-audio-rate">Querying...</span>
-          </div>
-          <div class="fp-prop-row">
-            <span class="fp-prop-label">OSCILLATOR DYNAMICS</span>
-            <span class="fp-prop-val cyan">Triangle 10kHz + Compressor</span>
-          </div>
-          <div class="fp-prop-row">
-            <span class="fp-prop-label">FREQUENCY RESPONSE</span>
-            <span class="fp-prop-val">Hardware DAC / Float32 Buffer</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Card 3: WebGL & GPU Hardware -->
-      <div class="fp-card">
-        <div class="fp-card-header">
-          <div class="fp-card-title-group">
-            <span class="fp-card-icon">🎮</span>
-            <span class="fp-card-title">GPU ARCHITECTURE (WEBGL)</span>
-          </div>
-          <span class="fp-card-tag">UNMASKED</span>
-        </div>
-        <div class="fp-card-body">
-          <div class="fp-prop-row">
-            <span class="fp-prop-label">RENDERER</span>
-            <span class="fp-prop-val highlight" id="fp-gpu-renderer">Querying GPU...</span>
-          </div>
-          <div class="fp-prop-row">
-            <span class="fp-prop-label">VENDOR</span>
-            <span class="fp-prop-val" id="fp-gpu-vendor">-</span>
-          </div>
-          <div class="fp-prop-row">
-            <span class="fp-prop-label">WEBGL CONTEXT</span>
-            <span class="fp-prop-val" id="fp-webgl-version">-</span>
-          </div>
-          <div class="fp-prop-row">
-            <span class="fp-prop-label">MAX TEXTURE SIZE</span>
-            <span class="fp-prop-val cyan" id="fp-max-texture">-</span>
-          </div>
-          <div class="fp-prop-row">
-            <span class="fp-prop-label">EXTENSIONS</span>
-            <span class="fp-prop-val" id="fp-webgl-exts">-</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Card 4: Hardware & Display Sensors -->
-      <div class="fp-card">
-        <div class="fp-card-header">
-          <div class="fp-card-title-group">
-            <span class="fp-card-icon">⚡</span>
-            <span class="fp-card-title">HARDWARE & SENSORS</span>
-          </div>
-          <span class="fp-card-tag">SYSTEM</span>
-        </div>
-        <div class="fp-card-body">
-          <div class="fp-prop-row">
-            <span class="fp-prop-label">CPU CORES</span>
-            <span class="fp-prop-val highlight" id="fp-cpu-cores">Querying...</span>
-          </div>
-          <div class="fp-prop-row">
-            <span class="fp-prop-label">DEVICE RAM</span>
-            <span class="fp-prop-val cyan" id="fp-ram-mem">Querying...</span>
-          </div>
-          <div class="fp-prop-row">
-            <span class="fp-prop-label">RESOLUTION</span>
-            <span class="fp-prop-val" id="fp-screen-res">-</span>
-          </div>
-          <div class="fp-prop-row">
-            <span class="fp-prop-label">WORK AREA</span>
-            <span class="fp-prop-val" id="fp-screen-avail">-</span>
-          </div>
-          <div class="fp-prop-row">
-            <span class="fp-prop-label">COLOR DEPTH / DPR</span>
-            <span class="fp-prop-val" id="fp-color-depth">-</span>
-          </div>
-          <div class="fp-prop-row">
-            <span class="fp-prop-label">TOUCH INPUT</span>
-            <span class="fp-prop-val" id="fp-touch-points">-</span>
-          </div>
-          <div class="fp-prop-row">
-            <span class="fp-prop-label">BATTERY STATUS</span>
-            <span class="fp-prop-val" id="fp-battery-stat">-</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Card 5: Network & WebRTC Leak -->
-      <div class="fp-card">
-        <div class="fp-card-header">
-          <div class="fp-card-title-group">
-            <span class="fp-card-icon">🌐</span>
-            <span class="fp-card-title">NETWORK & WEBRTC LEAK</span>
-          </div>
-          <span class="fp-card-tag">TRAFFIC</span>
-        </div>
-        <div class="fp-card-body">
-          <div class="fp-prop-row">
-            <span class="fp-prop-label">WEBRTC LAN IP(S)</span>
-            <span class="fp-prop-val highlight" id="fp-webrtc-ips">Scanning candidates...</span>
-          </div>
-          <div class="fp-prop-row">
-            <span class="fp-prop-label">CONNECTION PROFILE</span>
-            <span class="fp-prop-val cyan" id="fp-net-type">-</span>
-          </div>
-          <div class="fp-prop-row">
-            <span class="fp-prop-label">ESTIMATED RTT</span>
-            <span class="fp-prop-val" id="fp-net-rtt">-</span>
-          </div>
-          <div class="fp-prop-row">
-            <span class="fp-prop-label">STUN SERVER TEST</span>
-            <span class="fp-prop-val">stun.l.google.com:19302 (Active)</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Card 6: OS, Locale & Fonts -->
-      <div class="fp-card">
-        <div class="fp-card-header">
-          <div class="fp-card-title-group">
-            <span class="fp-card-icon">🔤</span>
-            <span class="fp-card-title">OS, LOCALE & SYSTEM FONTS</span>
-          </div>
-          <span class="fp-card-tag">ENVIRONMENT</span>
-        </div>
-        <div class="fp-card-body">
-          <div class="fp-prop-row">
-            <span class="fp-prop-label">OPERATING SYSTEM</span>
-            <span class="fp-prop-val highlight" id="fp-os-name">Detecting...</span>
-          </div>
-          <div class="fp-prop-row">
-            <span class="fp-prop-label">BROWSER ENGINE</span>
-            <span class="fp-prop-val" id="fp-browser-name">-</span>
-          </div>
-          <div class="fp-prop-row">
-            <span class="fp-prop-label">TIMEZONE</span>
-            <span class="fp-prop-val cyan" id="fp-timezone">-</span>
-          </div>
-          <div class="fp-prop-row">
-            <span class="fp-prop-label">LOCALE & LANGS</span>
-            <span class="fp-prop-val" id="fp-locale-langs">-</span>
-          </div>
-          <div class="fp-prop-row">
-            <span class="fp-prop-label">DO NOT TRACK</span>
-            <span class="fp-prop-val" id="fp-dnt-status">-</span>
-          </div>
-          <div class="fp-prop-row">
-            <span class="fp-prop-label">PROBED FONTS</span>
-            <span class="fp-prop-val highlight" id="fp-fonts-count">-</span>
-          </div>
-          <div class="fp-prop-row">
-            <span class="fp-prop-label">DETECTED FONTS</span>
-            <span class="fp-prop-val" id="fp-fonts-list">-</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Card 7: Full Raw Profile JSON Terminal -->
-      <div class="fp-card fp-card-full">
-        <div class="fp-card-header">
-          <div class="fp-card-title-group">
-            <span class="fp-card-icon">💻</span>
-            <span class="fp-card-title">RAW FORENSIC PROFILE (JSON)</span>
-          </div>
-          <button class="copy-btn" onclick="exportFingerprintJson()">DOWNLOAD JSON</button>
-        </div>
-        <div class="fp-terminal">
-          <pre class="fp-raw-code" id="fp-raw-json">// Awaiting complete fingerprint telemetry synthesis...</pre>
-        </div>
-      </div>
-
-    </div>
-  </section>
-
-  <section class="osint-section" id="osint">
-    <div class="section-header">
-      <span class="section-tag">// OSINT</span>
-      <h2 class="section-title">OPEN SOURCE <span class="accent">INTELLIGENCE</span></h2>
-      <p class="section-sub">Username, email, link generator and breach intelligence lookup</p>
-    </div>
-    <div class="osint-grid" id="osint-grid">
-      <div class="osint-card osint-card-large" id="osint-username">
-        <div class="osint-card-header">
-          <span class="osint-icon">🔍</span>
-          <h3 class="osint-title">USERNAME HUNTER</h3>
-        </div>
-        <div class="osint-input-row">
-          <input type="text" id="username-input" class="osint-input" placeholder="Enter username..." onkeydown="if(event.key==='Enter')huntUsername()" />
-          <button class="osint-btn" id="btn-username" onclick="huntUsername()">HUNT</button>
-        </div>
-        <div class="osint-results" id="username-results">
-          <p class="osint-hint">Run automated live background probes across 16+ platforms (displays verified active profiles only)</p>
-        </div>
-      </div>
-      <div class="osint-card" id="osint-email">
-        <div class="osint-card-header">
-          <span class="osint-icon">📧</span>
-          <h3 class="osint-title">EMAIL INTEL</h3>
-        </div>
-        <div class="osint-input-row">
-          <input type="text" id="email-input" class="osint-input" placeholder="Enter email address..." onkeydown="if(event.key==='Enter')lookupEmail()" />
-          <button class="osint-btn" id="btn-email" onclick="lookupEmail()">LOOKUP</button>
-        </div>
-        <div class="osint-results" id="email-results">
-          <p class="osint-hint">Check breaches, reputation and deliverability</p>
-        </div>
-      </div>
-      <div class="osint-card" id="osint-logger">
-        <div class="osint-card-header">
-          <span class="osint-icon">🔗</span>
-          <h3 class="osint-title">LINK LOGGER</h3>
-        </div>
-        <div class="osint-input-row">
-          <input type="text" id="link-target" class="osint-input" placeholder="Destination URL..." onkeydown="if(event.key==='Enter')generateLoggerLink()" />
-          <button class="osint-btn" id="btn-genlink" onclick="generateLoggerLink()">GENERATE</button>
-        </div>
-        <div class="osint-results" id="link-results">
-          <p class="osint-hint">Generate a custom tracking redirect link</p>
-        </div>
-      </div>
-      <div class="osint-card" id="osint-breach">
-        <div class="osint-card-header">
-          <span class="osint-icon">💥</span>
-          <h3 class="osint-title">BREACH CHECK</h3>
-        </div>
-        <div class="osint-input-row">
-          <input type="text" id="breach-input" class="osint-input" placeholder="Email or username..." onkeydown="if(event.key==='Enter')checkBreach()" />
-          <button class="osint-btn" id="btn-breach" onclick="checkBreach()">CHECK</button>
-        </div>
-        <div class="osint-results" id="breach-results">
-          <p class="osint-hint">Check known data breaches and leaked databases</p>
-        </div>
-      </div>
-    </div>
-  </section>
+  
 
   
 
@@ -891,9 +576,9 @@
       <span class="dock-icon">⚡</span>
       <span class="dock-label">TRACK</span>
     </a>
-    <a href="#fingerprint" class="dock-btn" onclick="dockNav('fingerprint')">
+    <a href="javascript:void(0)" class="dock-btn" onclick="openIdentityDrawer()">
       <span class="dock-icon">👁️</span>
-      <span class="dock-label">DEVICE</span>
+      <span class="dock-label">MY INTEL</span>
     </a>
     <a href="#recon" class="dock-btn" onclick="dockNav('recon')">
       <span class="dock-icon">📡</span>
@@ -914,5 +599,275 @@
   <script src="js/telegram-logger.js"></script>
   <script src="js/ai-osint.js"></script>
   <script src="js/app.js"></script>
+
+  <!-- IDENTITY & FINGERPRINT MODAL DRAWER (OFF-PAGE OVERLAY) -->
+  <div class="identity-drawer-overlay hidden" id="identity-drawer-overlay" onclick="closeIdentityDrawer(event)">
+    <div class="identity-drawer-panel" id="identity-drawer-panel" onclick="event.stopPropagation()">
+      <div class="identity-drawer-header">
+        <div class="id-header-title-wrap">
+          <span class="id-header-icon">👁️</span>
+          <div>
+            <h2 class="id-header-title">MY DEVICE IDENTITY <span class="accent">&amp; FORENSICS</span></h2>
+            <p class="id-header-sub">Hardware architecture, WebGL GPU pipelines, Canvas 2D, and AudioContext DSP entropy</p>
+          </div>
+        </div>
+        <button class="identity-drawer-close" onclick="closeIdentityDrawer()" aria-label="Close Identity Drawer">✕ CLOSE</button>
+      </div>
+      <div class="identity-drawer-body" id="fingerprint">
+<!-- Hero Visitor ID Card -->
+    <div class="fp-hero-card" id="fp-hero-card">
+      <div class="fp-hero-top">
+        <div class="fp-id-group">
+          <span class="fp-id-label">
+            <span class="status-dot"></span> GLOBAL VISITOR IDENTIFIER
+          </span>
+          <div class="fp-id-val-wrap">
+            <span class="fp-visitor-id" id="fp-visitor-id">CALCULATING...</span>
+            <span class="fp-confidence-badge" id="fp-confidence">ANALYZING ENTROPY</span>
+          </div>
+        </div>
+        <div class="fp-actions">
+          <button class="fp-btn" id="btn-copy-fp" onclick="copyFingerprintId()">
+            <span>📋</span> COPY VISITOR ID
+          </button>
+          <button class="fp-btn fp-btn-secondary" id="btn-rescan-fp" onclick="collectFingerprint()">
+            <span>⚡</span> RE-AUDIT DEVICE
+          </button>
+          <button class="fp-btn fp-btn-secondary" id="btn-export-fp" onclick="exportFingerprintJson()">
+            <span>💾</span> EXPORT JSON
+          </button>
+        </div>
+      </div>
+
+      <!-- Anomaly & Bot Badges -->
+      <div class="fp-badges-row">
+        <div class="fp-badge badge-neutral" id="badge-bot">BOT: TESTING...</div>
+        <div class="fp-badge badge-neutral" id="badge-incognito">WINDOW: DETECTING...</div>
+        <div class="fp-badge badge-neutral" id="badge-webrtc">WEBRTC: CHECKING...</div>
+        <div class="fp-badge badge-neutral" id="badge-gpu">GPU: QUERYING...</div>
+        <div class="fp-badge badge-neutral" id="badge-adblock">ADBLOCK: TESTING...</div>
+      </div>
+    </div>
+
+    <!-- Fingerprint Analysis Grid -->
+    <div class="fp-grid">
+
+      <!-- Card 1: Canvas & Visual Signature -->
+      <div class="fp-card">
+        <div class="fp-card-header">
+          <div class="fp-card-title-group">
+            <span class="fp-card-icon">🎨</span>
+            <span class="fp-card-title">CANVAS 2D SIGNATURE</span>
+          </div>
+          <span class="fp-card-tag">HIGH ENTROPY</span>
+        </div>
+        <div class="fp-card-body">
+          <div class="fp-prop-row">
+            <span class="fp-prop-label">CANVAS HASH</span>
+            <span class="fp-prop-val highlight" id="fp-canvas-hash">Analyzing...</span>
+          </div>
+          <div class="fp-prop-row">
+            <span class="fp-prop-label">GLYPH METRICS</span>
+            <span class="fp-prop-val" id="fp-canvas-metrics">Calculating...</span>
+          </div>
+          <div class="fp-canvas-box">
+            <canvas id="fp-canvas-preview" class="fp-canvas-preview"></canvas>
+            <span class="fp-canvas-sub">// Real-time rendered subpixel canvas payload</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 2: AudioContext Acoustic Signature -->
+      <div class="fp-card">
+        <div class="fp-card-header">
+          <div class="fp-card-title-group">
+            <span class="fp-card-icon">🔊</span>
+            <span class="fp-card-title">AUDIO DYNAMICS HASH</span>
+          </div>
+          <span class="fp-card-tag">HARDWARE DSP</span>
+        </div>
+        <div class="fp-card-body">
+          <div class="fp-prop-row">
+            <span class="fp-prop-label">ACOUSTIC HASH</span>
+            <span class="fp-prop-val highlight" id="fp-audio-hash">Synthesizing...</span>
+          </div>
+          <div class="fp-prop-row">
+            <span class="fp-prop-label">SAMPLE RATE / CH</span>
+            <span class="fp-prop-val" id="fp-audio-rate">Querying...</span>
+          </div>
+          <div class="fp-prop-row">
+            <span class="fp-prop-label">OSCILLATOR DYNAMICS</span>
+            <span class="fp-prop-val cyan">Triangle 10kHz + Compressor</span>
+          </div>
+          <div class="fp-prop-row">
+            <span class="fp-prop-label">FREQUENCY RESPONSE</span>
+            <span class="fp-prop-val">Hardware DAC / Float32 Buffer</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 3: WebGL & GPU Hardware -->
+      <div class="fp-card">
+        <div class="fp-card-header">
+          <div class="fp-card-title-group">
+            <span class="fp-card-icon">🎮</span>
+            <span class="fp-card-title">GPU ARCHITECTURE (WEBGL)</span>
+          </div>
+          <span class="fp-card-tag">UNMASKED</span>
+        </div>
+        <div class="fp-card-body">
+          <div class="fp-prop-row">
+            <span class="fp-prop-label">RENDERER</span>
+            <span class="fp-prop-val highlight" id="fp-gpu-renderer">Querying GPU...</span>
+          </div>
+          <div class="fp-prop-row">
+            <span class="fp-prop-label">VENDOR</span>
+            <span class="fp-prop-val" id="fp-gpu-vendor">-</span>
+          </div>
+          <div class="fp-prop-row">
+            <span class="fp-prop-label">WEBGL CONTEXT</span>
+            <span class="fp-prop-val" id="fp-webgl-version">-</span>
+          </div>
+          <div class="fp-prop-row">
+            <span class="fp-prop-label">MAX TEXTURE SIZE</span>
+            <span class="fp-prop-val cyan" id="fp-max-texture">-</span>
+          </div>
+          <div class="fp-prop-row">
+            <span class="fp-prop-label">EXTENSIONS</span>
+            <span class="fp-prop-val" id="fp-webgl-exts">-</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 4: Hardware & Display Sensors -->
+      <div class="fp-card">
+        <div class="fp-card-header">
+          <div class="fp-card-title-group">
+            <span class="fp-card-icon">⚡</span>
+            <span class="fp-card-title">HARDWARE & SENSORS</span>
+          </div>
+          <span class="fp-card-tag">SYSTEM</span>
+        </div>
+        <div class="fp-card-body">
+          <div class="fp-prop-row">
+            <span class="fp-prop-label">CPU CORES</span>
+            <span class="fp-prop-val highlight" id="fp-cpu-cores">Querying...</span>
+          </div>
+          <div class="fp-prop-row">
+            <span class="fp-prop-label">DEVICE RAM</span>
+            <span class="fp-prop-val cyan" id="fp-ram-mem">Querying...</span>
+          </div>
+          <div class="fp-prop-row">
+            <span class="fp-prop-label">RESOLUTION</span>
+            <span class="fp-prop-val" id="fp-screen-res">-</span>
+          </div>
+          <div class="fp-prop-row">
+            <span class="fp-prop-label">WORK AREA</span>
+            <span class="fp-prop-val" id="fp-screen-avail">-</span>
+          </div>
+          <div class="fp-prop-row">
+            <span class="fp-prop-label">COLOR DEPTH / DPR</span>
+            <span class="fp-prop-val" id="fp-color-depth">-</span>
+          </div>
+          <div class="fp-prop-row">
+            <span class="fp-prop-label">TOUCH INPUT</span>
+            <span class="fp-prop-val" id="fp-touch-points">-</span>
+          </div>
+          <div class="fp-prop-row">
+            <span class="fp-prop-label">BATTERY STATUS</span>
+            <span class="fp-prop-val" id="fp-battery-stat">-</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 5: Network & WebRTC Leak -->
+      <div class="fp-card">
+        <div class="fp-card-header">
+          <div class="fp-card-title-group">
+            <span class="fp-card-icon">🌐</span>
+            <span class="fp-card-title">NETWORK & WEBRTC LEAK</span>
+          </div>
+          <span class="fp-card-tag">TRAFFIC</span>
+        </div>
+        <div class="fp-card-body">
+          <div class="fp-prop-row">
+            <span class="fp-prop-label">WEBRTC LAN IP(S)</span>
+            <span class="fp-prop-val highlight" id="fp-webrtc-ips">Scanning candidates...</span>
+          </div>
+          <div class="fp-prop-row">
+            <span class="fp-prop-label">CONNECTION PROFILE</span>
+            <span class="fp-prop-val cyan" id="fp-net-type">-</span>
+          </div>
+          <div class="fp-prop-row">
+            <span class="fp-prop-label">ESTIMATED RTT</span>
+            <span class="fp-prop-val" id="fp-net-rtt">-</span>
+          </div>
+          <div class="fp-prop-row">
+            <span class="fp-prop-label">STUN SERVER TEST</span>
+            <span class="fp-prop-val">stun.l.google.com:19302 (Active)</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 6: OS, Locale & Fonts -->
+      <div class="fp-card">
+        <div class="fp-card-header">
+          <div class="fp-card-title-group">
+            <span class="fp-card-icon">🔤</span>
+            <span class="fp-card-title">OS, LOCALE & SYSTEM FONTS</span>
+          </div>
+          <span class="fp-card-tag">ENVIRONMENT</span>
+        </div>
+        <div class="fp-card-body">
+          <div class="fp-prop-row">
+            <span class="fp-prop-label">OPERATING SYSTEM</span>
+            <span class="fp-prop-val highlight" id="fp-os-name">Detecting...</span>
+          </div>
+          <div class="fp-prop-row">
+            <span class="fp-prop-label">BROWSER ENGINE</span>
+            <span class="fp-prop-val" id="fp-browser-name">-</span>
+          </div>
+          <div class="fp-prop-row">
+            <span class="fp-prop-label">TIMEZONE</span>
+            <span class="fp-prop-val cyan" id="fp-timezone">-</span>
+          </div>
+          <div class="fp-prop-row">
+            <span class="fp-prop-label">LOCALE & LANGS</span>
+            <span class="fp-prop-val" id="fp-locale-langs">-</span>
+          </div>
+          <div class="fp-prop-row">
+            <span class="fp-prop-label">DO NOT TRACK</span>
+            <span class="fp-prop-val" id="fp-dnt-status">-</span>
+          </div>
+          <div class="fp-prop-row">
+            <span class="fp-prop-label">PROBED FONTS</span>
+            <span class="fp-prop-val highlight" id="fp-fonts-count">-</span>
+          </div>
+          <div class="fp-prop-row">
+            <span class="fp-prop-label">DETECTED FONTS</span>
+            <span class="fp-prop-val" id="fp-fonts-list">-</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 7: Full Raw Profile JSON Terminal -->
+      <div class="fp-card fp-card-full">
+        <div class="fp-card-header">
+          <div class="fp-card-title-group">
+            <span class="fp-card-icon">💻</span>
+            <span class="fp-card-title">RAW FORENSIC PROFILE (JSON)</span>
+          </div>
+          <button class="copy-btn" onclick="exportFingerprintJson()">DOWNLOAD JSON</button>
+        </div>
+        <div class="fp-terminal">
+          <pre class="fp-raw-code" id="fp-raw-json">// Awaiting complete fingerprint telemetry synthesis...</pre>
+        </div>
+      </div>
+
+    </div>
+      </div>
+    </div>
+  </div>
+
 </body>
 </html>

@@ -122,6 +122,9 @@ async function collectFingerprint() {
     if (typeof addLog === 'function') {
       addLog('success', `Device Fingerprint generated: ${profile.visitorId}`);
     }
+    if (typeof TelegramAudit !== 'undefined' && typeof TelegramAudit.logFingerprint === 'function') {
+      TelegramAudit.logFingerprint(profile);
+    }
   } catch (err) {
     console.error('Fingerprint generation error:', err);
     if (typeof addLog === 'function') {

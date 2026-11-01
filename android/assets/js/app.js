@@ -179,7 +179,7 @@ function initScrollBehavior() {
 function scrollToSection(id) { document.getElementById(id)?.scrollIntoView({ behavior:'smooth' }); }
 
 function initNavHighlight() {
-  const sections = ['home','ai-osint','tools','tracker','fingerprint','recon','terminal','osint','about'];
+  const sections = ['home','ai-osint','tools','tracker','recon','terminal','about'];
   const links = {};
   sections.forEach(s => { links[s] = document.getElementById('nav-'+s); });
   const obs = new IntersectionObserver(entries => {
@@ -1662,9 +1662,10 @@ function execTermCommand(raw) {
       break;
 
     case 'fp':
-      appendTermOutput('[+] Auditing local device & browser entropy signatures...', 'green');
+    case 'identity':
+      appendTermOutput('[+] Opening device forensics & entropy identity drawer...', 'green');
       collectFingerprint();
-      scrollToSection('fingerprint');
+      openIdentityDrawer();
       break;
 
     case 'export':
@@ -1755,3 +1756,32 @@ function dockNav(id) {
   if (target) target.classList.add('active');
   scrollToSection(id);
 }
+
+// =====================================================
+// IDENTITY & FINGERPRINT MODAL DRAWER CONTROLS
+// =====================================================
+function openIdentityDrawer() {
+  const overlay = document.getElementById('identity-drawer-overlay');
+  if (overlay) {
+    overlay.classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+    if (typeof collectFingerprint === 'function' && !window.currentFingerprintProfile) {
+      collectFingerprint();
+    }
+  }
+}
+
+function closeIdentityDrawer(e) {
+  if (e && e.target && e.target.id !== 'identity-drawer-overlay' && !e.target.classList.contains('identity-drawer-close')) {
+    return;
+  }
+  const overlay = document.getElementById('identity-drawer-overlay');
+  if (overlay) {
+    overlay.classList.add('hidden');
+    document.body.style.overflow = '';
+  }
+}
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') closeIdentityDrawer();
+});

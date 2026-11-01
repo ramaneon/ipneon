@@ -886,7 +886,10 @@ const AI_OSINT = (() => {
         <!-- TOP NAVIGATION TABS -->
         <div class="ai-osint-nav-tabs">
           <button class="ai-osint-tab-btn active" data-tab="search" onclick="AI_OSINT.switchTab('search')">
-            <span>🔍</span> UNIVERSAL SEARCH
+            <span>🔍</span> UNIVERSAL AI SEARCH
+          </button>
+          <button class="ai-osint-tab-btn" data-tab="core-osint" onclick="AI_OSINT.switchTab('core-osint')">
+            <span>🎯</span> CORE OSINT TOOLS (4)
           </button>
           <button class="ai-osint-tab-btn" data-tab="graph" onclick="AI_OSINT.switchTab('graph')">
             <span>🕸️</span> EVIDENCE TOPOLOGY GRAPH
@@ -907,8 +910,8 @@ const AI_OSINT = (() => {
               <div class="lens-ring l2"></div>
               <div class="lens-core">👁️‍🗨️</div>
             </div>
-            <h2 class="ai-osint-title">AI OSINT <span class="accent">Intelligence Suite</span></h2>
-            <p class="ai-osint-sub">Search nickname, email, phone, domain, or company across 3,140+ public endpoints without leaving your browser</p>
+            <h2 class="ai-osint-title">AI NEON <span class="accent">OSINT Suite</span></h2>
+            <p class="ai-osint-sub">Unified intelligence suite &bull; Multi-vector search across 3,140+ public endpoints &bull; Username &amp; Email Hunter &bull; 100% in-browser zero downloads</p>
 
             <!-- INPUT BAR -->
             <div class="ai-osint-search-bar-wrap">
@@ -943,6 +946,69 @@ const AI_OSINT = (() => {
 
           <!-- RESULTS CONTAINER -->
           <div class="ai-osint-results-wrapper" id="ai-osint-results-container" style="display:none;"></div>
+        </div>
+
+        <!-- 2. CORE OSINT TOOLS VIEW (COMBINED) -->
+        <div class="ai-osint-tab-view" id="ai-osint-view-core-osint">
+          <div class="section-header" style="margin-bottom:1.5rem; text-align:center;">
+            <span class="section-tag">// TARGET ENUMERATION</span>
+            <h3 class="section-title" style="font-size:1.6rem;">CORE RECON <span class="accent">ARSENAL</span></h3>
+            <p class="section-sub">Username, email, link generator and breach intelligence lookup</p>
+          </div>
+          <div class="osint-grid" id="osint-grid">
+            <div class="osint-card osint-card-large" id="osint-username">
+              <div class="osint-card-header">
+                <span class="osint-icon">🔍</span>
+                <h3 class="osint-title">USERNAME HUNTER</h3>
+              </div>
+              <div class="osint-input-row">
+                <input type="text" id="username-input" class="osint-input" placeholder="Enter username..." onkeydown="if(event.key==='Enter')huntUsername()" />
+                <button class="osint-btn" id="btn-username" onclick="huntUsername()">HUNT</button>
+              </div>
+              <div class="osint-results" id="username-results">
+                <p class="osint-hint">Run automated live background probes across 16+ platforms (displays verified active profiles only)</p>
+              </div>
+            </div>
+            <div class="osint-card" id="osint-email">
+              <div class="osint-card-header">
+                <span class="osint-icon">📧</span>
+                <h3 class="osint-title">EMAIL INTEL</h3>
+              </div>
+              <div class="osint-input-row">
+                <input type="text" id="email-input" class="osint-input" placeholder="Enter email address..." onkeydown="if(event.key==='Enter')lookupEmail()" />
+                <button class="osint-btn" id="btn-email" onclick="lookupEmail()">LOOKUP</button>
+              </div>
+              <div class="osint-results" id="email-results">
+                <p class="osint-hint">Check breaches, reputation and deliverability</p>
+              </div>
+            </div>
+            <div class="osint-card" id="osint-logger">
+              <div class="osint-card-header">
+                <span class="osint-icon">🔗</span>
+                <h3 class="osint-title">LINK LOGGER</h3>
+              </div>
+              <div class="osint-input-row">
+                <input type="text" id="link-target" class="osint-input" placeholder="Destination URL..." onkeydown="if(event.key==='Enter')generateLoggerLink()" />
+                <button class="osint-btn" id="btn-genlink" onclick="generateLoggerLink()">GENERATE</button>
+              </div>
+              <div class="osint-results" id="link-results">
+                <p class="osint-hint">Generate a custom tracking redirect link</p>
+              </div>
+            </div>
+            <div class="osint-card" id="osint-breach">
+              <div class="osint-card-header">
+                <span class="osint-icon">💥</span>
+                <h3 class="osint-title">BREACH CHECK</h3>
+              </div>
+              <div class="osint-input-row">
+                <input type="text" id="breach-input" class="osint-input" placeholder="Email or username..." onkeydown="if(event.key==='Enter')checkBreach()" />
+                <button class="osint-btn" id="btn-breach" onclick="checkBreach()">CHECK</button>
+              </div>
+              <div class="osint-results" id="breach-results">
+                <p class="osint-hint">Check known data breaches and leaked databases</p>
+              </div>
+            </div>
+          </div>
         </div>
 
         <!-- 2. EVIDENCE GRAPH VIEW -->
