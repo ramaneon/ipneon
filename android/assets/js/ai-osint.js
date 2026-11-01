@@ -370,13 +370,16 @@ const AI_OSINT = (() => {
 
     // ═══ SMART ROUTING ═══
     if (kind === 'username') {
-      // Route → Username Hunter tab + fire live hunt
-      switchTab('username');
+      // Unified Fingerprint.to Experience: Render the comprehensive AI Dossier right in Universal Search!
+      switchTab('search');
+      _runSearchWithProgress(q, kind);
+
+      // Simultaneously populate and trigger the background probe in Username Hunter tab
       const uInput = document.getElementById('username-input');
       if (uInput) uInput.value = q;
-      if (typeof huntUsername === 'function') huntUsername();
-      // Also show AI profile summary in search tab after delay
-      setTimeout(() => _showAIProfileSummary(q, kind), 500);
+      if (typeof huntUsername === 'function') {
+        setTimeout(() => huntUsername(), 300);
+      }
 
     } else if (kind === 'email') {
       // Route → Email + Breach tab + fire both tools
@@ -493,11 +496,12 @@ const AI_OSINT = (() => {
       </div>
       <div class="ai-osint-filter-bar" id="ai-osint-filter-bar">
         <button class="ai-osint-filter-chip active" onclick="AI_OSINT.filterProfiles('All')">All (${profiles.length})</button>
-        <button class="ai-osint-filter-chip" onclick="AI_OSINT.filterProfiles('Dev')">Dev (${profiles.filter(p=>p.group==='Dev').length})</button>
         <button class="ai-osint-filter-chip" onclick="AI_OSINT.filterProfiles('Social')">Social (${profiles.filter(p=>p.group==='Social').length})</button>
+        <button class="ai-osint-filter-chip" onclick="AI_OSINT.filterProfiles('Dev')">Dev (${profiles.filter(p=>p.group==='Dev').length})</button>
         <button class="ai-osint-filter-chip" onclick="AI_OSINT.filterProfiles('Gaming')">Gaming (${profiles.filter(p=>p.group==='Gaming').length})</button>
-        <button class="ai-osint-filter-chip" onclick="AI_OSINT.filterProfiles('Forums')">Forums (${profiles.filter(p=>p.group==='Forums').length})</button>
         <button class="ai-osint-filter-chip" onclick="AI_OSINT.filterProfiles('Media')">Media (${profiles.filter(p=>p.group==='Media').length})</button>
+        <button class="ai-osint-filter-chip" onclick="AI_OSINT.filterProfiles('Dorks')">OSINT Dorks (${profiles.filter(p=>p.group==='Dorks').length})</button>
+        <button class="ai-osint-filter-chip" onclick="AI_OSINT.filterProfiles('Threat')">Threat &amp; Leaks (${profiles.filter(p=>p.group==='Threat').length})</button>
       </div>
       <div class="ai-osint-profiles-grid" id="ai-osint-profiles-grid">
         ${renderProfileItems(profiles)}
@@ -581,50 +585,69 @@ const AI_OSINT = (() => {
   }
 
   function buildProfilesForTarget(q, kind) {
-    const slug = q.trim().toLowerCase().replace(/[^a-z0-9_-]/g, '');
-
-    const baseList = [
-      { site: 'GitHub', group: 'Dev', url: `https://github.com/${slug}`, detail: '31 public repositories, 42 stars, verified GPG key', since: '2018', match: 'exact' },
-      { site: 'Reddit', group: 'Forums', url: `https://reddit.com/user/${slug}`, detail: '2.4k karma, moderator on 2 technical subreddits', since: '2019', match: 'exact' },
-      { site: 'Telegram', group: 'Social', url: `https://t.me/${slug}`, detail: 'Public bio linked to dev handle', since: '2020', match: 'exact' },
-      { site: 'Stack Overflow', group: 'Dev', url: `https://stackoverflow.com/users/${slug}`, detail: '1,420 reputation, 14 answers in Python & Go', since: '2019', match: 'exact' },
-      { site: 'Steam', group: 'Gaming', url: `https://steamcommunity.com/id/${slug}`, detail: 'Level 42 profile, 64 games owned, badge collector', since: '2016', match: 'likely' },
-      { site: 'Docker Hub', group: 'Dev', url: `https://hub.docker.com/u/${slug}`, detail: '5 published container images', since: '2021', match: 'exact' },
-      { site: 'Twitter / X', group: 'Social', url: `https://twitter.com/${slug}`, detail: 'Active account, mentions matching location', since: '2019', match: 'likely' },
-      { site: 'Medium', group: 'Media', url: `https://medium.com/@${slug}`, detail: '4 published cybersecurity deep-dives', since: '2021', match: 'exact' },
-      { site: 'Chess.com', group: 'Gaming', url: `https://www.chess.com/member/${slug}`, detail: 'Rapid rating 1485, 310 games played', since: '2022', match: 'likely' },
-      { site: 'Habr', group: 'Forums', url: `https://habr.com/ru/users/${slug}`, detail: 'Registered reader, 4 saved translation bookmarks', since: '2020', match: 'likely' },
-      { site: 'Keybase', group: 'Dev', url: `https://keybase.io/${slug}`, detail: 'PGP fingerprint verified across Twitter & GitHub', since: '2019', match: 'exact' },
-      { site: 'SoundCloud', group: 'Media', url: `https://soundcloud.com/${slug}`, detail: '3 playlists, public follower list', since: '2017', match: 'possible' },
-      { site: 'Pinterest', group: 'Social', url: `https://pinterest.com/${slug}`, detail: '4 public design boards', since: '2018', match: 'possible' },
-      { site: 'GitLab', group: 'Dev', url: `https://gitlab.com/${slug}`, detail: 'Public profile with commit activity', since: '2020', match: 'likely' },
-      { site: 'YouTube', group: 'Media', url: `https://youtube.com/@${slug}`, detail: 'Subscribed to infosec & coding channels', since: '2017', match: 'possible' }
-    ];
+    const slug = q.trim().replace(/^@/, '');
+    const cleanSlug = encodeURIComponent(slug);
 
     if (kind === 'domain') {
       return [
-        { site: 'WHOIS Registry', group: 'Dev', url: `https://whois.domaintools.com/${q}`, detail: 'Gandi SAS registrar, DNSSEC active', since: '2018', match: 'exact' },
-        { site: 'crt.sh (Certificates)', group: 'Dev', url: `https://crt.sh/?q=${q}`, detail: '42 wildcard certificates issued via Let\'s Encrypt', since: '2019', match: 'exact' },
-        { site: 'Shodan Exposed Nodes', group: 'Dev', url: `https://www.shodan.io/search?query=hostname:${q}`, detail: 'Port 80/443 open (nginx), Port 8443 SSL-VPN', since: '2020', match: 'exact' },
-        { site: 'Have I Been Pwned', group: 'Forums', url: `https://haveibeenpwned.com/`, detail: 'Corporate domain found in 2 historic breach archives', since: '2022', match: 'exact' },
-        { site: 'Wayback Machine', group: 'Media', url: `https://web.archive.org/web/*/${q}`, detail: '348 snapshots saved since 2018', since: '2018', match: 'exact' },
-        { site: 'GitHub Org Search', group: 'Dev', url: `https://github.com/search?q=${q}`, detail: '14 public repositories mention domain endpoints', since: '2021', match: 'likely' },
-        { site: 'SecurityTrails', group: 'Dev', url: `https://securitytrails.com/domain/${q}`, detail: '18 historical A-record IP mutations detected', since: '2018', match: 'exact' }
+        { site: 'WHOIS Registry', group: 'Dev', url: `https://whois.domaintools.com/${cleanSlug}`, detail: 'ICANN registration, registrar attribution & DNSSEC records', since: 'Active', match: 'exact' },
+        { site: 'crt.sh (Certificates)', group: 'Dev', url: `https://crt.sh/?q=${cleanSlug}`, detail: 'Wildcard and sub-domain SSL/TLS transparency log certificates', since: 'Active', match: 'exact' },
+        { site: 'Shodan Exposed Nodes', group: 'Dev', url: `https://www.shodan.io/search?query=hostname:${cleanSlug}`, detail: 'Internet-facing ports, open services, SSL-VPN & IoT telemetry', since: 'Active', match: 'exact' },
+        { site: 'Have I Been Pwned', group: 'Threat', url: `https://haveibeenpwned.com/`, detail: 'Corporate domain records in credential breach logs & stealer dumps', since: 'Active', match: 'exact' },
+        { site: 'Wayback Machine', group: 'Media', url: `https://web.archive.org/web/*/${cleanSlug}`, detail: 'Historical snapshots across digital web archive timeline', since: 'Active', match: 'exact' },
+        { site: 'SecurityTrails', group: 'Dev', url: `https://securitytrails.com/domain/${cleanSlug}`, detail: 'Historical DNS A/MX records and IP infrastructure mutations', since: 'Active', match: 'exact' },
+        { site: 'URLScan.io Sandbox', group: 'Threat', url: `https://urlscan.io/search/#${cleanSlug}`, detail: 'Automated browser DOM analysis, network calls & screenshots', since: 'Active', match: 'exact' }
       ];
     }
 
     if (kind === 'email') {
-      const domain = q.split('@')[1] || '';
+      const domain = slug.split('@')[1] || '';
       return [
-        { site: 'Have I Been Pwned', group: 'Forums', url: 'https://haveibeenpwned.com/', detail: 'Found in 1 credential exposure database (2024)', since: '2024', match: 'exact' },
-        { site: 'Gravatar Avatar Engine', group: 'Social', url: `https://en.gravatar.com/`, detail: 'Linked MD5 hash with active profile avatar', since: '2019', match: 'exact' },
-        { site: 'GitHub Commit Search', group: 'Dev', url: `https://github.com/search?q=${q}&type=commits`, detail: 'Author email on 12 public repository commits', since: '2020', match: 'exact' },
-        { site: 'holehe SaaS Matrix', group: 'Social', url: '#', detail: 'Registered on Google Workspace, Spotify, Twitter, and Discord', since: '2018', match: 'exact' },
-        { site: 'MX / SPF Diagnostics', group: 'Dev', url: `https://mxtoolbox.com/SuperTool.aspx?action=mx:${domain}`, detail: `Mail server resolves to ${domain} with strict DMARC`, since: '2019', match: 'likely' }
+        { site: 'Have I Been Pwned', group: 'Threat', url: `https://haveibeenpwned.com/account/${cleanSlug}`, detail: 'Credential exposure database, plain-text hash archives', since: 'Active', match: 'exact' },
+        { site: 'DeHashed Leak Index', group: 'Threat', url: `https://dehashed.com/search?query=${cleanSlug}`, detail: 'Comprehensive breached asset & compromised record search', since: 'Active', match: 'exact' },
+        { site: 'IntelX Public Search', group: 'Threat', url: `https://intelx.io/?s=${cleanSlug}`, detail: 'Darknet dumps, paste sites, and historical leaked corpora', since: 'Active', match: 'exact' },
+        { site: 'Gravatar Global Profile', group: 'Social', url: `https://en.gravatar.com/${cleanSlug.split('@')[0]}`, detail: 'MD5 profile linkage, avatar, and linked social presences', since: 'Active', match: 'likely' },
+        { site: 'GitHub Commit Search', group: 'Dev', url: `https://github.com/search?q=${cleanSlug}&type=commits`, detail: 'Public commit author references across open repositories', since: 'Active', match: 'likely' },
+        { site: 'MX / SPF Diagnostics', group: 'Dev', url: `https://mxtoolbox.com/SuperTool.aspx?action=mx:${domain}`, detail: `Mail exchange records, SPF/DMARC spoofability audit for ${domain}`, since: 'Active', match: 'likely' }
       ];
     }
 
-    return baseList;
+    // Default: USERNAME / HANDLE / PERSON (Fingerprint.to 35+ platform mapping)
+    return [
+      // 1. Social & Identity Networks
+      { site: 'Instagram', group: 'Social', url: `https://instagram.com/${cleanSlug}`, detail: `Profile URL check & bio metadata probe for @${slug}`, since: 'Live Probe', match: 'exact' },
+      { site: 'Twitter / X', group: 'Social', url: `https://twitter.com/${cleanSlug}`, detail: `Direct handle lookup, timeline search & mentions for @${slug}`, since: 'Live Probe', match: 'exact' },
+      { site: 'TikTok', group: 'Social', url: `https://tiktok.com/@${cleanSlug}`, detail: `Creator profile, user bio and media endpoints for @${slug}`, since: 'Live Probe', match: 'exact' },
+      { site: 'Telegram', group: 'Social', url: `https://t.me/${cleanSlug}`, detail: `Direct public channel / username resolution for @${slug}`, since: 'Live Probe', match: 'exact' },
+      { site: 'LinkedIn', group: 'Social', url: `https://www.google.com/search?q=site:linkedin.com/in/+${cleanSlug}`, detail: `Professional identity & corporate footprint indexed for ${slug}`, since: 'Indexed', match: 'likely' },
+      { site: 'Pinterest', group: 'Social', url: `https://pinterest.com/${cleanSlug}`, detail: `Public boards, user avatar & pin activity for @${slug}`, since: 'Live Probe', match: 'exact' },
+      { site: 'Reddit', group: 'Social', url: `https://reddit.com/user/${cleanSlug}`, detail: `Subreddit posts, comments, karma and account status for u/${slug}`, since: 'Live Probe', match: 'exact' },
+      { site: 'YouTube', group: 'Media', url: `https://youtube.com/@${cleanSlug}`, detail: `Channel handles, uploads and subscription activity for @${slug}`, since: 'Live Probe', match: 'exact' },
+      { site: 'Twitch', group: 'Gaming', url: `https://twitch.tv/${cleanSlug}`, detail: `Live broadcast channel, chat profile and stream vods for @${slug}`, since: 'Live Probe', match: 'exact' },
+      { site: 'Steam', group: 'Gaming', url: `https://steamcommunity.com/id/${cleanSlug}`, detail: `Valve Steam Community gaming identity, games & inventory for ${slug}`, since: 'Live Probe', match: 'exact' },
+      
+      // 2. Developer & Technical Footprint
+      { site: 'GitHub', group: 'Dev', url: `https://github.com/${cleanSlug}`, detail: `Open source code repositories, commits, stars and gists for @${slug}`, since: 'Live Probe', match: 'exact' },
+      { site: 'GitLab', group: 'Dev', url: `https://gitlab.com/${cleanSlug}`, detail: `GitLab projects, snippets and activity log for @${slug}`, since: 'Live Probe', match: 'exact' },
+      { site: 'Docker Hub', group: 'Dev', url: `https://hub.docker.com/u/${cleanSlug}`, detail: `Container images, tags and developer registry repositories for ${slug}`, since: 'Live Probe', match: 'exact' },
+      { site: 'Dev.to', group: 'Dev', url: `https://dev.to/${cleanSlug}`, detail: `Developer articles, publications and community profile for @${slug}`, since: 'Live Probe', match: 'exact' },
+      { site: 'Stack Overflow', group: 'Dev', url: `https://stackoverflow.com/users/search?q=${cleanSlug}`, detail: `Engineering Q&A reputation, technology tags and answers for ${slug}`, since: 'Indexed', match: 'likely' },
+      { site: 'Keybase', group: 'Dev', url: `https://keybase.io/${cleanSlug}`, detail: `Cryptographic PGP identities, proofs and verified handles for ${slug}`, since: 'Live Probe', match: 'exact' },
+      { site: 'HackerNews', group: 'Dev', url: `https://news.ycombinator.com/user?id=${cleanSlug}`, detail: `Y Combinator Hacker News submissions, comments & karma for ${slug}`, since: 'Live Probe', match: 'exact' },
+      
+      // 3. Media, Audio & Creative
+      { site: 'Medium', group: 'Media', url: `https://medium.com/@${cleanSlug}`, detail: `Published stories, publications, highlights and followers for @${slug}`, since: 'Live Probe', match: 'exact' },
+      { site: 'Spotify', group: 'Media', url: `https://open.spotify.com/search/${cleanSlug}/users`, detail: `Public playlists, user profile and streaming history for ${slug}`, since: 'Indexed', match: 'possible' },
+      { site: 'SoundCloud', group: 'Media', url: `https://soundcloud.com/${cleanSlug}`, detail: `Audio tracks, playlists, reposts and creator bio for @${slug}`, since: 'Live Probe', match: 'exact' },
+      { site: 'Linktree', group: 'Social', url: `https://linktr.ee/${cleanSlug}`, detail: `Aggregated multi-link identity and bio landing page for @${slug}`, since: 'Live Probe', match: 'exact' },
+      
+      // 4. Intelligence, Dorks & Threat Recon
+      { site: 'Google OSINT Dork', group: 'Dorks', url: `https://www.google.com/search?q="${cleanSlug}"`, detail: `Exact-phrase web-wide crawling across all indexed public pages for "${slug}"`, since: 'Live Dork', match: 'exact' },
+      { site: 'Bing Social Dork', group: 'Dorks', url: `https://www.bing.com/search?q="${cleanSlug}"+(site:instagram.com+OR+site:twitter.com+OR+site:linkedin.com+OR+site:github.com)`, detail: `Multi-platform focused indexing query for verified mentions of ${slug}`, since: 'Live Dork', match: 'exact' },
+      { site: 'Have I Been Pwned', group: 'Threat', url: `https://haveibeenpwned.com/account/${cleanSlug}`, detail: `Compromised credentials, stealer log dumps & paste archives for ${slug}`, since: 'Live Threat', match: 'likely' },
+      { site: 'DeHashed Threat Search', group: 'Threat', url: `https://dehashed.com/search?query=${cleanSlug}`, detail: `Breached records, historical usernames, emails & passwords matching ${slug}`, since: 'Live Threat', match: 'likely' },
+      { site: 'IntelX Archives', group: 'Threat', url: `https://intelx.io/?s=${cleanSlug}`, detail: `Historical deep-web search for raw documents and leaks mentioning ${slug}`, since: 'Live Threat', match: 'likely' }
+    ];
   }
 
   function renderProfileItems(profiles) {

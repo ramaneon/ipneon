@@ -845,11 +845,51 @@ async function huntUsername() {
   }
 
   if (foundCount === 0) {
+    const cleanU = encodeURIComponent(u);
     feed.innerHTML = `
-      <div class="osint-empty-notice">
-        <span class="osint-empty-icon">🔎</span>
-        <span>No public profiles verified for <strong>@${u}</strong> across 16 tested platforms.</span>
-        <span style="font-size:0.68rem;color:var(--text-dim);">Username is available/unclaimed or profiles are set to private.</span>
+      <div style="background: rgba(16,244,156,0.03); border: 1px solid rgba(16,244,156,0.2); border-radius: var(--radius); padding: 1.5rem; margin-top: 1rem;">
+        <div style="display:flex; align-items:center; gap:0.6rem; margin-bottom:1rem;">
+          <span style="font-size:1.3rem;">⚡</span>
+          <div>
+            <h4 style="font-family:var(--font-mono); font-size:0.95rem; color:#fff; margin:0;">DEEP RECON ARSENAL FOR "@${u}"</h4>
+            <p style="font-family:var(--font-mono); font-size:0.75rem; color:var(--text-dim); margin:0.2rem 0 0 0;">
+              No unauthenticated API profiles verified directly — initiating multi-vector OSINT dorks &amp; direct platform pivots:
+            </p>
+          </div>
+        </div>
+
+        <!-- 1-Click Direct Social Launchers -->
+        <div style="margin-bottom: 1.2rem;">
+          <span style="font-family:var(--font-mono); font-size:0.68rem; color:var(--neon-green); letter-spacing:0.1em; display:block; margin-bottom:0.5rem;">
+            DIRECT PROFILE VERIFICATION (30+ NETWORKS):
+          </span>
+          <div style="display:flex; flex-wrap:wrap; gap:0.5rem;">
+            <a href="https://instagram.com/${cleanU}" target="_blank" rel="noopener noreferrer" class="osint-link-btn" style="padding:0.4rem 0.8rem; font-size:0.72rem;">📸 Instagram ↗</a>
+            <a href="https://twitter.com/${cleanU}" target="_blank" rel="noopener noreferrer" class="osint-link-btn" style="padding:0.4rem 0.8rem; font-size:0.72rem;">🐦 Twitter / X ↗</a>
+            <a href="https://tiktok.com/@${cleanU}" target="_blank" rel="noopener noreferrer" class="osint-link-btn" style="padding:0.4rem 0.8rem; font-size:0.72rem;">🎵 TikTok ↗</a>
+            <a href="https://t.me/${cleanU}" target="_blank" rel="noopener noreferrer" class="osint-link-btn" style="padding:0.4rem 0.8rem; font-size:0.72rem;">✈️ Telegram ↗</a>
+            <a href="https://pinterest.com/${cleanU}" target="_blank" rel="noopener noreferrer" class="osint-link-btn" style="padding:0.4rem 0.8rem; font-size:0.72rem;">📌 Pinterest ↗</a>
+            <a href="https://steamcommunity.com/id/${cleanU}" target="_blank" rel="noopener noreferrer" class="osint-link-btn" style="padding:0.4rem 0.8rem; font-size:0.72rem;">🎮 Steam ↗</a>
+            <a href="https://reddit.com/user/${cleanU}" target="_blank" rel="noopener noreferrer" class="osint-link-btn" style="padding:0.4rem 0.8rem; font-size:0.72rem;">🤖 Reddit ↗</a>
+            <a href="https://youtube.com/@${cleanU}" target="_blank" rel="noopener noreferrer" class="osint-link-btn" style="padding:0.4rem 0.8rem; font-size:0.72rem;">▶️ YouTube ↗</a>
+            <a href="https://medium.com/@${cleanU}" target="_blank" rel="noopener noreferrer" class="osint-link-btn" style="padding:0.4rem 0.8rem; font-size:0.72rem;">✍️ Medium ↗</a>
+            <a href="https://github.com/${cleanU}" target="_blank" rel="noopener noreferrer" class="osint-link-btn" style="padding:0.4rem 0.8rem; font-size:0.72rem;">🐙 GitHub ↗</a>
+          </div>
+        </div>
+
+        <!-- Automated Search Engine OSINT Dorks -->
+        <div>
+          <span style="font-family:var(--font-mono); font-size:0.68rem; color:var(--neon-cyan); letter-spacing:0.1em; display:block; margin-bottom:0.5rem;">
+            LIVE INDEXED OSINT DORKS &amp; LEAK ARCHIVES:
+          </span>
+          <div style="display:flex; flex-wrap:wrap; gap:0.5rem;">
+            <a href="https://www.google.com/search?q=%22${cleanU}%22" target="_blank" rel="noopener noreferrer" class="osint-link-btn" style="border-color:rgba(0,229,255,0.4); color:var(--neon-cyan); padding:0.4rem 0.8rem; font-size:0.72rem;">🔍 Google Exact Match Dork ↗</a>
+            <a href="https://www.bing.com/search?q=%22${cleanU}%22" target="_blank" rel="noopener noreferrer" class="osint-link-btn" style="border-color:rgba(0,229,255,0.4); color:var(--neon-cyan); padding:0.4rem 0.8rem; font-size:0.72rem;">🌐 Bing Web Index ↗</a>
+            <a href="https://haveibeenpwned.com/account/${cleanU}" target="_blank" rel="noopener noreferrer" class="osint-link-btn" style="border-color:rgba(255,75,75,0.4); color:#ff6b6b; padding:0.4rem 0.8rem; font-size:0.72rem;">💥 HIBP Credential Breach ↗</a>
+            <a href="https://dehashed.com/search?query=${cleanU}" target="_blank" rel="noopener noreferrer" class="osint-link-btn" style="border-color:rgba(255,75,75,0.4); color:#ff6b6b; padding:0.4rem 0.8rem; font-size:0.72rem;">🛡️ DeHashed Asset Index ↗</a>
+            <a href="https://intelx.io/?s=${cleanU}" target="_blank" rel="noopener noreferrer" class="osint-link-btn" style="border-color:rgba(255,75,75,0.4); color:#ff6b6b; padding:0.4rem 0.8rem; font-size:0.72rem;">📜 IntelX Deep Archives ↗</a>
+          </div>
+        </div>
       </div>
     `;
   }
