@@ -3763,3 +3763,245 @@ section { position: relative; z-index: 1; }
     min-width: 120px;
   }
 }
+
+
+
+/* =====================================================
+   IPNEON GUI OVERHAUL — Declutter & Breathe
+   ===================================================== */
+
+/* NAV OVERHAUL */
+.nav-link-primary {
+  color: var(--neon-green) !important;
+  font-weight: 700 !important;
+  border: 1px solid rgba(16,244,156,0.3);
+  border-radius: 4px;
+  padding: 0.25rem 0.7rem !important;
+}
+.nav-apk-pill {
+  color: var(--neon-green) !important;
+  font-weight: 800 !important;
+  border: 1px solid rgba(0,255,159,0.4);
+  border-radius: 4px;
+  padding: 0.2rem 0.6rem !important;
+}
+
+/* HERO CTA BUTTONS — 3 clean types */
+.btn-hero-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: linear-gradient(135deg, #10f49c, #00e5ff);
+  color: #030712;
+  font-weight: 800;
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  letter-spacing: 0.06em;
+  padding: 0.85rem 2rem;
+  border: none;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  text-transform: uppercase;
+}
+.btn-hero-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(16,244,156,0.4);
+}
+.btn-hero-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(16,244,156,0.08);
+  color: var(--neon-green);
+  font-weight: 700;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  letter-spacing: 0.06em;
+  padding: 0.8rem 1.6rem;
+  border: 1px solid rgba(16,244,156,0.35);
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: all 0.2s;
+  text-transform: uppercase;
+}
+.btn-hero-secondary:hover {
+  background: rgba(16,244,156,0.15);
+  transform: translateY(-2px);
+}
+.btn-hero-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: transparent;
+  color: var(--text-dim);
+  font-weight: 600;
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  letter-spacing: 0.05em;
+  padding: 0.75rem 1.4rem;
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: all 0.2s;
+  text-transform: uppercase;
+}
+.btn-hero-ghost:hover {
+  border-color: rgba(0,229,255,0.4);
+  color: var(--neon-cyan);
+}
+
+/* HERO STATS — 3 items, more breathing room */
+.hero-stats {
+  display: flex;
+  gap: 2.5rem;
+  margin-top: 2.5rem;
+  flex-wrap: wrap;
+}
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+.stat-num {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #fff;
+  font-family: var(--font-mono);
+  line-height: 1;
+}
+.stat-label {
+  font-size: 0.62rem;
+  letter-spacing: 0.12em;
+  color: var(--text-dim);
+  font-family: var(--font-mono);
+}
+
+/* TOOLS GRID — collapsed by default, expand on toggle */
+.tools-grid-collapsed {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.5s ease;
+}
+.tools-grid-collapsed.expanded {
+  max-height: 9999px;
+}
+.toggle-expand-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 1rem;
+  background: none;
+  border: 1px solid rgba(16,244,156,0.25);
+  color: var(--neon-green);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  padding: 0.45rem 1.1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.toggle-expand-btn:hover {
+  background: rgba(16,244,156,0.08);
+}
+.section-header-compact {
+  text-align: center;
+  padding-bottom: 0.5rem;
+}
+
+/* ABOUT SLIM */
+.about-inner-slim {
+  max-width: 1000px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  text-align: center;
+  padding: 3rem 1.5rem;
+}
+.about-slim-text { max-width: 640px; }
+.about-slim-desc {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  line-height: 1.75;
+  margin-top: 0.75rem;
+}
+.about-slim-stats {
+  display: flex;
+  gap: 2.5rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.about-section { padding: 2rem 2rem; }
+
+/* FOOTER SLIM */
+.footer-slim {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding: 1.5rem 2rem;
+}
+.footer-slim-left {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+.footer-logo-text {
+  font-family: var(--font-mono);
+  font-weight: 800;
+  font-size: 1.1rem;
+  color: #fff;
+  letter-spacing: 0.05em;
+}
+.footer-slim-by {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--text-dim);
+}
+.footer-slim-right {
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+}
+.footer-slim-center { display: flex; align-items: center; }
+.footer .footer-inner { display: none !important; }
+
+/* SECTION SPACING — add breathing room between sections */
+.tools-section,
+.tracker-section,
+.recon-section,
+.about-section {
+  border-top: 1px solid rgba(255,255,255,0.04);
+}
+
+/* SECTION HEADER — reduce visual weight */
+.section-header {
+  margin-bottom: 2.5rem;
+}
+.section-title {
+  font-size: 1.9rem;
+  margin-top: 0.3rem;
+  margin-bottom: 0.5rem;
+}
+.section-sub {
+  color: var(--text-dim);
+  font-size: 0.85rem;
+  max-width: 540px;
+  margin: 0 auto;
+}
+
+/* Remove log section from flow */
+.log-section { display: none !important; }
+
+@media (max-width: 640px) {
+  .hero-stats { gap: 1.5rem; }
+  .footer-slim { flex-direction: column; text-align: center; }
+  .footer-slim-right { justify-content: center; }
+  .about-slim-stats { gap: 1.5rem; }
+}

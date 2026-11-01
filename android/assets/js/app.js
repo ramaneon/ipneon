@@ -963,6 +963,18 @@ function checkBreach() {
   showToast('Breach intel sources loaded!');
 }
 
+
+function toggleToolsGrid() {
+  const grid = document.getElementById('tools-grid');
+  const btn = document.getElementById('tools-expand-btn');
+  const icon = document.getElementById('tools-expand-icon');
+  if (!grid) return;
+  const isExpanded = grid.classList.contains('expanded');
+  grid.classList.toggle('expanded', !isExpanded);
+  if (icon) icon.textContent = isExpanded ? '▼' : '▲';
+  if (btn) btn.innerHTML = (isExpanded ? '<span id="tools-expand-icon">▼</span> SHOW ALL VECTORS' : '<span id="tools-expand-icon">▲</span> COLLAPSE VECTORS');
+}
+
 function initLogTimestamp() { const el=document.getElementById('log-init-time'); if(el) el.textContent=getTimestamp(); }
 
 function addLog(type,message) {

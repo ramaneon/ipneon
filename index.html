@@ -37,15 +37,16 @@
       </div>
       <nav class="nav" id="main-nav">
         <a href="#home" class="nav-link active" id="nav-home">HOME</a>
-        <a href="#ai-osint" class="nav-link" id="nav-ai-osint" style="color:var(--neon-green); font-weight:700;">⚡ AI NEON OSINT</a>
-        <a href="#tools" class="nav-link" id="nav-tools">TOOLS</a>
-        <a href="#tracker" class="nav-link" id="nav-tracker">TRACKER</a>
-        <a href="javascript:void(0)" class="nav-link" id="nav-fingerprint" onclick="openIdentityDrawer()">👁️ MY INTEL</a>
+        <a href="#ai-osint" class="nav-link nav-link-primary" id="nav-ai-osint">⚡ OSINT SUITE</a>
+        <a href="#tracker" class="nav-link" id="nav-tracker">IP TRACKER</a>
         <a href="#recon" class="nav-link" id="nav-recon">RECON</a>
         <a href="#terminal" class="nav-link" id="nav-terminal">TERMINAL</a>
-        <a href="#ai-osint" class="nav-link" id="nav-osint">🎯 OSINT</a>
-        <a href="#about" class="nav-link" id="nav-about">ABOUT</a>
-        <a href="ipneon.apk" download class="nav-link" id="nav-apk" style="color:var(--neon-green); font-weight:800; border:1px solid rgba(0,255,159,0.3); border-radius:4px; padding:0.2rem 0.6rem;">⚡ APK</a>
+        <!-- Hidden anchors to preserve JS querySelector compatibility -->
+        <span style="display:none;" id="nav-tools"></span>
+        <span style="display:none;" id="nav-fingerprint"></span>
+        <span style="display:none;" id="nav-osint"></span>
+        <span style="display:none;" id="nav-about"></span>
+        <a href="ipneon.apk" download class="nav-link nav-apk-pill" id="nav-apk">📱 APK</a>
       </nav>
       <div class="header-status" id="header-status">
         <span class="status-dot"></span>
@@ -79,40 +80,34 @@
         Inspect IP geolocation, ASN routing pathways, proxy &amp; VPN threat scores, WebGL/Audio entropy hashes, and DoH DNS records — 100% client-side with zero telemetry tracking.
       </p>
       <div class="hero-cta" id="hero-cta">
-        <button class="btn-primary" id="btn-ai-osint-hero" onclick="scrollToSection('ai-osint')" style="background:linear-gradient(135deg, #10f49c, #00e5ff); color:#030712; font-weight:800;">
-          <span class="btn-icon">⚡</span> AI NEON OSINT
+        <button class="btn-hero-primary" id="btn-ai-osint-hero" onclick="scrollToSection('ai-osint')">
+          <span>⚡</span> Launch OSINT Suite
         </button>
-        <button class="btn-primary" id="btn-launch" onclick="scrollToSection('tracker')">
-          <span class="btn-icon">⚡</span> Analyze Target
+        <button class="btn-hero-secondary" id="btn-launch" onclick="scrollToSection('tracker')">
+          <span>🎯</span> Analyze IP/Domain
         </button>
-        <button class="btn-secondary" id="btn-fp-hero" onclick="openIdentityDrawer()" style="border-color: rgba(0,229,255,0.4); color: var(--neon-cyan);">
-          <span class="btn-icon">👁️</span> Device Fingerprint
+        <button class="btn-hero-ghost" id="btn-fp-hero" onclick="openIdentityDrawer()">
+          <span>👁️</span> My Device Intel
         </button>
-        <a href="ipneon.apk" download class="btn-secondary" id="btn-apk-hero" style="border-color: rgba(0,255,159,0.5); color: var(--neon-green); text-decoration: none; display: inline-flex; align-items: center;">
-          <span class="btn-icon">📱</span> Download APK
-        </a>
-        <button class="btn-secondary" id="btn-tools" onclick="scrollToSection('recon')">
-          <span class="btn-icon">📡</span> Recon Arsenal
-        </button>
+        <!-- Retained IDs for JS bindings -->
+        <span style="display:none;" id="btn-apk-hero"></span>
+        <span style="display:none;" id="btn-tools"></span>
       </div>
       <div class="hero-stats" id="hero-stats">
         <div class="stat-item">
+          <span class="stat-num" data-target="3140">0</span>
+          <span class="stat-label">OSINT ENDPOINTS</span>
+        </div>
+        <div class="stat-item">
           <span class="stat-num" data-target="20">0</span>
-          <span class="stat-label">VECTORS</span>
+          <span class="stat-label">IP VECTORS</span>
         </div>
-        <div class="stat-item">
-          <span class="stat-num" data-target="99">0</span>
-          <span class="stat-label">ACCURACY %</span>
-        </div>
-        <div class="stat-item">
-          <span class="stat-num" data-target="195">0</span>
-          <span class="stat-label">COUNTRIES</span>
-        </div>
-        <div class="stat-item stat-item-highlight" title="Verified Lifetime Visitors (Cloud Recorded)">
+        <div class="stat-item stat-item-highlight" title="Verified Lifetime Visitors">
           <span class="stat-num live-visitor-counter" id="hero-visitor-count">...</span>
           <span class="stat-label"><span class="visitor-pulse-dot"></span> LIVE VISITORS</span>
         </div>
       </div>
+    </div>
     </div>
     <div class="hero-visual" id="hero-visual">
       <div class="globe-wrapper">
@@ -146,12 +141,15 @@
   </section>
 
   <section class="tools-section" id="tools">
-    <div class="section-header">
-      <span class="section-tag">// VECTORS</span>
-      <h2 class="section-title">20 Intelligence <span class="accent">Vectors</span></h2>
-      <p class="section-sub">Modular analysis engines for IP geolocation, ASN infrastructure, and routing forensics</p>
+    <div class="section-header section-header-compact">
+      <span class="section-tag">// IP INTELLIGENCE VECTORS</span>
+      <h2 class="section-title">20 <span class="accent">Intelligence Vectors</span></h2>
+      <p class="section-sub">Modular IP tracking, ASN routing, geolocation and forensics engines</p>
+      <button class="toggle-expand-btn" id="tools-expand-btn" onclick="toggleToolsGrid()">
+        <span id="tools-expand-icon">▼</span> SHOW ALL VECTORS
+      </button>
     </div>
-    <div class="tools-grid" id="tools-grid"></div>
+    <div class="tools-grid tools-grid-collapsed" id="tools-grid"></div>
   </section>
 
   <section class="tracker-section" id="tracker">
@@ -475,7 +473,7 @@
     </div>
   </section>
 
-  <section class="log-section" id="log-section">
+  <section class="log-section" id="log-section" style="display:none;">
     <div class="log-header" id="log-header">
       <span class="log-title">// ACTIVITY LOG</span>
       <div class="log-controls">
@@ -492,61 +490,36 @@
   </section>
 
   <section class="about-section" id="about">
-    <div class="about-inner">
-      <div class="about-text">
-        <span class="section-tag">// ABOUT</span>
-        <h2 class="section-title">WHAT IS <span class="accent">IPNEON</span></h2>
-        <p class="about-desc">
-          IPNeon is a professional cybersecurity intelligence suite built for security researchers,
-          penetration testers, and OSINT investigators. Combining 20 proven IP tracking vectors
-          with real-time geolocation, threat analysis, browser fingerprinting, and breach intelligence.
-        </p>
-        <div class="about-features">
-          <div class="af-item"><span class="af-icon">📍</span> Real-time IP geolocation</div>
-          <div class="af-item"><span class="af-icon">🛡️</span> Threat score and VPN/Proxy/TOR detection</div>
-          <div class="af-item"><span class="af-icon">👁️</span> Deep client-side browser fingerprinting</div>
-          <div class="af-item"><span class="af-icon">🔍</span> OSINT username and email lookup</div>
-          <div class="af-item"><span class="af-icon">💥</span> Data breach intelligence</div>
-          <div class="af-item"><span class="af-icon">🔗</span> Custom link logger generator</div>
-          <div class="af-item"><span class="af-icon">🗺️</span> Interactive map visualization</div>
-        </div>
-        <div class="about-disclaimer">
-          <span>⚠️</span> For educational and authorized security testing purposes only.
-        </div>
+    <div class="about-inner-slim">
+      <div class="about-slim-text">
+        <span class="section-tag">// IPNEON</span>
+        <p class="about-slim-desc">Professional cybersecurity OSINT suite — IP intelligence, browser fingerprinting, breach lookup, and network forensics. Built for researchers and investigators. 100% client-side, zero tracking.</p>
       </div>
-      <div class="about-stats-panel">
-        <div class="astat"><span class="astat-num">20</span><span class="astat-label">Tracking Vectors</span></div>
-        <div class="astat"><span class="astat-num">10+</span><span class="astat-label">FP Signals</span></div>
-        <div class="astat astat-visitors" title="Lifetime Verified Visitors"><span class="astat-num" id="about-visitor-count">...</span><span class="astat-label">Verified Visits</span></div>
+      <div class="about-slim-stats">
+        <div class="astat"><span class="astat-num">20</span><span class="astat-label">IP Vectors</span></div>
+        <div class="astat"><span class="astat-num">3,140+</span><span class="astat-label">OSINT Endpoints</span></div>
+        <div class="astat astat-visitors"><span class="astat-num" id="about-visitor-count">...</span><span class="astat-label">Verified Visits</span></div>
         <div class="astat"><span class="astat-num">100%</span><span class="astat-label">Client-Side</span></div>
       </div>
     </div>
   </section>
 
   <footer class="footer" id="footer">
-    <div class="footer-inner">
-      <div class="footer-logo">
-        <span class="logo-bracket">[</span>
-        <span class="logo-text">IP<span class="logo-accent">NEON</span></span>
-        <span class="logo-bracket">]</span>
+    <div class="footer-slim">
+      <div class="footer-slim-left">
+        <span class="footer-logo-text">[IP<span class="logo-accent">NEON</span>]</span>
+        <span class="footer-slim-by">by <a href="https://github.com/ramaneon" target="_blank" class="footer-link">ramaneon</a></span>
       </div>
-      <p class="footer-sub">Built by <a href="https://github.com/ramaneon" target="_blank" class="footer-link">ramaneon</a> &bull; For educational and authorized use only</p>
-      <div class="footer-visitor-box">
-        <a href="https://ramaneon.github.io/ipneon/" target="_blank" title="Official Verified Lifetime Visitors">
-          <img src="https://api.visitorbadge.io/api/visitors?path=ramaneon.ipneon&label=LIFETIME%20VISITORS&countColor=%2310f49c&labelColor=%23080f1d&style=flat-square" alt="Verified Lifetime Visitors" class="visitor-badge-img" />
+      <div class="footer-slim-center">
+        <a href="https://api.visitorbadge.io/api/visitors?path=ramaneon.ipneon&label=LIFETIME%20VISITORS&countColor=%2310f49c&labelColor=%23080f1d&style=flat-square" target="_blank">
+          <img src="https://api.visitorbadge.io/api/visitors?path=ramaneon.ipneon&label=LIFETIME%20VISITORS&countColor=%2310f49c&labelColor=%23080f1d&style=flat-square" alt="Visitors" class="visitor-badge-img" />
         </a>
-        <span class="footer-visitor-note">? Real-time authentic counter saved with permanent repository memory</span>
       </div>
-      <div class="footer-links">
-        <a href="https://ramaneon.github.io/ipneon/" target="_blank" class="footer-link" id="footer-live">🌐 LIVE</a>
-        <a href="https://github.com/ramaneon/ipneon" target="_blank" class="footer-link" id="footer-github">GitHub</a>
-        <a href="#ai-osint" class="footer-link" style="color:var(--neon-green);">⚡ AI OSINT</a>
-        <a href="#tools" class="footer-link">Tools</a>
-        <a href="#tracker" class="footer-link">Tracker</a>
-        <a href="#fingerprint" class="footer-link">Fingerprint</a>
-        <a href="#recon" class="footer-link">Recon</a>
-        <a href="#terminal" class="footer-link">Terminal</a>
-        <a href="ipneon.apk" download class="footer-link" style="color:var(--neon-green);">⚡ APK (Android)</a>
+      <div class="footer-slim-right">
+        <a href="#ai-osint" class="footer-link">OSINT</a>
+        <a href="#tracker" class="footer-link">TRACKER</a>
+        <a href="https://github.com/ramaneon/ipneon" target="_blank" class="footer-link">GITHUB</a>
+        <a href="ipneon.apk" download class="footer-link" style="color:var(--neon-green);">📱 APK</a>
       </div>
     </div>
   </footer>
