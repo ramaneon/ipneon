@@ -179,7 +179,7 @@ function initScrollBehavior() {
 function scrollToSection(id) { document.getElementById(id)?.scrollIntoView({ behavior:'smooth' }); }
 
 function initNavHighlight() {
-  const sections = ['home','ai-osint','tools','tracker','recon','terminal','about'];
+  const sections = ['home','ai-osint','tools','tracker','recon','about'];
   const links = {};
   sections.forEach(s => { links[s] = document.getElementById('nav-'+s); });
   const obs = new IntersectionObserver(entries => {

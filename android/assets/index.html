@@ -40,7 +40,7 @@
         <a href="#ai-osint" class="nav-link nav-link-primary" id="nav-ai-osint">⚡ OSINT SUITE</a>
         <a href="#tracker" class="nav-link" id="nav-tracker">IP TRACKER</a>
         <a href="#recon" class="nav-link" id="nav-recon">RECON</a>
-        <a href="#terminal" class="nav-link" id="nav-terminal">TERMINAL</a>
+        <span style="display:none;" id="nav-terminal"></span>
         <!-- Hidden anchors to preserve JS querySelector compatibility -->
         <span style="display:none;" id="nav-tools"></span>
         <span style="display:none;" id="nav-fingerprint"></span>
@@ -420,42 +420,7 @@
         </div>
       </div>
     </div>
-  </section>
-
-  <!-- INTERACTIVE TERMINAL -->
-  <section class="recon-section" id="terminal" style="padding-top:1rem;">
-    <div class="section-header">
-      <span class="section-tag">// CLI CONSOLE</span>
-      <h2 class="section-title">Interactive Recon <span class="accent">Terminal</span></h2>
-      <p class="section-sub">Direct forensic execution: scan, dns, cidr, ping, mac, theme engine, and JSON export</p>
-    </div>
-
-    <div class="cyber-terminal-panel">
-      <div class="term-topbar">
-        <div class="term-dots">
-          <span class="term-dot term-dot-red"></span>
-          <span class="term-dot term-dot-yellow"></span>
-          <span class="term-dot term-dot-green"></span>
-        </div>
-        <span class="term-title">IPNEON://CONSOLE_v2.0 [ONLINE]</span>
-        <div class="term-quick-btns">
-          <button class="term-qbtn" onclick="execTermQuick('help')">help</button>
-          <button class="term-qbtn" onclick="execTermQuick('scan 8.8.8.8')">scan</button>
-          <button class="term-qbtn" onclick="execTermQuick('dns github.com')">dns</button>
-          <button class="term-qbtn" onclick="execTermQuick('fp')">fp</button>
-          <button class="term-qbtn" onclick="execTermQuick('clear')">clear</button>
-        </div>
-      </div>
-      <div class="term-viewport" id="term-viewport">
-        <div class="term-entry term-line-green">[⚡] IPNEON CYBER RECON HUD INITIALIZED &mdash; ALL SUBSYSTEMS LIVE.</div>
-        <div class="term-entry term-line-out">Type 'help' to inspect command table, or use arrows for history.</div>
-      </div>
-      <div class="term-input-line">
-        <span class="term-prompt">IPNEON@root:~#</span>
-        <input type="text" id="term-input" class="term-cli-input" placeholder="Type command (e.g. scan 1.1.1.1, dns google.com, cidr 10.0.0.0/16, help)..." autocomplete="off" spellcheck="false" />
-      </div>
-    </div>
-
+  
     <!-- NATIVE ANDROID APK RELEASE CTA -->
     <div class="apk-cta-banner">
       <div class="apk-cta-info">
@@ -472,6 +437,7 @@
       </div>
     </div>
   </section>
+
 
   <section class="log-section" id="log-section" style="display:none;">
     <div class="log-header" id="log-header">
@@ -534,10 +500,7 @@
     </div>
   </div>
 
-  <!-- FLOATING QUICK HUD TERMINAL BUTTON -->
-  <button class="floating-term-btn" onclick="scrollToSection('terminal')">
-    <span>💻</span> [>_ TERMINAL]
-  </button>
+  
 
   <!-- MOBILE CYBER BOTTOM DOCK -->
   <nav class="mobile-cyber-dock" id="mobile-dock">
@@ -557,10 +520,7 @@
       <span class="dock-icon">📡</span>
       <span class="dock-label">RECON</span>
     </a>
-    <a href="#terminal" class="dock-btn" onclick="dockNav('terminal')">
-      <span class="dock-icon">💻</span>
-      <span class="dock-label">CLI</span>
-    </a>
+    
     <a href="ipneon.apk" download class="dock-btn" style="color:var(--neon-green);">
       <span class="dock-icon">📱</span>
       <span class="dock-label">APK</span>
