@@ -1,8 +1,8 @@
 /* =====================================================
-   AI OSINT ALL-IN-ONE (Browser Native Engine)
+   AI NEON OSINT ARSENAL — Unified Intelligence Engine
    Integrated into IPNeon Suite
    Author: ramaneon
-   License: MIT
+   License: IPNEON PROPRIETARY COMMERCIAL ROYALTY LICENSE
    ===================================================== */
 
 const AI_OSINT = (() => {

@@ -2509,7 +2509,7 @@ section { position: relative; z-index: 1; }
 /* =====================================================
    AI OSINT AI OSINT ALL-IN-ONE — COMPONENT STYLES
    ===================================================== */
-.AI OSINT-section {
+.ai-osint-section {
   position: relative;
   z-index: 1;
   padding: 5rem 1.5rem;
@@ -2517,7 +2517,7 @@ section { position: relative; z-index: 1; }
   margin: 0 auto;
 }
 
-.AI OSINT-container {
+.ai-osint-container {
   background: var(--bg-card);
   backdrop-filter: blur(28px) saturate(160%);
   -webkit-backdrop-filter: blur(28px) saturate(160%);
@@ -2528,13 +2528,13 @@ section { position: relative; z-index: 1; }
 }
 
 /* AI OSINT Tabs */
-.AI OSINT-nav-tabs {
+.ai-osint-nav-tabs {
   display: flex;
   background: rgba(4, 9, 20, 0.95);
   border-bottom: 1px solid var(--border-dim);
   overflow-x: auto;
 }
-.AI OSINT-tab-btn {
+.ai-osint-tab-btn {
   background: none;
   border: none;
   color: var(--text-muted);
@@ -2551,27 +2551,27 @@ section { position: relative; z-index: 1; }
   border-bottom: 2px solid transparent;
   transition: all 0.2s var(--spring);
 }
-.AI OSINT-tab-btn:hover {
+.ai-osint-tab-btn:hover {
   color: #fff;
   background: rgba(255, 255, 255, 0.04);
 }
-.AI OSINT-tab-btn.active {
+.ai-osint-tab-btn.active {
   color: var(--neon-green);
   border-bottom-color: var(--neon-green);
   background: rgba(16, 244, 156, 0.08);
 }
 
-.AI OSINT-tab-view {
+.ai-osint-tab-view {
   display: none;
   padding: 2.5rem;
 }
-.AI OSINT-tab-view.active {
+.ai-osint-tab-view.active {
   display: block;
   animation: fadeIn 0.3s ease;
 }
 
 /* AI OSINT Hero & Radar Lens */
-.AI OSINT-hero-box {
+.ai-osint-hero-box {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -2579,7 +2579,7 @@ section { position: relative; z-index: 1; }
   max-width: 820px;
   margin: 0 auto 2.5rem auto;
 }
-.AI OSINT-lens-radar {
+.ai-osint-lens-radar {
   position: relative;
   width: 90px;
   height: 90px;
@@ -2605,20 +2605,20 @@ section { position: relative; z-index: 1; }
   font-size: 2.2rem;
   filter: drop-shadow(0 0 12px var(--neon-green));
 }
-.AI OSINT-title {
+.ai-osint-title {
   font-size: 2.4rem;
   font-weight: 800;
   letter-spacing: -0.03em;
   margin-bottom: 0.6rem;
 }
-.AI OSINT-sub {
+.ai-osint-sub {
   color: var(--text-muted);
   font-size: 1.05rem;
   max-width: 620px;
 }
 
 /* Search Bar */
-.AI OSINT-search-bar-wrap {
+.ai-osint-search-bar-wrap {
   width: 100%;
   display: flex;
   align-items: center;
@@ -2629,12 +2629,12 @@ section { position: relative; z-index: 1; }
   margin: 1.8rem 0 1rem 0;
   transition: all 0.25s var(--spring);
 }
-.AI OSINT-search-bar-wrap:focus-within {
+.ai-osint-search-bar-wrap:focus-within {
   border-color: var(--neon-green);
   box-shadow: 0 0 25px rgba(16, 244, 156, 0.25);
   background: rgba(3, 7, 18, 0.98);
 }
-.AI OSINT-kind-badge {
+.ai-osint-kind-badge {
   background: rgba(16, 244, 156, 0.15);
   color: var(--neon-green);
   font-family: var(--font-mono);
@@ -2646,7 +2646,7 @@ section { position: relative; z-index: 1; }
   margin-right: 0.6rem;
   white-space: nowrap;
 }
-.AI OSINT-search-input {
+.ai-osint-search-input {
   flex: 1;
   background: transparent;
   border: none;
@@ -2655,10 +2655,10 @@ section { position: relative; z-index: 1; }
   font-size: 1.05rem;
   font-family: var(--font-main);
 }
-.AI OSINT-search-input::placeholder {
+.ai-osint-search-input::placeholder {
   color: var(--text-dim);
 }
-.AI OSINT-search-btn {
+.ai-osint-search-btn {
   background: linear-gradient(135deg, #10f49c, #00e5ff);
   border: none;
   color: #030712;
@@ -2674,12 +2674,12 @@ section { position: relative; z-index: 1; }
   gap: 0.4rem;
   transition: all 0.2s var(--spring);
 }
-.AI OSINT-search-btn:hover {
+.ai-osint-search-btn:hover {
   transform: translateY(-2px);
   box-shadow: 0 8px 24px rgba(16, 244, 156, 0.4);
 }
 
-.AI OSINT-presets-row {
+.ai-osint-presets-row {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -2708,7 +2708,7 @@ section { position: relative; z-index: 1; }
 }
 
 /* Progress Box */
-.AI OSINT-progress-box {
+.ai-osint-progress-box {
   background: rgba(8, 15, 29, 0.9);
   border: 1px solid rgba(16, 244, 156, 0.25);
   border-radius: var(--radius-sm);
@@ -2748,11 +2748,11 @@ section { position: relative; z-index: 1; }
 }
 
 /* Results Section */
-.AI OSINT-results-wrapper {
+.ai-osint-results-wrapper {
   max-width: 900px;
   margin: 2rem auto 0 auto;
 }
-.AI OSINT-res-header {
+.ai-osint-res-header {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
@@ -2762,25 +2762,25 @@ section { position: relative; z-index: 1; }
   flex-wrap: wrap;
   gap: 1rem;
 }
-.AI OSINT-res-kind {
+.ai-osint-res-kind {
   font-family: var(--font-mono);
   font-size: 0.75rem;
   color: var(--neon-green);
   font-weight: 700;
 }
-.AI OSINT-res-title {
+.ai-osint-res-title {
   font-size: 1.9rem;
   font-weight: 800;
   letter-spacing: -0.02em;
   margin-top: 0.2rem;
 }
-.AI OSINT-res-actions {
+.ai-osint-res-actions {
   display: flex;
   gap: 0.6rem;
 }
 
 /* AI Summary Card */
-.AI OSINT-ai-card {
+.ai-osint-ai-card {
   background: linear-gradient(135deg, rgba(16, 244, 156, 0.06), rgba(0, 229, 255, 0.04));
   border: 1px solid rgba(16, 244, 156, 0.25);
   border-radius: var(--radius);
@@ -2788,7 +2788,7 @@ section { position: relative; z-index: 1; }
   margin-bottom: 1.8rem;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
 }
-.AI OSINT-ai-badge {
+.ai-osint-ai-badge {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
@@ -2798,12 +2798,12 @@ section { position: relative; z-index: 1; }
   color: var(--neon-green);
   margin-bottom: 0.75rem;
 }
-.AI OSINT-ai-summary {
+.ai-osint-ai-summary {
   font-size: 1rem;
   line-height: 1.65;
   color: var(--text-primary);
 }
-.AI OSINT-ai-citations {
+.ai-osint-ai-citations {
   display: flex;
   flex-direction: column;
   gap: 0.35rem;
@@ -2811,21 +2811,21 @@ section { position: relative; z-index: 1; }
   padding-top: 0.8rem;
   border-top: 1px dashed rgba(255, 255, 255, 0.1);
 }
-.AI OSINT-cite-pill {
+.ai-osint-cite-pill {
   font-family: var(--font-mono);
   font-size: 0.75rem;
   color: var(--text-muted);
 }
 
 /* Filter Bar */
-.AI OSINT-filter-bar {
+.ai-osint-filter-bar {
   display: flex;
   gap: 0.4rem;
   margin-bottom: 1.2rem;
   overflow-x: auto;
   padding-bottom: 0.4rem;
 }
-.AI OSINT-filter-chip {
+.ai-osint-filter-chip {
   background: rgba(255, 255, 255, 0.06);
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 8px;
@@ -2837,23 +2837,23 @@ section { position: relative; z-index: 1; }
   white-space: nowrap;
   transition: all 0.2s var(--spring);
 }
-.AI OSINT-filter-chip:hover {
+.ai-osint-filter-chip:hover {
   color: #fff;
   background: rgba(255, 255, 255, 0.1);
 }
-.AI OSINT-filter-chip.active {
+.ai-osint-filter-chip.active {
   background: rgba(16, 244, 156, 0.2);
   color: var(--neon-green);
   border-color: rgba(16, 244, 156, 0.4);
 }
 
 /* Profile Items */
-.AI OSINT-profiles-grid {
+.ai-osint-profiles-grid {
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
 }
-.AI OSINT-profile-card {
+.ai-osint-profile-card {
   display: flex;
   align-items: center;
   gap: 1.1rem;
@@ -2863,12 +2863,12 @@ section { position: relative; z-index: 1; }
   padding: 1.1rem 1.4rem;
   transition: all 0.2s var(--spring);
 }
-.AI OSINT-profile-card:hover {
+.ai-osint-profile-card:hover {
   background: rgba(11, 20, 38, 0.95);
   border-color: rgba(16, 244, 156, 0.3);
   transform: translateX(4px);
 }
-.AI OSINT-profile-icon {
+.ai-osint-profile-icon {
   font-size: 1.8rem;
   width: 48px;
   height: 48px;
@@ -2879,17 +2879,17 @@ section { position: relative; z-index: 1; }
   border: 1px solid rgba(255, 255, 255, 0.08);
   flex-shrink: 0;
 }
-.AI OSINT-profile-body {
+.ai-osint-profile-body {
   flex: 1;
   min-width: 0;
 }
-.AI OSINT-profile-title-row {
+.ai-osint-profile-title-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
   margin-bottom: 0.25rem;
 }
-.AI OSINT-profile-name {
+.ai-osint-profile-name {
   color: #fff;
   font-size: 1rem;
   font-weight: 700;
@@ -2898,25 +2898,25 @@ section { position: relative; z-index: 1; }
   align-items: center;
   gap: 0.35rem;
 }
-.AI OSINT-profile-name:hover {
+.ai-osint-profile-name:hover {
   color: var(--neon-cyan);
 }
 .external-icon {
   font-size: 0.8rem;
   opacity: 0.6;
 }
-.AI OSINT-profile-desc {
+.ai-osint-profile-desc {
   color: var(--text-muted);
   font-size: 0.88rem;
   margin-bottom: 0.45rem;
   line-height: 1.4;
 }
-.AI OSINT-profile-foot {
+.ai-osint-profile-foot {
   display: flex;
   align-items: center;
   gap: 0.75rem;
 }
-.AI OSINT-group-badge {
+.ai-osint-group-badge {
   font-family: var(--font-mono);
   font-size: 0.7rem;
   background: rgba(255, 255, 255, 0.06);
@@ -2924,13 +2924,13 @@ section { position: relative; z-index: 1; }
   border-radius: 4px;
   color: var(--text-dim);
 }
-.AI OSINT-since {
+.ai-osint-since {
   font-family: var(--font-mono);
   font-size: 0.72rem;
   color: var(--text-dim);
 }
 
-.AI OSINT-match-tag {
+.ai-osint-match-tag {
   font-family: var(--font-mono);
   font-size: 0.72rem;
   font-weight: 700;
@@ -2955,7 +2955,7 @@ section { position: relative; z-index: 1; }
 /* =====================================================
    EVIDENCE TOPOLOGY GRAPH WORKSPACE
    ===================================================== */
-.AI OSINT-graph-header {
+.ai-osint-graph-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -2976,7 +2976,7 @@ section { position: relative; z-index: 1; }
   color: var(--neon-green);
   font-weight: 800;
 }
-.AI OSINT-case-dropdown {
+.ai-osint-case-dropdown {
   background: rgba(8, 15, 29, 0.95);
   border: 1px solid rgba(255, 255, 255, 0.14);
   color: #fff;
@@ -2987,7 +2987,7 @@ section { position: relative; z-index: 1; }
   outline: none;
   cursor: pointer;
 }
-.AI OSINT-case-dropdown:focus {
+.ai-osint-case-dropdown:focus {
   border-color: var(--neon-green);
 }
 .wgh-right {
@@ -2995,19 +2995,19 @@ section { position: relative; z-index: 1; }
   gap: 0.5rem;
 }
 
-.AI OSINT-graph-workspace {
+.ai-osint-graph-workspace {
   display: grid;
   grid-template-columns: 1fr 340px;
   gap: 1.5rem;
   min-height: 580px;
 }
 @media (max-width: 1024px) {
-  .AI OSINT-graph-workspace {
+  .ai-osint-graph-workspace {
     grid-template-columns: 1fr;
   }
 }
 
-.AI OSINT-graph-stage {
+.ai-osint-graph-stage {
   position: relative;
   background: radial-gradient(circle at center, rgba(16, 244, 156, 0.03) 0%, rgba(3, 7, 18, 0.95) 75%);
   border: 1px solid rgba(255, 255, 255, 0.08);
@@ -3088,7 +3088,7 @@ section { position: relative; z-index: 1; }
 }
 
 /* Node Inspector */
-.AI OSINT-node-inspector {
+.ai-osint-node-inspector {
   background: rgba(8, 15, 29, 0.9);
   border: 1px solid var(--border-dim);
   border-radius: var(--radius);
@@ -3211,7 +3211,7 @@ section { position: relative; z-index: 1; }
 /* =====================================================
    SOURCES & TOOLKIT VIEW
    ===================================================== */
-.AI OSINT-tools-header {
+.ai-osint-tools-header {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
@@ -3221,24 +3221,24 @@ section { position: relative; z-index: 1; }
   flex-wrap: wrap;
   gap: 1rem;
 }
-.AI OSINT-tools-title {
+.ai-osint-tools-title {
   font-size: 1.6rem;
   font-weight: 800;
 }
-.AI OSINT-tools-sub {
+.ai-osint-tools-sub {
   color: var(--text-muted);
   font-size: 0.95rem;
 }
-.AI OSINT-tools-action-grp {
+.ai-osint-tools-action-grp {
   display: flex;
   gap: 0.6rem;
 }
-.AI OSINT-tools-grid {
+.ai-osint-tools-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
   gap: 1.2rem;
 }
-.AI OSINT-tool-card {
+.ai-osint-tool-card {
   background: rgba(8, 15, 29, 0.8);
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: var(--radius-sm);
@@ -3247,69 +3247,69 @@ section { position: relative; z-index: 1; }
   flex-direction: column;
   transition: all 0.2s var(--spring);
 }
-.AI OSINT-tool-card:hover {
+.ai-osint-tool-card:hover {
   border-color: var(--neon-cyan);
   transform: translateY(-3px);
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
 }
-.AI OSINT-tool-head {
+.ai-osint-tool-head {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
   margin-bottom: 0.75rem;
 }
-.AI OSINT-tool-name-grp {
+.ai-osint-tool-name-grp {
   display: flex;
   gap: 0.75rem;
 }
-.AI OSINT-tool-icon {
+.ai-osint-tool-icon {
   font-size: 1.4rem;
 }
-.AI OSINT-tool-title {
+.ai-osint-tool-title {
   font-weight: 700;
   font-size: 1.05rem;
   color: #fff;
 }
-.AI OSINT-tool-cat {
+.ai-osint-tool-cat {
   font-family: var(--font-mono);
   font-size: 0.7rem;
   color: var(--neon-cyan);
 }
-.AI OSINT-tool-status {
+.ai-osint-tool-status {
   font-family: var(--font-mono);
   font-size: 0.68rem;
   font-weight: 800;
   padding: 0.2rem 0.5rem;
   border-radius: 4px;
 }
-.AI OSINT-tool-status.connected {
+.ai-osint-tool-status.connected {
   background: rgba(16, 244, 156, 0.15);
   color: var(--neon-green);
 }
-.AI OSINT-tool-status.available {
+.ai-osint-tool-status.available {
   background: rgba(255, 255, 255, 0.06);
   color: var(--text-dim);
 }
-.AI OSINT-tool-desc {
+.ai-osint-tool-desc {
   color: var(--text-muted);
   font-size: 0.85rem;
   line-height: 1.45;
   flex: 1;
   margin-bottom: 1.2rem;
 }
-.AI OSINT-tool-foot {
+.ai-osint-tool-foot {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding-top: 0.75rem;
   border-top: 1px solid rgba(255, 255, 255, 0.06);
 }
-.AI OSINT-tool-runs {
+.ai-osint-tool-runs {
   font-family: var(--font-mono);
   font-size: 0.72rem;
   color: var(--text-dim);
 }
-.AI OSINT-tool-btn-grp {
+.ai-osint-tool-btn-grp {
   display: flex;
   gap: 0.4rem;
 }
@@ -3392,34 +3392,34 @@ section { position: relative; z-index: 1; }
     color: #000 !important;
   }
   #matrixCanvas, #particles, .cyber-splash-screen, .header, .footer,
-  .mobile-cyber-dock, .floating-term-btn, .AI OSINT-nav-tabs,
+  .mobile-cyber-dock, .floating-term-btn, .ai-osint-nav-tabs,
   .hero-section, .tools-section, .tracker-section, .fp-section,
   .recon-section, .osint-section, .about-section, .log-section {
     display: none !important;
   }
-  .AI OSINT-section {
+  .ai-osint-section {
     padding: 0 !important;
     max-width: 100% !important;
   }
-  .AI OSINT-container {
+  .ai-osint-container {
     border: none !important;
     box-shadow: none !important;
     background: transparent !important;
   }
-  .AI OSINT-tab-view {
+  .ai-osint-tab-view {
     display: block !important;
     padding: 0 !important;
   }
-  .AI OSINT-profile-card {
+  .ai-osint-profile-card {
     background: #fff !important;
     border: 1px solid #ccc !important;
     color: #000 !important;
     page-break-inside: avoid;
   }
-  .AI OSINT-profile-name, .AI OSINT-tool-title, .inspector-title {
+  .ai-osint-profile-name, .ai-osint-tool-title, .inspector-title {
     color: #000 !important;
   }
-  .AI OSINT-profile-desc, .AI OSINT-tool-desc {
+  .ai-osint-profile-desc, .ai-osint-tool-desc {
     color: #444 !important;
   }
 }
