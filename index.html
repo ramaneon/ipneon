@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -37,6 +37,7 @@
       </div>
       <nav class="nav" id="main-nav">
         <a href="#home" class="nav-link active" id="nav-home">HOME</a>
+        <a href="#watson" class="nav-link" id="nav-watson" style="color:var(--neon-green); font-weight:700;">🤖 WATSON AI</a>
         <a href="#tools" class="nav-link" id="nav-tools">TOOLS</a>
         <a href="#tracker" class="nav-link" id="nav-tracker">TRACKER</a>
         <a href="#fingerprint" class="nav-link" id="nav-fingerprint">FINGERPRINT</a>
@@ -69,6 +70,9 @@
         Inspect IP geolocation, ASN routing pathways, proxy &amp; VPN threat scores, WebGL/Audio entropy hashes, and DoH DNS records — 100% client-side with zero telemetry tracking.
       </p>
       <div class="hero-cta" id="hero-cta">
+        <button class="btn-primary" id="btn-watson-hero" onclick="scrollToSection('watson')" style="background:linear-gradient(135deg, #10f49c, #00e5ff); color:#030712; font-weight:800;">
+          <span class="btn-icon">🤖</span> Watson AI OSINT
+        </button>
         <button class="btn-primary" id="btn-launch" onclick="scrollToSection('tracker')">
           <span class="btn-icon">⚡</span> Analyze Target
         </button>
@@ -572,6 +576,16 @@
     </div>
   </section>
 
+  <!-- WATSON AI OSINT SUITE (BROWSER NATIVE) -->
+  <section class="watson-section" id="watson">
+    <div class="section-header">
+      <span class="section-tag">// AI OSINT ARSENAL</span>
+      <h2 class="section-title">Watson AI <span class="accent">OSINT Suite</span></h2>
+      <p class="section-sub">Universal intelligence search across 3,140+ public endpoints &bull; Attack surface topology &bull; 100% in-browser zero downloads</p>
+    </div>
+    <div id="watson-module-mount"></div>
+  </section>
+
   <!-- RECON ARSENAL -->
   <section class="recon-section" id="recon">
     <div class="section-header">
@@ -824,6 +838,7 @@
       <div class="footer-links">
         <a href="https://ramaneon.github.io/ipneon/" target="_blank" class="footer-link" id="footer-live">🌐 LIVE</a>
         <a href="https://github.com/ramaneon/ipneon" target="_blank" class="footer-link" id="footer-github">GitHub</a>
+        <a href="#watson" class="footer-link" style="color:var(--neon-green);">🤖 Watson AI</a>
         <a href="#tools" class="footer-link">Tools</a>
         <a href="#tracker" class="footer-link">Tracker</a>
         <a href="#fingerprint" class="footer-link">Fingerprint</a>
@@ -851,6 +866,10 @@
 
   <!-- MOBILE CYBER BOTTOM DOCK -->
   <nav class="mobile-cyber-dock" id="mobile-dock">
+    <a href="#watson" class="dock-btn" onclick="dockNav('watson')">
+      <span class="dock-icon">🤖</span>
+      <span class="dock-label">WATSON</span>
+    </a>
     <a href="#tracker" class="dock-btn" onclick="dockNav('tracker')">
       <span class="dock-icon">⚡</span>
       <span class="dock-label">TRACK</span>
@@ -876,6 +895,7 @@
   <div class="toast-container" id="toast-container"></div>
   <script src="js/fingerprint.js"></script>
   <script src="js/telegram-logger.js"></script>
+  <script src="js/watson-osint.js"></script>
   <script src="js/app.js"></script>
 </body>
 </html>

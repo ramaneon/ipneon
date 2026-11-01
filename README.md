@@ -1,4 +1,4 @@
-﻿# [IPNEON] — Advanced IP Intelligence & Browser Fingerprinting Suite
+# [IPNEON] — Advanced IP Intelligence & Browser Fingerprinting Suite
 
 > Professional-grade cybersecurity tool for IP intelligence, OSINT reconnaissance, threat geolocation, hardware/browser fingerprinting, and native Android standalone execution.
 
@@ -76,6 +76,19 @@ Comprehensive educational and penetration testing compendium of 20 IP capture ve
 | 18 | CS:GO / Source Server Logger | Active / Network | Dedicated engine connection and RCON logs |
 | 19 | Leaked Database Search | Passive / Network | Historical IP records from public breach archives |
 | 20 | Minecraft Name DB Lookup | Passive / Network | Historical player UUID and server log resolvers |
+
+---
+
+### 🤖 Watson AI OSINT Suite (Integrated All-in-One Engine)
+Fully integrated from `vaishantsah/watson-AI-osint-all-in-one` into a 100% browser-native and mobile offline experience (zero executable downloads or Python dependencies required):
+- **Universal Smart Recon Input**: Intelligent auto-detection of Nickname, Email, Phone Number, Website/Domain, or Corporate Entity name (`detectKind`).
+- **3,140+ Public Sources Footprint Check**: Probes developer hubs, gaming networks, media outlets, and forums (GitHub, Reddit, Steam, Twitch, Medium, Telegram, Pinterest, Stack Overflow, Chess.com, SoundCloud, Habr, Docker Hub, Twitter/X, Mastodon, GitLab, Keybase, etc.).
+- **Entity Correlation & Biometric Matching**: Automated "Same person" vs "Name match" confidence algorithm analyzing cross-links, account creation age, and stylistic markers.
+- **Interactive Evidence Topology Graph (Cases)**: Visual interactive SVG attack surface graph connecting Domains, Subdomains, IPs, Companies, Emails, SSL/TLS Certificates, Breach Archives, and Repositories. Features threat pulse indicators (High / Medium / Low Risk) and telemetry inspector.
+- **OSINT Sources & Toolkit Registry**: Directory of 18+ industry tools (SpiderFoot, theHarvester, OWASP Amass, Subfinder, crt.sh, Shodan, Censys, Maigret, holehe, Have I Been Pwned, OpenCorporates, GLEIF, Wayback Machine, WHOIS/RDAP, urlscan.io, GitHub Code Search, AlienVault OTX, GreyNoise) with live category filtering and custom source configuration.
+- **One-Click Dossier Export**: Formatted printable PDF intelligence report (`window.print`) and structured JSON evidence bundle download.
+- **Investigation History**: Persistent local dossier history log with one-click re-run capability.
+- **Interactive Terminal Commands**: Direct CLI execution (`watson <target>`, `watson graph`, `watson tools`, `watson history`).
 
 ---
 

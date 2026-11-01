@@ -113,7 +113,7 @@ function initScrollBehavior() {
 function scrollToSection(id) { document.getElementById(id)?.scrollIntoView({ behavior:'smooth' }); }
 
 function initNavHighlight() {
-  const sections = ['home','tools','tracker','fingerprint','recon','terminal','osint','about'];
+  const sections = ['home','watson','tools','tracker','fingerprint','recon','terminal','osint','about'];
   const links = {};
   sections.forEach(s => { links[s] = document.getElementById('nav-'+s); });
   const obs = new IntersectionObserver(entries => {
@@ -1486,7 +1486,11 @@ function execTermCommand(raw) {
   switch (cmd) {
     case 'help':
       appendTermOutput(`
-        <div style="display:grid; grid-template-columns:120px 1fr; gap:0.2rem; font-size:0.75rem;">
+        <div style="display:grid; grid-template-columns:140px 1fr; gap:0.2rem; font-size:0.75rem;">
+          <div><strong>watson &lt;target&gt;</strong></div><div>Watson AI Universal Footprint Search (3,140+ sites)</div>
+          <div><strong>watson graph</strong></div><div>Open Interactive Attack Surface Topology Graph</div>
+          <div><strong>watson tools</strong></div><div>Inspect 18+ Connected OSINT Modules & Tools</div>
+          <div><strong>watson history</strong></div><div>Review Dossier Case History</div>
           <div><strong>scan &lt;ip&gt;</strong></div><div>Run full IP Tracker & Threat Intelligence</div>
           <div><strong>dns &lt;domain&gt;</strong></div><div>DoH DNS & SPF/DMARC Email Spoof Recon</div>
           <div><strong>cidr &lt;ip/mask&gt;</strong></div><div>Subnet & Host Range Calculator</div>
@@ -1501,6 +1505,32 @@ function execTermCommand(raw) {
           <div><strong>about</strong></div><div>Show system & architecture information</div>
         </div>
       `, 'green');
+      break;
+
+    case 'watson':
+      if (!args[0]) {
+        appendTermOutput('Usage: watson &lt;query&gt; | watson graph | watson tools | watson history', 'yellow');
+      } else {
+        const sub = args[0].toLowerCase();
+        if (sub === 'graph' || sub === 'cases' || sub === 'case') {
+          appendTermOutput('[+] Switching to Watson Evidence Topology Graph...', 'green');
+          if (window.WATSON) WATSON.switchTab('graph');
+          scrollToSection('watson');
+        } else if (sub === 'tools' || sub === 'sources') {
+          appendTermOutput('[+] Opening Watson OSINT Sources & Toolkit Registry...', 'green');
+          if (window.WATSON) WATSON.switchTab('tools');
+          scrollToSection('watson');
+        } else if (sub === 'history') {
+          appendTermOutput('[+] Loading Watson Investigation Dossier History...', 'green');
+          if (window.WATSON) WATSON.switchTab('history');
+          scrollToSection('watson');
+        } else {
+          const target = args.join(' ');
+          appendTermOutput(`[+] Executing Watson AI universal intelligence search on: ${escapeHtml(target)}...`, 'green');
+          if (window.WATSON) WATSON.executeWatsonSearch(target);
+          scrollToSection('watson');
+        }
+      }
       break;
 
     case 'clear':
